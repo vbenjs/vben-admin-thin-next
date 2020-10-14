@@ -1,4 +1,3 @@
-import { REDIRECT_ROUTE } from '/@/router/constant';
 import type { AppRouteRecordRaw, Menu } from '/@/router/types';
 import store from '/@/store/index';
 import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
@@ -13,14 +12,15 @@ import { userStore } from '/@/store/modules/user';
 import { asyncRoutes } from '/@/router/routes/index';
 import { filter } from '/@/utils/helper/treeHelper';
 import { toRaw } from 'vue';
-import { getMenuListById } from '/@/api/sys/menu';
 
-import { genRouteModule, transformObjToRoute } from '/@/utils/helper/routeHelper';
-import { transformRouteToMenu } from '/@/utils/helper/menuHelper';
+// 需要后台获取菜单的请将下面注释打开
+// import { getMenuListById } from '/@/api/sys/menu';
+// import { genRouteModule, transformObjToRoute } from '/@/utils/helper/routeHelper';
+// import { transformRouteToMenu } from '/@/utils/helper/menuHelper';
+// import { REDIRECT_ROUTE } from '/@/router/constant';
+// import { useMessage } from '/@/hooks/web/useMessage';
+// const { createMessage } = useMessage();
 
-import { useMessage } from '/@/hooks/web/useMessage';
-import { warn } from 'vue';
-const { createMessage } = useMessage();
 const NAME = 'permission';
 hotModuleUnregisterModule(NAME);
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
@@ -91,7 +91,7 @@ class Permission extends VuexModule {
   }
 
   @Action
-  async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
+  async buildRoutesAction(): Promise<AppRouteRecordRaw[]> {
     let routes: AppRouteRecordRaw[] = [];
     const roleList = toRaw(userStore.getRoleListState);
 
@@ -107,32 +107,39 @@ class Permission extends VuexModule {
       });
       // this.commitRoutesState(routes);
       // Background permissions
-      warn(
-        `当前权限模式为:${PermissionModeEnum.ROLE},请将src/store/modules/permission.ts内的后台菜单获取函数注释,如果已注释可以忽略此信息!`
-      );
+
       //  如果确定不需要做后台动态权限,请将下面整个判断注释
-    } else if (permissionMode === PermissionModeEnum.BACK) {
-      const messageKey = 'loadMenu';
-      createMessage.loading({
-        content: '菜单加载中...',
-        key: messageKey,
-        duration: 1,
-      });
-      // 这里获取后台路由菜单逻辑自行修改
-      const paramId = id || userStore.getUserInfoState.userId;
-      if (!paramId) {
-        throw new Error('paramId is undefined!');
-      }
-      let routeList: any[] = await getMenuListById({ id: paramId });
-      // 动态引入组件
-      routeList = transformObjToRoute(routeList);
-      //  后台路由转菜单结构
-      const backMenuList = transformRouteToMenu(routeList);
-      this.commitBackMenuListState(backMenuList);
-      // 生成路由
-      routes = genRouteModule(routeList) as AppRouteRecordRaw[];
-      routes.push(REDIRECT_ROUTE);
     }
+    /**
+     * 需要后台动态更改菜单的请将注释打开
+     */
+
+    // else if (permissionMode === PermissionModeEnum.BACK) {
+    //   const messageKey = 'loadMenu';
+    //   createMessage.loading({
+    //     content: '菜单加载中...',
+    //     key: messageKey,
+    //     duration: 1,
+    //   });
+    //   // 这里获取后台路由菜单逻辑自行修改
+    //   const paramId = id || userStore.getUserInfoState.userId;
+    //   if (!paramId) {
+    //     throw new Error('paramId is undefined!');
+    //   }
+    //   let routeList: any[] = await getMenuListById({ id: paramId });
+    //   // 动态引入组件
+    //   routeList = transformObjToRoute(routeList);
+    //   //  后台路由转菜单结构
+    //   const backMenuList = transformRouteToMenu(routeList);
+    //   this.commitBackMenuListState(backMenuList);
+    //   // 生成路由
+    //   routes = genRouteModule(routeList) as AppRouteRecordRaw[];
+    //   routes.push(REDIRECT_ROUTE);
+    // }
+
+    /**
+     * 需要后台动态更改菜单的请将上面注释打开
+     */
     return routes;
   }
 }

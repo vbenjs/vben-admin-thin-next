@@ -2,11 +2,10 @@ import { readFileSync, writeFileSync, existsSync } from 'fs-extra';
 import viteConfig, { htmlConfig } from '../../vite.config';
 import { getCwdPath, successConsole, errorConsole } from '../utils';
 import { GLOB_CONFIG_FILE_NAME } from '../constant';
-import { hmScript } from './hm';
 import HtmlMinifier from 'html-minifier';
 const pkg = require('../../package.json');
 
-const { title, addHm, cdnConf, useCdn, minify } = htmlConfig;
+const { title, cdnConf, useCdn, minify } = htmlConfig;
 
 function injectTitle(html: string, htmlTitle: string) {
   if (/<\/title>/.test(html)) {
@@ -22,13 +21,6 @@ function injectConfigScript(html: string) {
 
   if (/<\/head>/.test(html)) {
     return html.replace(/<\/head>/, `${tag}\n\t\t</head>`);
-  }
-  return html;
-}
-
-function injectHmScript(html: string) {
-  if (/<head>/.test(html)) {
-    return html.replace(/<head>/, `<head>\n${hmScript}`);
   }
   return html;
 }
@@ -81,9 +73,6 @@ export async function runUpdateHtml() {
     processedHtml = rawHtml;
     processedHtml = injectTitle(processedHtml, title);
     processedHtml = injectConfigScript(processedHtml);
-    if (addHm) {
-      processedHtml = injectHmScript(processedHtml);
-    }
     if (useCdn) {
       processedHtml = injectCdnCss(processedHtml);
       processedHtml = injectCdnjs(processedHtml);

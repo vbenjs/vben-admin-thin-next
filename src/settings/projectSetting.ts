@@ -92,7 +92,7 @@ const setting: ProjectConfig = {
   showBreadCrumb: true,
 
   // 使用error-handler-plugin
-  useErrorHandle: isProdMode(),
+  useErrorHandle: false,
 
   //  开启页面切换动画
   openRouterTransition: true,
@@ -109,20 +109,20 @@ const setting: ProjectConfig = {
   openPageLoading: true,
 
   // 是否开启回到顶部
-  useOpenBackTop: true,
+  useOpenBackTop: false,
 
   // 开启顶部进度条
   openNProgress: isProdMode(),
 
   //  是否可以嵌入iframe页面
-  canEmbedIFramePage: true,
+  canEmbedIFramePage: false,
 
   // 切换界面的时候是否删除未关闭的message及notify
   closeMessageOnSwitch: true,
 
   // 切换界面的时候是否取消已经发送但是未响应的http请求。
   // 如果开启,想对单独接口覆盖。可以在单独接口设置
-  removeAllHttpPending: true,
+  removeAllHttpPending: false,
 };
 
 export default setting;

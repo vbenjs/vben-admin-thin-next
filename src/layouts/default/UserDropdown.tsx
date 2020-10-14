@@ -10,7 +10,6 @@ import Icon from '/@/components/Icon/index';
 
 import { userStore } from '/@/store/modules/user';
 
-import { DOC_URL } from '/@/settings/siteSetting';
 import { appStore } from '/@/store/modules/app';
 
 const prefixCls = 'user-dropdown';
@@ -28,17 +27,9 @@ export default defineComponent({
       userStore.confirmLoginOut();
     }
 
-    // 打开文档
-    function openDoc() {
-      window.open(DOC_URL, '__blank');
-    }
-
     function handleMenuClick(e: any) {
       if (e.key === 'loginOut') {
         handleLoginOut();
-      }
-      if (e.key === 'doc') {
-        openDoc();
       }
     }
     const getUserInfo = computed(() => {
@@ -65,7 +56,7 @@ export default defineComponent({
               <Menu slot="overlay" onClick={handleMenuClick}>
                 {() => (
                   <>
-                    {showDoc && (
+                    {/* {showDoc && (
                       <Menu.Item key="doc">
                         {() => (
                           <span class="flex items-center">
@@ -74,7 +65,7 @@ export default defineComponent({
                           </span>
                         )}
                       </Menu.Item>
-                    )}
+                    )} */}
                     {showDoc && <Divider />}
 
                     <Menu.Item key="loginOut">

@@ -5,7 +5,6 @@
     "bootstrap": "yarn install",
     "serve": "node ./build/jsc.js preserve && cross-env NODE_ENV=development vite",
     "build": "node ./build/jsc.js build",
-    "build:site": "cross-env SITE=true npm run build ",
     "build:no-cache": "yarn  clean:cache && npm run build",
     "report": "cross-env REPORT=true npm run build ",
     "preview": "node ./build/jsc.js preview",
@@ -23,20 +22,16 @@
   "dependencies": {
     "@iconify/iconify": "^2.0.0-rc.1",
     "ant-design-vue": "^2.0.0-beta.10",
-    "apexcharts": "^3.22.0",
     "axios": "^0.20.0",
-    "echarts": "^4.9.0",
     "lodash-es": "^4.17.15",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.2.0",
-    "qrcode": "^1.4.4",
     "vue": "^3.0.0",
     "vue-i18n": "^9.0.0-beta.4",
     "vue-router": "^4.0.0-beta.13",
     "vuex": "^4.0.0-beta.4",
-    "vuex-module-decorators": "^1.0.1",
-    "zxcvbn": "^4.4.2"
+    "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",

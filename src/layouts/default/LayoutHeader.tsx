@@ -10,12 +10,10 @@ import {
   RedoOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined,
-  GithubFilled,
   LockOutlined,
 } from '@ant-design/icons-vue';
 import { useFullscreen } from '/@/hooks/web/useFullScreen';
 import { useTabs } from '/@/hooks/web/useTabs';
-import { GITHUB_URL } from '/@/settings/siteSetting';
 import LockAction from './actions/LockActionItem';
 import { useModal } from '/@/components/Modal/index';
 
@@ -28,10 +26,6 @@ export default defineComponent({
     const getProjectConfigRef = computed(() => {
       return appStore.getProjectConfig;
     });
-
-    function goToGithub() {
-      window.open(GITHUB_URL, '__blank');
-    }
 
     const headerClass = computed(() => {
       const theme = unref(getProjectConfigRef).headerSetting.theme;
@@ -77,19 +71,6 @@ export default defineComponent({
               </div>
 
               <div class={`layout-header__action`}>
-                {showGithub && (
-                  // @ts-ignore
-                  <Tooltip>
-                    {{
-                      title: () => 'github',
-                      default: () => (
-                        <div class={`layout-header__action-item`} onClick={goToGithub}>
-                          <GithubFilled class={`layout-header__action-icon`} />
-                        </div>
-                      ),
-                    }}
-                  </Tooltip>
-                )}
                 {showGithub && (
                   // @ts-ignore
                   <Tooltip>

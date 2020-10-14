@@ -6,9 +6,9 @@ import { useTransition } from './useTransition';
 
 import { RouterView, RouteLocation } from 'vue-router';
 import { tabStore } from '/@/store/modules/tab';
-import FrameLayout from '/@/layouts/iframe/index.vue';
+// import FrameLayout from '/@/layouts/iframe/index.vue';
 
-import { useSetting } from '/@/hooks/core/useSetting';
+// import { useSetting } from '/@/hooks/core/useSetting';
 // import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'PageLayout',
@@ -24,7 +24,7 @@ export default defineComponent({
       const { on: transitionOn } = useTransition();
       on = transitionOn;
     }
-    const { projectSetting } = useSetting();
+    // const { projectSetting } = useSetting();
     return () => {
       const {
         routerTransition,
@@ -63,7 +63,7 @@ export default defineComponent({
               },
             }}
           </RouterView>
-          {projectSetting.canEmbedIFramePage && <FrameLayout />}
+          {/* {projectSetting.canEmbedIFramePage && <FrameLayout />} */}
         </div>
       );
     };

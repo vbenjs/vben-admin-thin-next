@@ -1,44 +1,16 @@
 import type { AppRouteModule } from '/@/router/types';
 
-import { PAGE_LAYOUT_COMPONENT } from '/@/router/constant';
-
 export default {
   layout: {
     path: '/dashboard',
     name: 'Dashboard',
-    component: PAGE_LAYOUT_COMPONENT,
-    redirect: '/dashboard/workbench',
+    component: () => import('/@/views/dashboard/welcome/index.vue'),
     meta: {
+      affix: true,
       icon: 'ant-design:home-outlined',
-      title: 'Dashboard',
+      title: '首页',
     },
   },
 
-  routes: [
-    {
-      path: '/welcome',
-      name: 'Welcome',
-      component: () => import('/@/views/dashboard/welcome/index.vue'),
-      meta: {
-        title: '首页',
-      },
-    },
-    {
-      path: '/workbench',
-      name: 'Workbench',
-      component: () => import('/@/views/dashboard/workbench/index.vue'),
-      meta: {
-        title: '工作台',
-        affix: true,
-      },
-    },
-    {
-      path: '/analysis',
-      name: 'Analysis',
-      component: () => import('/@/views/dashboard/analysis/index.vue'),
-      meta: {
-        title: '分析页',
-      },
-    },
-  ],
+  routes: [],
 } as AppRouteModule;

@@ -120,13 +120,7 @@ const viteConfig: UserConfig = {
   // 配置Dep优化行为
   // 会使用 rollup 对 包重新编译，将编译成符合 esm 模块规范的新的包放入 node_modules 下的 .
   optimizeDeps: {
-    include: [
-      'echarts',
-      'echarts/map/js/china',
-      'ant-design-vue/es/locale/zh_CN',
-      '@ant-design/icons-vue',
-      'moment/locale/zh-cn',
-    ],
+    include: ['ant-design-vue/es/locale/zh_CN', '@ant-design/icons-vue', 'moment/locale/zh-cn'],
   },
   // 本地跨域代理
   proxy: createProxy(VITE_PROXY),
@@ -140,8 +134,6 @@ const viteConfig: UserConfig = {
   },
 };
 
-// 用于打包部署站点使用。实际项目可以删除
-const isSite = process.env.SITE === 'true';
 // 扩展配置, 往打包后的html注入内容
 // 只针对生产环境
 // TODO 目前只是简单手动注入实现，后续vite应该会提供配置项
@@ -163,8 +155,6 @@ export const htmlConfig: {
 } = {
   // html title
   title: VITE_GLOB_APP_TITLE,
-  // 百度统计，不需要可以删除
-  addHm: isSite,
   // 使用cdn打包
   // TODO Cdn esm使用方式需要只能支持google，暂时关闭，后续查询更好的方式
   useCdn: false,
