@@ -210,6 +210,13 @@
       // margin: 0;
       line-height: @app-menu-item-height;
     }
+
+    &.ant-menu-inline-collapsed {
+      .ant-menu-item-selected {
+        background: unset !important;
+        box-shadow: none;
+      }
+    }
   }
 
   &.ant-menu-light {
