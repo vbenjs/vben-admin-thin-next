@@ -8,6 +8,7 @@
 **中文**
 
 - [介绍](#介绍)
+  - [精简版地址](#精简版地址)
 - [预览地址](#预览地址)
 - [修改清单](#修改清单)
 - [注意](#注意)
@@ -16,10 +17,16 @@
   - [格式化](#格式化)
   - [其他](#其他)
 - [Git 提交规范](#git-提交规范)
+- [浏览器支持](#浏览器支持)
+- [加入我们](#加入我们)
 
 ## 介绍
 
 该项目为 [vue-vben-admin2.0](https://github.com/anncwb/vue-vben-admin)的精简版本。
+
+### 精简版地址
+
+[vue-vben-admin-thin-next](https://github.com/anncwb/vben-admin-thin-next)
 
 ## 预览地址
 
@@ -31,7 +38,7 @@
 
 ## 修改清单
 
-当你开始使用是，请按下面列表先行修改项目
+当你开始使用时，请按下面列表先行修改项目
 
 - [ ] 重命名 `package.json` 中的 `name` 字段
 - [ ] 在`LICENSE`中更改作者姓名
@@ -120,3 +127,21 @@ yarn clean:lib # 删除node_modules，兼容window系统
   - `ci` 持续集成
   - `types` 类型定义文件更改
   - `wip` 开发中
+
+## 浏览器支持
+
+本地开发推荐使用`Chrome`浏览器,在火狐浏览器进行开发相对卡顿。
+
+支持现代浏览器, IE 暂不支持，后续考虑支持 ie11
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| :-: | :-: | :-: | :-: |
+| not support | last 2 versions | last 2 versions | last 2 versions |
+
+## 加入我们
+
+`Vue-Vben-Aadmin` 是完全开源免费的项目，在帮助开发者更方便地进行中大型管理系统开发，同时也提供 QQ 交流群(项目刚起步，人数较少，有兴趣的可以加群一起讨论)，使用问题欢迎在群内提问。
+
+- QQ 群 `569291866`
+
+ <img alt="VbenAdmin Logo" width="100" src="./.github/res/imgs/qq.jpeg">
