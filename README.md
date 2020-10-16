@@ -8,8 +8,13 @@
 **中文**
 
 - [介绍](#介绍)
+- [gitHub 地址](#github-地址)
   - [精简版地址](#精简版地址)
 - [预览地址](#预览地址)
+- [文档](#文档)
+- [预安装](#预安装)
+  - [环境要求](#环境要求)
+  - [UI 框架](#ui-框架)
 - [修改清单](#修改清单)
 - [注意](#注意)
   - [开发环境](#开发环境)
@@ -22,7 +27,11 @@
 
 ## 介绍
 
-该项目为 [vue-vben-admin2.0](https://github.com/anncwb/vue-vben-admin)的精简版本。
+项目基于`ant-design-vue`,`typescript`,`vue3.0`,`vite`,`tsx`实现的 vue3 风格的后台管理系统，
+
+## gitHub 地址
+
+[vue-vben-admin2.0](https://github.com/anncwb/vue-vben-admin) - `main` 分支
 
 ### 精简版地址
 
@@ -32,7 +41,29 @@
 
 - [2.0 精简版 在线预览](https://vvbin.cn/thin/next/)
 
-- [2.0 在线预览](https://vvbin.cn/next/)
+测试账号: vben/123456
+
+<p align="center">
+    <img alt="VbenAdmin Logo" width="100%" src="./.github/res/imgs/preview1.png">
+    <img alt="VbenAdmin Logo" width="100%" src="./.github/res/imgs/preview2.png">
+    <img alt="VbenAdmin Logo" width="100%" src="./.github/res/imgs/preview3.png">
+</p>
+
+## 文档
+
+2.0 文档很快完成，请耐心等待。
+
+## 预安装
+
+### 环境要求
+
+- `Node.js`: - 版本最好大于 `12.0.0`
+- `yarn` > `npm` > `cnpm`: - 包管理工具.
+
+### UI 框架
+
+- [Tailwind CSS](https://tailwindcss.com/) - 2.0.0-beta.5 已删除
+- [Ant Design Vue 2.0](https://2x.antdv.com/docs/vue/introduce-cn/)
 
 测试账号: vben/123456
 
@@ -134,9 +165,11 @@ yarn clean:lib # 删除node_modules，兼容window系统
 
 支持现代浏览器, IE 暂不支持，后续考虑支持 ie11
 
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :-: | :-: | :-: | :-: |
-| not support | last 2 versions | last 2 versions | last 2 versions |
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| :-: | :-: | :-: | :-: | :-: |
+| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+
+更多浏览器可以查看 [Can I Use Es Module](https://caniuse.com/?search=ES%20Module)
 
 ## 加入我们
 
