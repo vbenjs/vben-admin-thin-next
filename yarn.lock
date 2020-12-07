@@ -8010,9 +8010,9 @@ vary@^1.1.2:
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
 vditor@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.npmjs.org/vditor/-/vditor-3.7.0.tgz#8699b7cd8cf1b4406e5e11aa6f966df2b6c009d7"
-  integrity sha512-8DnHoIZyHo5cZe4f4D3ZeY0CEdZwwXxKhrbocjo+eiw0ipX6iC+OCLVYE3l8tJ0Ze7w99DnxU7XRxbKj3xYFkw==
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/vditor/-/vditor-3.7.1.tgz#09ea23212416c4f1a129ec3863bbc52f47251bb1"
+  integrity sha512-/yen904xluZ9CVRZqeEUULZDBV7FdANhtlwracOAkaeQoYMEqT7xqLpJsJPEk6OHJ4MtFXSIGodDAM5H9DskTQ==
   dependencies:
     diff-match-patch "^1.0.5"
 
