@@ -21,7 +21,7 @@ export default defineComponent({
 
     const injectValue = useLayoutContext();
 
-    const { getCalcContentWidth } = useMenuSetting();
+    const { getCalcContentWidth, getSplit } = useMenuSetting();
 
     const {
       getFixed,
@@ -29,6 +29,7 @@ export default defineComponent({
       getShowFullHeaderRef,
       getShowHeader,
       getUnFixedAndFull,
+      getHeaderTheme,
     } = useHeaderSetting();
 
     const { getFullContent } = useFullContent();
@@ -55,7 +56,8 @@ export default defineComponent({
       (): CSSProperties => {
         const style: CSSProperties = {};
         if (unref(getFixed)) {
-          style.width = unref(getCalcContentWidth);
+          style.width =
+            unref(injectValue.isMobile) || unref(getSplit) ? '100%' : unref(getCalcContentWidth);
         }
         if (unref(getShowFullHeaderRef)) {
           style.top = `${unref(fullHeaderHeightRef)}px`;
@@ -80,7 +82,7 @@ export default defineComponent({
         nextTick(() => {
           const headerEl = unref(headerElRef)?.$el;
           const tabEl = unref(tabElRef)?.$el;
-          const fullHeaderEl = unref(injectValue.fullHeaderRef)?.$el;
+          const fullHeaderEl = unref(injectValue.fullHeader)?.$el;
 
           let height = 0;
           if (headerEl && !unref(getShowFullHeaderRef)) {
@@ -110,7 +112,7 @@ export default defineComponent({
           {unref(getIsShowPlaceholderDom) && <div style={unref(getPlaceholderDomStyle)} />}
           <div
             style={unref(getWrapStyle)}
-            class={['multiple-tab-header', { fixed: unref(getIsFixed) }]}
+            class={['multiple-tab-header', unref(getHeaderTheme), { fixed: unref(getIsFixed) }]}
           >
             {unref(getShowInsetHeaderRef) && <LayoutHeader ref={headerElRef} />}
             {unref(showTabsRef) && <MultipleTabs ref={tabElRef} />}

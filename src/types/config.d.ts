@@ -9,7 +9,6 @@ export interface MenuSetting {
   collapsed: boolean;
   collapsedShowTitle: boolean;
   canDrag: boolean;
-  showSearch: boolean;
   show: boolean;
   hidden: boolean;
   split: boolean;
@@ -29,8 +28,6 @@ export interface MultiTabsSetting {
   // 开启快速操作
   showQuick: boolean;
   canDrag: boolean;
-  // 缓存最大数量
-  max: number;
 }
 
 export interface HeaderSetting {

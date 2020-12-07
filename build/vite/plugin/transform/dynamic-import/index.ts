@@ -12,18 +12,17 @@ function getPath(path: string) {
   return path.replace('src/views', '');
 }
 
-const dynamicImportTransform = function (env: any = {}): Transform {
+const dynamicImportTransform = function (enableDynamicImport: boolean): Transform {
   return {
     test({ path }) {
       // Only convert the file
       return (
-        path.includes('/src/utils/helper/dynamicImport.ts') ||
-        path.includes(`\\src\\utils\\helper\\dynamicImport.ts`)
+        path.includes('/src/router/helper/dynamicImport.ts') ||
+        path.includes(`\\src\\router\\helper\\dynamicImport.ts`)
       );
     },
     transform({ code }) {
-      const { VITE_DYNAMIC_IMPORT } = env;
-      if (!VITE_DYNAMIC_IMPORT) {
+      if (!enableDynamicImport) {
         return code;
       }
 

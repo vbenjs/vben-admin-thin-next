@@ -81,7 +81,7 @@ export default defineComponent({
         topRef.value = 0;
         if (unref(getUnFixedAndFull)) return;
         nextTick(() => {
-          const fullHeaderEl = unref(injectValue.fullHeaderRef)?.$el;
+          const fullHeaderEl = unref(injectValue.fullHeader)?.$el;
           if (!fullHeaderEl) return;
           topRef.value = fullHeaderEl.offsetHeight;
         });
@@ -100,7 +100,7 @@ export default defineComponent({
           flex: `0 0 ${width}`,
           maxWidth: width,
           minWidth: width,
-          transition: 'all 0.2s',
+          transition: 'all 0.15s',
         };
       }
     );
@@ -121,13 +121,12 @@ export default defineComponent({
     return () => {
       return (
         <>
-          {unref(getMenuFixed) && (
+          {unref(getMenuFixed) && !unref(injectValue.isMobile) && (
             <div style={unref(getHiddenDomStyle)} class={{ hidden: !unref(showClassSideBarRef) }} />
           )}
-
           <Layout.Sider
             ref={sideRef}
-            breakpoint="md"
+            breakpoint="lg"
             collapsible
             class={unref(getSiderClass)}
             style={unref(getSiderStyle)}

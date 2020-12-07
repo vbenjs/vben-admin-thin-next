@@ -36,7 +36,7 @@ const setting: ProjectConfig = {
   showLogo: true,
 
   // Whether to show footer
-  showFooter: true,
+  showFooter: false,
 
   // locale setting
   locale: {
@@ -88,8 +88,6 @@ const setting: ProjectConfig = {
     show: true,
     // Whether to show dom
     hidden: true,
-    // Whether to show search box
-    showSearch: true,
     // Menu width
     menuWidth: 210,
     // Menu mode
@@ -118,8 +116,6 @@ const setting: ProjectConfig = {
     canDrag: true,
     // Turn on quick actions
     showQuick: true,
-    // Maximum number of tab cache
-    max: 12,
   },
 
   // Transition Setting

@@ -1,4 +1,3 @@
-import { appStore } from './app';
 import type {
   LoginParams,
   GetUserInfoByUserIdModel,
@@ -107,12 +106,7 @@ class User extends VuexModule {
 
       // const name = FULL_PAGE_NOT_FOUND_ROUTE.name;
       // name && router.removeRoute(name);
-      goHome &&
-        (await router.push(PageEnum.BASE_HOME).then(() => {
-          setTimeout(() => {
-            appStore.commitPageLoadingState(false);
-          }, 30);
-        }));
+      goHome && router.push(PageEnum.BASE_HOME);
       return userInfo;
     } catch (error) {
       return null;
@@ -143,11 +137,11 @@ class User extends VuexModule {
   @Action
   async confirmLoginOut() {
     const { createConfirm } = useMessage();
-    const { t } = useI18n('sys.app');
+    const { t } = useI18n();
     createConfirm({
       iconType: 'warning',
-      title: t('loginOutTip'),
-      content: t('loginOutMessage'),
+      title: t('sys.app.loginOutTip'),
+      content: t('sys.app.loginOutMessage'),
       onOk: async () => {
         await this.loginOut(true);
       },

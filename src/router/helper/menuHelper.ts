@@ -1,8 +1,9 @@
-import { AppRouteModule, RouteModule } from '/@/router/types.d';
+import { AppRouteModule } from '/@/router/types.d';
 import type { MenuModule, Menu, AppRouteRecordRaw } from '/@/router/types';
 
-import { findPath, forEach, treeMap, treeToList } from './treeHelper';
+import { findPath, forEach, treeMap, treeToList } from '/@/utils/helper/treeHelper';
 import { cloneDeep } from 'lodash-es';
+import { isUrl } from '/@/utils/is';
 
 export function getAllParentPath(treeData: any[], path: string) {
   const menuList = findPath(treeData, (n) => n.path === path) as Menu[];
@@ -39,7 +40,7 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
 
   const menuList = [menu];
   forEach(menuList, (m) => {
-    joinParentPath(menuList, m);
+    !isUrl(m.path) && joinParentPath(menuList, m);
   });
   return menuList[0];
 }
@@ -48,18 +49,18 @@ export function transformRouteToMenu(routeModList: AppRouteModule[]) {
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
   cloneRouteModList.forEach((item) => {
-    const { layout, routes, children } = item as RouteModule;
-    if (layout) {
-      layout.children = routes || children;
-      routeList.push(layout);
+    if (item.meta?.single) {
+      const realItem = item?.children?.[0];
+      realItem && routeList.push(realItem);
     } else {
-      routes && routeList.push(...routes);
+      routeList.push(item);
     }
   });
   return treeMap(routeList, {
     conversion: (node: AppRouteRecordRaw) => {
       const { meta: { title, icon } = {} } = node;
-      joinParentPath(routeList, node);
+
+      !isUrl(node.path) && joinParentPath(routeList, node);
       return {
         name: title,
         icon,

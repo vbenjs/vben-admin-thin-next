@@ -4,27 +4,27 @@
 
     <Tooltip placement="top" v-if="getSetting.redo">
       <template #title>
-        <span>{{ t('settingRedo') }}</span>
+        <span>{{ t('component.table.settingRedo') }}</span>
       </template>
       <RedoOutlined @click="redo" />
     </Tooltip>
 
     <Tooltip placement="top" v-if="getSetting.size">
       <template #title>
-        <span>{{ t('settingDens') }}</span>
+        <span>{{ t('component.table.settingDens') }}</span>
       </template>
       <Dropdown placement="bottomCenter" :trigger="['click']">
         <ColumnHeightOutlined />
         <template #overlay>
           <Menu @click="handleTitleClick" selectable v-model:selectedKeys="selectedKeysRef">
             <MenuItem key="default">
-              <span>{{ t('settingDensDefault') }}</span>
+              <span>{{ t('component.table.settingDensDefault') }}</span>
             </MenuItem>
             <MenuItem key="middle">
-              <span>{{ t('settingDensMiddle') }}</span>
+              <span>{{ t('component.table.settingDensMiddle') }}</span>
             </MenuItem>
             <MenuItem key="small">
-              <span>{{ t('settingDensSmall') }}</span>
+              <span>{{ t('component.table.settingDensSmall') }}</span>
             </MenuItem>
           </Menu>
         </template>
@@ -33,7 +33,7 @@
 
     <Tooltip placement="top" v-if="getSetting.setting">
       <template #title>
-        <span>{{ t('settingColumn') }}</span>
+        <span>{{ t('component.table.settingColumn') }}</span>
       </template>
       <Popover
         placement="bottomLeft"
@@ -58,9 +58,11 @@
               v-model:checked="checkAll"
               @change="onCheckAllChange"
             >
-              {{ t('settingColumnShow') }}
+              {{ t('component.table.settingColumnShow') }}
             </Checkbox>
-            <a-button size="small" type="link" @click="reset"> {{ t('settingReset') }}</a-button>
+            <a-button size="small" type="link" @click="reset">
+              {{ t('component.table.settingReset') }}</a-button
+            >
           </div>
         </template>
         <SettingOutlined />
@@ -69,7 +71,7 @@
 
     <Tooltip placement="top" v-if="getSetting.fullScreen">
       <template #title>
-        <span>{{ t('settingFullScreen') }}</span>
+        <span>{{ t('component.table.settingFullScreen') }}</span>
       </template>
       <FullscreenOutlined @click="handleFullScreen" v-if="!isFullscreenRef" />
       <FullscreenExitOutlined @click="handleFullScreen" v-else />
@@ -140,7 +142,7 @@
         defaultCheckList: [],
       });
 
-      const { t } = useI18n('component.table');
+      const { t } = useI18n();
 
       watchEffect(() => {
         const columns = table.getColumns();
@@ -156,8 +158,9 @@
             value: (item.dataIndex || item.title) as string,
           });
         });
-
-        plainOptions.value = ret;
+        if (!plainOptions.value.length) {
+          plainOptions.value = ret;
+        }
         const checkList = table
           .getColumns()
           .map((item) => item.dataIndex || item.title) as string[];

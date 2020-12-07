@@ -2,7 +2,7 @@ import type { Menu, MenuModule } from '/@/router/types';
 import type { RouteRecordNormalized } from 'vue-router';
 import { appStore } from '/@/store/modules/app';
 import { permissionStore } from '/@/store/modules/permission';
-import { transformMenuModule, flatMenus, getAllParentPath } from '/@/utils/helper/menuHelper';
+import { transformMenuModule, flatMenus, getAllParentPath } from '/@/router/helper/menuHelper';
 import { filter } from '/@/utils/helper/treeHelper';
 import router from '/@/router';
 import { PermissionModeEnum } from '/@/enums/appEnum';
@@ -21,6 +21,9 @@ Object.keys(modules).forEach((key) => {
 // ===========================
 // ==========Helper===========
 // ===========================
+const isBackMode = () => {
+  return appStore.getProjectConfig.permissionMode === PermissionModeEnum.BACK;
+};
 
 const staticMenus: Menu[] = [];
 (() => {
@@ -32,10 +35,6 @@ const staticMenus: Menu[] = [];
     staticMenus.push(transformMenuModule(menu));
   }
 })();
-
-const isBackMode = () => {
-  return appStore.getProjectConfig.permissionMode === PermissionModeEnum.BACK;
-};
 
 async function getAsyncMenus() {
   // 前端角色控制菜单 直接取菜单文件
@@ -90,12 +89,17 @@ export async function getFlatChildrenMenus(children: Menu[]) {
 function basicFilter(routes: RouteRecordNormalized[]) {
   return (menu: Menu) => {
     const matchRoute = routes.find((route) => {
+      if (route.meta.externalLink) {
+        return true;
+      }
+
       if (route.meta) {
         if (route.meta.carryParam) {
           return pathToRegexp(route.path).test(menu.path);
         }
-        if (route.meta.ignoreAuth) return false;
+        if (route.meta.ignoreAuth) return true;
       }
+
       return route.path === menu.path;
     });
 

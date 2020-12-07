@@ -8,23 +8,16 @@ export const basicProps = {
     type: Array as PropType<Menu[]>,
     default: () => [],
   },
-  flatItems: {
-    type: Array as PropType<Menu[]>,
-    default: () => [],
-  },
   appendClass: {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+
   collapsedShowTitle: {
     type: Boolean as PropType<boolean>,
     default: false,
   },
-  // 是否显示搜索框
-  search: {
-    type: Boolean as PropType<boolean>,
-    default: true,
-  },
+
   // 最好是4 倍数
   inlineIndent: {
     type: Number as PropType<number>,
@@ -35,6 +28,10 @@ export const basicProps = {
     type: String as PropType<MenuModeEnum>,
     default: MenuModeEnum.INLINE,
   },
+  showLogo: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
   type: {
     type: String as PropType<MenuTypeEnum>,
     default: MenuTypeEnum.MIX,
@@ -43,18 +40,11 @@ export const basicProps = {
     type: String as PropType<string>,
     default: ThemeEnum.DARK,
   },
-  showLogo: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
   inlineCollapsed: {
     type: Boolean as PropType<boolean>,
     default: false,
   },
-  isAppMenu: {
-    type: Boolean as PropType<boolean>,
-    default: true,
-  },
+
   isHorizontal: {
     type: Boolean as PropType<boolean>,
     default: false,
@@ -64,7 +54,6 @@ export const basicProps = {
     default: true,
   },
   beforeClickFn: {
-    type: Function as PropType<Fn>,
-    default: null,
+    type: Function as PropType<(key: string) => Promise<boolean>>,
   },
 };
