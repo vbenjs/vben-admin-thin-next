@@ -6,6 +6,7 @@ import { appStore } from '/@/store/modules/app';
 
 import { SIDE_BAR_MINI_WIDTH, SIDE_BAR_SHOW_TIT_MINI_WIDTH } from '/@/enums/appEnum';
 import { MenuModeEnum, MenuTypeEnum, TriggerEnum } from '/@/enums/menuEnum';
+import { useFullContent } from '/@/hooks/web/useFullContent';
 
 // Get menu configuration
 const getMenuSetting = computed(() => appStore.getProjectConfig.menuSetting);
@@ -64,6 +65,10 @@ const getIsHorizontal = computed(() => {
   return unref(getMenuMode) === MenuModeEnum.HORIZONTAL;
 });
 
+const getIsMixMode = computed(() => {
+  return unref(getMenuMode) === MenuModeEnum.INLINE && unref(getMenuType) === MenuTypeEnum.MIX;
+});
+
 const getRealWidth = computed(() => {
   return unref(getCollapsed) ? unref(getMiniWidthNumber) : unref(getMenuWidth);
 });
@@ -76,6 +81,15 @@ const getMiniWidthNumber = computed(() => {
 const getCalcContentWidth = computed(() => {
   const width = unref(getIsTopMenu) || !unref(getShowMenu) ? 0 : unref(getRealWidth);
   return `calc(100% - ${unref(width)}px)`;
+});
+
+const { getFullContent: fullContent } = useFullContent();
+
+const getShowSidebar = computed(() => {
+  return (
+    unref(getSplit) ||
+    (unref(getShowMenu) && unref(getMenuMode) !== MenuModeEnum.HORIZONTAL && !unref(fullContent))
+  );
 });
 
 // Set menu configuration
@@ -119,5 +133,7 @@ export function useMenuSetting() {
     getMenuHidden,
     getIsTopMenu,
     getMenuBgColor,
+    getShowSidebar,
+    getIsMixMode,
   };
 }

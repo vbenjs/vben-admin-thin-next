@@ -4,7 +4,6 @@ import { computed, unref } from 'vue';
 
 import { appStore } from '/@/store/modules/app';
 
-import { useMultipleTabSetting } from '/@/hooks/setting/useMultipleTabSetting';
 import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
 import { useRootSetting } from '/@/hooks/setting/useRootSetting';
 import { useFullContent } from '/@/hooks/web/useFullContent';
@@ -12,7 +11,6 @@ import { useFullContent } from '/@/hooks/web/useFullContent';
 import { MenuModeEnum } from '/@/enums/menuEnum';
 
 const { getFullContent } = useFullContent();
-const { getShowMultipleTab } = useMultipleTabSetting();
 const {
   getMenuMode,
   getSplit,
@@ -51,7 +49,7 @@ const getFixed = computed(() => unref(getHeaderSetting).fixed);
 
 const getHeaderBgColor = computed(() => unref(getHeaderSetting).bgColor);
 
-const getShowRedo = computed(() => unref(getHeaderSetting).showRedo && unref(getShowMultipleTab));
+const getShowSearch = computed(() => unref(getHeaderSetting).showSearch);
 
 const getUseLockPage = computed(() => unref(getHeaderSetting).useLockPage);
 
@@ -87,8 +85,8 @@ export function useHeaderSetting() {
     getHeaderSetting,
 
     getShowDoc,
+    getShowSearch,
     getHeaderTheme,
-    getShowRedo,
     getUseLockPage,
     getShowFullScreen,
     getShowNotice,

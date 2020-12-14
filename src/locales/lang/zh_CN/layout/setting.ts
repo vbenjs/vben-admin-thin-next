@@ -39,7 +39,7 @@ export default {
   sidebarTheme: '菜单主题',
 
   menuDrag: '侧边菜单拖拽',
-  menuSearch: '侧边菜单搜索',
+  menuSearch: '菜单搜索',
   menuAccordion: '侧边菜单手风琴模式',
   menuCollapse: '折叠菜单',
   collapseMenuDisplayName: '折叠菜单显示名称',
@@ -52,6 +52,7 @@ export default {
   breadcrumbIcon: '面包屑图标',
   tabs: '标签页',
   tabsQuickBtn: '标签页快捷按钮',
+  tabsRedoBtn: '标签页刷新按钮',
   sidebar: '左侧菜单',
   header: '顶栏',
   footer: '页脚',

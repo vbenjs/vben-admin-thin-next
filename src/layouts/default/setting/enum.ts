@@ -28,7 +28,10 @@ export enum HandlerEnum {
   HEADER_THEME,
   HEADER_FIXED,
 
+  HEADER_SEARCH,
+
   TABS_SHOW_QUICK,
+  TABS_SHOW_REDO,
   TABS_SHOW,
 
   LOCK_TIME,
@@ -94,6 +97,7 @@ export const routerTransitionOptions = [
   RouterTransitionEnum.ZOOM_OUT,
   RouterTransitionEnum.FADE_SIDE,
   RouterTransitionEnum.FADE_BOTTOM,
+  RouterTransitionEnum.FADE_SCALE,
 ].map((item) => {
   return {
     label: item,

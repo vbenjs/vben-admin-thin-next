@@ -40,7 +40,7 @@ export default {
   sidebarTheme: 'Menu theme',
 
   menuDrag: 'Drag Sidebar',
-  menuSearch: 'Sidebar search',
+  menuSearch: 'Menu search',
   menuAccordion: 'Sidebar accordion',
   menuCollapse: 'Collapse menu',
   collapseMenuDisplayName: 'Collapse menu display name',
@@ -53,6 +53,7 @@ export default {
   breadcrumbIcon: 'Breadcrumbs Icon',
   tabs: 'Tabs',
   tabsQuickBtn: 'Tabs quick button',
+  tabsRedoBtn: 'Tabs redo button',
   sidebar: 'Sidebar',
   header: 'Header',
   footer: 'Footer',

@@ -1,9 +1,12 @@
 @import (reference) '../../../design/index.less';
+@header-trigger-prefix-cls: ~'@{namespace}-layout-header-trigger';
+@header-prefix-cls: ~'@{namespace}-layout-header';
+@locale-prefix-cls: ~'@{namespace}-app-locale-picker';
 
-.layout-header {
+.@{header-prefix-cls} {
   display: flex;
   height: @header-height;
-  padding: 0 20px 0 0;
+  padding: 0;
   margin-left: -1px;
   line-height: @header-height;
   color: @white;
@@ -11,20 +14,33 @@
   align-items: center;
   justify-content: space-between;
 
-  &.fixed {
+  &--fixed {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: @layout-header-fixed-z-index;
     width: 100%;
   }
 
-  &__left {
+  &-logo {
+    height: @header-height;
+    min-width: 192px;
+    padding: 0 10px;
+    font-size: 14px;
+
+    img {
+      width: @logo-width;
+      height: @logo-width;
+      margin-right: 2px;
+    }
+  }
+
+  &-left {
     display: flex;
     height: 100%;
     align-items: center;
 
-    .layout-trigger {
+    .@{header-trigger-prefix-cls} {
       display: flex;
       height: 100%;
       padding: 1px 10px 0 16px;
@@ -32,7 +48,7 @@
       align-items: center;
 
       .anticon {
-        font-size: 17px;
+        font-size: 16px;
       }
 
       &.light {
@@ -51,218 +67,91 @@
         }
       }
     }
-
-    .layout-breadcrumb {
-      display: flex;
-      padding: 0 8px;
-      align-items: center;
-
-      .ant-breadcrumb-link {
-        .anticon {
-          margin-right: 4px;
-          margin-bottom: 2px;
-        }
-      }
-    }
   }
 
-  &__content {
-    display: flex;
+  &-menu {
     height: 100%;
-    flex-grow: 1;
-    align-items: center;
-  }
-
-  &__header--light {
-    background: @white;
-    border-bottom: 1px solid @header-light-bottom-border-color;
-
-    .layout-header__menu {
-      height: calc(@header-height - 1px);
-
-      .ant-menu-submenu {
-        height: @header-height;
-        line-height: @header-height;
-      }
-    }
-
-    .layout-breadcrumb {
-      .ant-breadcrumb-link {
-        color: @breadcrumb-item-normal-color;
-
-        a {
-          color: @text-color-base;
-
-          &:hover {
-            color: @primary-color;
-          }
-        }
-      }
-
-      .ant-breadcrumb-separator {
-        color: @breadcrumb-item-normal-color;
-      }
-    }
-
-    .layout-header__logo {
-      height: @header-height;
-      color: @text-color-base;
-
-      img {
-        width: @logo-width;
-        height: @logo-width;
-        margin-right: 6px;
-      }
-
-      &:hover {
-        background: @header-light-bg-hover-color;
-      }
-    }
-
-    .layout-header__action {
-      &-item {
-        &:hover {
-          background: @header-light-bg-hover-color;
-        }
-
-        &.locale {
-          padding: 0 10px;
-          color: rgba(0, 0, 0, 0.65);
-        }
-      }
-
-      &-icon {
-        color: @text-color-base;
-      }
-    }
-
-    .layout-header__user-dropdown {
-      &:hover {
-        background: @header-light-bg-hover-color;
-      }
-    }
-
-    .user-dropdown {
-      &__name {
-        color: @text-color-base;
-      }
-
-      &__desc {
-        color: @header-light-desc-color;
-      }
-    }
-  }
-
-  &__header--dark {
-    background: @header-dark-bg-color;
-
-    .layout-header__action {
-      &-item {
-        &:hover {
-          background: @header-dark-bg-hover-color;
-        }
-      }
-    }
-
-    .layout-header__logo {
-      height: @header-height;
-
-      img {
-        width: @logo-width;
-        height: @logo-width;
-        margin-right: 10px;
-      }
-
-      &:hover {
-        background: @header-dark-bg-hover-color;
-      }
-    }
-
-    .layout-header__user-dropdown {
-      &:hover {
-        background: @header-dark-bg-hover-color;
-      }
-    }
-
-    .layout-breadcrumb {
-      .ant-breadcrumb-link {
-        color: rgba(255, 255, 255, 0.6);
-
-        a {
-          color: rgba(255, 255, 255, 0.8);
-
-          &:hover {
-            color: @white;
-          }
-        }
-      }
-
-      .ant-breadcrumb-separator,
-      .anticon {
-        color: rgba(255, 255, 255, 0.8);
-      }
-    }
-  }
-
-  &__logo {
-    padding: 0 10px;
-  }
-
-  &__bread {
-    display: none;
+    min-width: 0;
     flex: 1;
+    align-items: center;
   }
 
-  &__action {
+  &-action {
     display: flex;
+    min-width: 200px;
+    padding-right: 12px;
     align-items: center;
 
-    &-item {
+    &__item {
       display: flex;
       height: @header-height;
       padding: 0 2px;
       font-size: 1.2em;
       cursor: pointer;
       align-items: center;
+
+      .ant-badge {
+        height: @header-height;
+        line-height: @header-height;
+      }
+
+      .ant-badge-dot {
+        top: 10px;
+        right: 2px;
+      }
     }
 
-    &-icon {
+    span[role='img'] {
       padding: 0 8px;
     }
   }
 
-  &__menu {
-    margin-left: 4px;
-    overflow: hidden;
-    align-items: center;
-  }
+  &--light {
+    background: @white;
+    border-bottom: 1px solid @header-light-bottom-border-color;
 
-  &__user-dropdown {
-    height: @header-height;
-    padding: 0 0 0 10px;
-  }
+    .@{header-prefix-cls}-logo {
+      color: @text-color-base;
 
-  .user-dropdown {
-    display: flex;
-    padding-right: 10px;
-    font-size: 12px;
-    cursor: pointer;
-    align-items: center;
-
-    img {
-      width: 26px;
-      height: 26px;
-      margin-right: 12px;
+      &:hover {
+        background: @header-light-bg-hover-color;
+      }
     }
 
-    &__header {
-      border-radius: 50%;
+    .@{header-prefix-cls}-action {
+      &__item {
+        &:hover {
+          background: @header-light-bg-hover-color;
+        }
+
+        .@{locale-prefix-cls} {
+          padding: 0 6px;
+          color: rgba(0, 0, 0, 0.65);
+        }
+      }
+
+      &-icon,
+      span[role='img'] {
+        color: @text-color-base;
+      }
     }
   }
-}
 
-.app-layout-header-user-dropdown-overlay {
-  .ant-dropdown-menu-item {
-    min-width: 160px;
+  &--dark {
+    background: @header-dark-bg-color;
+
+    .@{header-prefix-cls}-logo {
+      &:hover {
+        background: @header-dark-bg-hover-color;
+      }
+    }
+
+    .@{header-prefix-cls}-action {
+      &__item {
+        &:hover {
+          background: @header-dark-bg-hover-color;
+        }
+      }
+    }
   }
 }

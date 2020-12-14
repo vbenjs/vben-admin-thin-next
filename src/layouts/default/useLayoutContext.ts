@@ -3,15 +3,14 @@ import { createContext, useContext } from '/@/hooks/core/useContext';
 
 export interface LayoutContextProps {
   fullHeader: Ref<ComponentRef>;
-  isMobile: Ref<boolean>;
 }
 
-const layoutContextInjectKey: InjectionKey<LayoutContextProps> = Symbol();
+const key: InjectionKey<LayoutContextProps> = Symbol();
 
 export function createLayoutContext(context: LayoutContextProps) {
-  return createContext<LayoutContextProps>(context, layoutContextInjectKey);
+  return createContext<LayoutContextProps>(context, key);
 }
 
 export function useLayoutContext() {
-  return useContext<LayoutContextProps>(layoutContextInjectKey);
+  return useContext<LayoutContextProps>(key);
 }

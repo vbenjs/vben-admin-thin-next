@@ -1,0 +1,85 @@
+import Sortable from 'sortablejs';
+import { toRaw, ref, nextTick, onMounted } from 'vue';
+import { RouteLocationNormalized } from 'vue-router';
+import { useProjectSetting } from '/@/hooks/setting';
+import { useDesign } from '/@/hooks/web/useDesign';
+import router from '/@/router';
+import { tabStore } from '/@/store/modules/tab';
+import { isNullAndUnDef } from '/@/utils/is';
+
+export function initAffixTabs(): string[] {
+  const affixList = ref<RouteLocationNormalized[]>([]);
+  /**
+   * @description: Filter all fixed routes
+   */
+  function filterAffixTabs(routes: RouteLocationNormalized[]) {
+    const tabs: RouteLocationNormalized[] = [];
+    routes &&
+      routes.forEach((route) => {
+        if (route.meta && route.meta.affix) {
+          tabs.push(toRaw(route));
+        }
+      });
+    return tabs;
+  }
+
+  /**
+   * @description: Set fixed tabs
+   */
+  function addAffixTabs(): void {
+    const affixTabs = filterAffixTabs((router.getRoutes() as unknown) as RouteLocationNormalized[]);
+    affixList.value = affixTabs;
+    for (const tab of affixTabs) {
+      tabStore.addTabAction(({
+        meta: tab.meta,
+        name: tab.name,
+        path: tab.path,
+      } as unknown) as RouteLocationNormalized);
+    }
+  }
+
+  let isAddAffix = false;
+  if (!isAddAffix) {
+    addAffixTabs();
+    isAddAffix = true;
+  }
+  return affixList.value.map((item) => item.meta?.title).filter(Boolean);
+}
+
+export function useTabsDrag(affixTextList: string[]) {
+  const { multiTabsSetting } = useProjectSetting();
+
+  const { prefixCls } = useDesign('multiple-tabs');
+
+  function initSortableTabs() {
+    if (!multiTabsSetting.canDrag) return;
+    nextTick(() => {
+      const el = document.querySelectorAll(`.${prefixCls} .ant-tabs-nav > div`)?.[0] as HTMLElement;
+
+      if (!el) return;
+      Sortable.create(el, {
+        animation: 500,
+        delay: 400,
+        delayOnTouchOnly: true,
+        filter: (e: ChangeEvent) => {
+          const text = e?.target?.innerText;
+          if (!text) return false;
+          return affixTextList.includes(text);
+        },
+        onEnd: (evt) => {
+          const { oldIndex, newIndex } = evt;
+
+          if (isNullAndUnDef(oldIndex) || isNullAndUnDef(newIndex) || oldIndex === newIndex) {
+            return;
+          }
+
+          tabStore.commitSortTabs({ oldIndex, newIndex });
+        },
+      });
+    });
+  }
+
+  onMounted(() => {
+    initSortableTabs();
+  });
+}

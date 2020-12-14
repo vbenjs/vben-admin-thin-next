@@ -61,14 +61,15 @@ const setting: ProjectConfig = {
     theme: ThemeEnum.LIGHT,
     // Whether to enable the lock screen function
     useLockPage: true,
-    // Whether to show the refresh button
-    showRedo: true,
+
     // Whether to show the full screen button
     showFullScreen: true,
     // Whether to show the document button
     showDoc: false,
     // Whether to show the notification button
-    showNotice: false,
+    showNotice: true,
+    // Whether to display the menu search
+    showSearch: true,
   },
 
   // Menu configuration
@@ -100,8 +101,6 @@ const setting: ProjectConfig = {
     split: false,
     // Top menu layout
     topMenuAlign: 'center',
-    // Hide the search box when the menu is collapsed
-    collapsedShowSearch: false,
     // Fold trigger position
     trigger: TriggerEnum.HEADER,
     // Turn on accordion mode, only show a menu
@@ -116,6 +115,9 @@ const setting: ProjectConfig = {
     canDrag: true,
     // Turn on quick actions
     showQuick: true,
+
+    // Whether to show the refresh button
+    showRedo: true,
   },
 
   // Transition Setting

@@ -66,8 +66,9 @@
   .@{prefix-cls} {
     display: flex;
     align-items: center;
-    padding-left: 12px;
+    padding-left: 7px;
     cursor: pointer;
+    transition: all 0.2s ease;
 
     &.collapsed-show-title {
       padding-left: 20px;
@@ -86,7 +87,7 @@
     }
 
     &__title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       opacity: 0;
       transition: all 0.5s;

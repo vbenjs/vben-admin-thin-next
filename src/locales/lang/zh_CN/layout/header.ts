@@ -4,10 +4,11 @@ export default {
   dropdownItemLoginOut: '退出系统',
 
   // tooltip
+  search: '搜索',
   tooltipErrorLog: '错误日志',
   tooltipLock: '锁定屏幕',
   tooltipNotify: '消息通知',
-  tooltipRedo: '刷新',
+
   tooltipEntryFull: '全屏',
   tooltipExitFull: '退出全屏',
 
