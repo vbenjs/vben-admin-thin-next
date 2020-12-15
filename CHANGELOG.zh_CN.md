@@ -1,19 +1,28 @@
-## 2.0.0-rc.13 (2020-12-10)
+## 2.0.0-rc.14 (2020-12-15)
 
 ### ✨ Features
 
 - 移除左侧菜单搜索，新增顶部菜单搜索功能
+- layout 移动端适配。业务页面未适配
+- axios 加入 joinTime 配置。控制响应是否加入时间戳
 
 ### ⚡ Performance Improvements
 
 - 异步引入组件
 - 优化整体结构
+- 替换菜单默认滚动条为滚动组件
+- 菜单性能优化
 
 ### 🎫 Chores
 
 - 返回顶部样式调整,避免遮住其他元素
 - 升级`ant-design-vue`到`2.0.0-rc.5`
 - 刷新按钮布局调整
+- `route.meta` 移除 `externalLink` 属性
+
+### ✨ Refactor
+
+- `openModal`与`openDrawer`第三个参数`openOnSet`默认设置为 true
 
 ### 🐛 Bug Fixes
 
@@ -27,6 +36,7 @@
 - 修复 `Modal`与`Drawer`组件在使用 emits 数据传递失效问题
 - 修复菜单已知问题
 - 修复上传组件 api 失效问题
+- 修复菜单权限过滤失效问题
 
 ## 2.0.0-rc.13 (2020-12-10)
 
