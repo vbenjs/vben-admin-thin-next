@@ -7,9 +7,12 @@
         v-if="getShowHeaderLogo || getIsMobile"
         :class="`${prefixCls}-logo`"
         :theme="getHeaderTheme"
+        :style="getLogoWidth"
       />
       <LayoutTrigger
-        v-if="(getShowContent && getShowHeaderTrigger && !getSplit) || getIsMobile"
+        v-if="
+          (getShowContent && getShowHeaderTrigger && !getSplit && !getIsMixSidebar) || getIsMobile
+        "
         :theme="getHeaderTheme"
         :sider="false"
       />
@@ -81,6 +84,7 @@
   } from './components';
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
   export default defineComponent({
     name: 'LayoutHeader',
@@ -103,7 +107,14 @@
     },
     setup(props) {
       const { prefixCls } = useDesign('layout-header');
-      const { getShowTopMenu, getShowHeaderTrigger, getSplit } = useMenuSetting();
+      const {
+        getShowTopMenu,
+        getShowHeaderTrigger,
+        getSplit,
+        getIsMixMode,
+        getMenuWidth,
+        getIsMixSidebar,
+      } = useMenuSetting();
       const { getShowLocale } = useLocaleSetting();
       const { getUseErrorHandle } = useRootSetting();
 
@@ -129,6 +140,14 @@
             [`${prefixCls}--${theme}`]: theme,
           },
         ];
+      });
+
+      const getLogoWidth = computed(() => {
+        if (!unref(getIsMixMode)) {
+          return {};
+        }
+        const width = unref(getMenuWidth) < 180 ? 180 : unref(getMenuWidth);
+        return { width: `${width}px` };
       });
 
       const getSplitType = computed(() => {
@@ -157,6 +176,8 @@
         getShowNotice,
         getUseLockPage,
         getUseErrorHandle,
+        getLogoWidth,
+        getIsMixSidebar,
       };
     },
   });

@@ -43,10 +43,11 @@ export default defineComponent({
     const {
       getMenuMode,
       getMenuType,
-      getCollapsedShowTitle,
       getMenuTheme,
       getCollapsed,
+      getCollapsedShowTitle,
       getAccordion,
+      getIsHorizontal,
       getIsSidebarType,
     } = useMenuSetting();
     const { getShowLogo } = useRootSetting();
@@ -66,7 +67,12 @@ export default defineComponent({
     const getIsShowLogo = computed(() => unref(getShowLogo) && unref(getIsSidebarType));
 
     const getUseScroll = computed(() => {
-      return unref(getIsSidebarType) || props.splitType === MenuSplitTyeEnum.LEFT;
+      return (
+        !unref(getIsHorizontal) &&
+        (unref(getIsSidebarType) ||
+          props.splitType === MenuSplitTyeEnum.LEFT ||
+          props.splitType === MenuSplitTyeEnum.NONE)
+      );
     });
 
     const getWrapperStyle = computed(
@@ -125,13 +131,13 @@ export default defineComponent({
           beforeClickFn={beforeMenuClickFn}
           isHorizontal={props.isHorizontal}
           type={unref(getMenuType)}
-          mode={unref(getComputedMenuMode)}
           collapsedShowTitle={unref(getCollapsedShowTitle)}
+          showLogo={unref(getIsShowLogo)}
+          mode={unref(getComputedMenuMode)}
           theme={unref(getComputedMenuTheme)}
           items={unref(menusRef)}
           accordion={unref(getAccordion)}
           onMenuClick={handleMenuClick}
-          showLogo={unref(getIsShowLogo)}
         />
       );
     }

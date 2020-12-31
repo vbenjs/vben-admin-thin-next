@@ -90,9 +90,10 @@
       });
 
       const getMenuClass = computed(() => {
+        const align = props.isHorizontal && unref(getSplit) ? 'start' : unref(getTopMenuAlign);
         return [
           prefixCls,
-          `justify-${unref(getTopMenuAlign)}`,
+          `justify-${align}`,
           {
             [`${prefixCls}--hide-title`]: !unref(showTitle),
             [`${prefixCls}--collapsed-show-title`]: props.collapsedShowTitle,
@@ -109,7 +110,7 @@
 
         const inlineCollapseOptions: { inlineCollapsed?: boolean } = {};
         if (isInline) {
-          inlineCollapseOptions.inlineCollapsed = unref(getCollapsed);
+          inlineCollapseOptions.inlineCollapsed = props.mixSider ? false : unref(getCollapsed);
         }
         return inlineCollapseOptions;
       });
@@ -117,16 +118,21 @@
       listenerLastChangeTab((route) => {
         if (route.name === REDIRECT_NAME) return;
         handleMenuChange(route);
-      }, false);
+        const currentActiveMenu = route.meta?.currentActiveMenu;
+        if (currentActiveMenu) {
+          menuState.selectedKeys = [currentActiveMenu];
+          setOpenKeys(currentActiveMenu);
+        }
+      });
 
       watch(
         () => props.items,
         () => {
           handleMenuChange();
-        },
-        {
-          immediate: true,
         }
+        // {
+        //   immediate: true,
+        // }
       );
 
       async function handleMenuClick({ key, keyPath }: { key: string; keyPath: string[] }) {
@@ -148,9 +154,7 @@
           return;
         }
         const path = (route || unref(currentRoute)).path;
-        if (props.mode !== MenuModeEnum.HORIZONTAL) {
-          setOpenKeys(path);
-        }
+        setOpenKeys(path);
         if (props.isHorizontal && unref(getSplit)) {
           const parentPath = await getCurrentParentPath(path);
           menuState.selectedKeys = [parentPath];
