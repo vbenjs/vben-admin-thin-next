@@ -16,6 +16,8 @@ import { propTypes } from '/@/utils/propTypes';
 export const basicProps = {
   clickToRowSelect: propTypes.bool.def(true),
 
+  isTreeTable: propTypes.bool.def(false),
+
   tableSetting: {
     type: Object as PropType<TableSetting>,
   },
@@ -39,6 +41,11 @@ export const basicProps = {
 
   summaryFunc: {
     type: [Function, Array] as PropType<(...arg: any[]) => any[]>,
+    default: null,
+  },
+
+  summaryData: {
+    type: Array as PropType<Recordable[]>,
     default: null,
   },
 
@@ -71,7 +78,7 @@ export const basicProps = {
   emptyDataIsShowTable: propTypes.bool.def(true),
   // 额外的请求参数
   searchInfo: {
-    type: Object as PropType<any>,
+    type: Object as PropType<Recordable>,
     default: null,
   },
   // 使用搜索表单

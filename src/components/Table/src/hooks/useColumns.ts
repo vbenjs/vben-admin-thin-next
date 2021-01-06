@@ -1,6 +1,6 @@
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
-import { unref, ComputedRef, Ref, computed, watchEffect, ref, toRaw } from 'vue';
+import { unref, ComputedRef, Ref, computed, watch, ref, toRaw } from 'vue';
 import { isBoolean, isArray, isString, isObject } from '/@/utils/is';
 import { DEFAULT_ALIGN, PAGE_SIZE, INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG } from '../const';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -43,19 +43,17 @@ function handleIndexColumn(
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
   columns: BasicColumn[]
 ) {
-  const { showIndexColumn, indexColumnProps } = unref(propsRef);
+  const { showIndexColumn, indexColumnProps, isTreeTable } = unref(propsRef);
 
   let pushIndexColumns = false;
-  columns.forEach((item) => {
-    const { children } = item;
-
-    const isTreeTable = children && children.length;
-
+  if (unref(isTreeTable)) {
+    return;
+  }
+  columns.forEach(() => {
     const indIndex = columns.findIndex((column) => column.flag === INDEX_COLUMN_FLAG);
-
-    if (showIndexColumn && !isTreeTable) {
+    if (showIndexColumn) {
       pushIndexColumns = indIndex === -1;
-    } else if (!showIndexColumn && !isTreeTable && indIndex !== -1) {
+    } else if (!showIndexColumn && indIndex !== -1) {
       columns.splice(indIndex, 1);
     }
   });
@@ -119,7 +117,8 @@ export function useColumns(
     }
     const { ellipsis } = unref(propsRef);
 
-    columns.forEach((item) => {
+    const cloneColumns = cloneDeep(columns);
+    cloneColumns.forEach((item) => {
       const { customRender, slots } = item;
 
       handleItem(
@@ -127,13 +126,14 @@ export function useColumns(
         Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots
       );
     });
-    return columns;
+    return cloneColumns;
   });
 
   const getViewColumns = computed(() => {
     const viewColumns = sortFixedColumn(unref(getColumnsRef));
 
-    viewColumns.forEach((column) => {
+    const columns = cloneDeep(viewColumns);
+    columns.forEach((column) => {
       const { slots, dataIndex, customRender, format, edit, editRow, flag } = column;
 
       if (!slots || !slots?.title) {
@@ -153,14 +153,25 @@ export function useColumns(
         column.customRender = renderEditCell(column);
       }
     });
-    return viewColumns;
+    return columns;
   });
 
-  watchEffect(() => {
-    const columns = toRaw(unref(propsRef).columns);
-    columnsRef.value = columns;
-    cacheColumns = columns?.filter((item) => !item.flag) ?? [];
-  });
+  watch(
+    () => unref(propsRef).columns,
+    (columns) => {
+      columnsRef.value = columns;
+      cacheColumns = columns?.filter((item) => !item.flag) ?? [];
+    }
+  );
+
+  // watchEffect(() => {
+  //   const columns = toRaw(unref(propsRef).columns);
+  //   console.log('======================');
+  //   console.log(111);
+  //   console.log('======================');
+  //   columnsRef.value = columns;
+  //   cacheColumns = columns?.filter((item) => !item.flag) ?? [];
+  // });
 
   /**
    * set columns
@@ -185,13 +196,14 @@ export function useColumns(
       const columnKeys = columns as string[];
       const newColumns: BasicColumn[] = [];
       cacheColumns.forEach((item) => {
-        if (columnKeys.includes(`${item.key}`! || item.dataIndex!)) {
+        if (columnKeys.includes(item.dataIndex! || (item.key as string))) {
           newColumns.push({
             ...item,
             defaultHidden: false,
           });
         }
       });
+
       // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
         newColumns.sort((prev, next) => {

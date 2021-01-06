@@ -67,6 +67,12 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
     case HandlerEnum.MENU_FIXED:
       return { menuSetting: { fixed: value } };
 
+    case HandlerEnum.MENU_TRIGGER_MIX_SIDEBAR:
+      return { menuSetting: { mixSideTrigger: value } };
+
+    case HandlerEnum.MENU_FIXED_MIX_SIDEBAR:
+      return { menuSetting: { mixSideFixed: value } };
+
     // ============transition==================
     case HandlerEnum.OPEN_PAGE_LOADING:
       appStore.commitPageLoadingState(false);
@@ -117,8 +123,12 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
 
     case HandlerEnum.TABS_SHOW:
       return { multiTabsSetting: { show: value } };
+
     case HandlerEnum.TABS_SHOW_REDO:
       return { multiTabsSetting: { showRedo: value } };
+
+    case HandlerEnum.TABS_SHOW_FOLD:
+      return { multiTabsSetting: { showFold: value } };
 
     // ============header==================
     case HandlerEnum.HEADER_THEME:

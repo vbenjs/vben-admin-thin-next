@@ -1,13 +1,13 @@
 import type { BasicTableProps, FetchParams, SorterResult } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 
-import { ref, unref, ComputedRef, computed, onMounted, watchEffect, reactive } from 'vue';
+import { ref, unref, ComputedRef, computed, onMounted, watch, reactive } from 'vue';
 
 import { useTimeoutFn } from '/@/hooks/core/useTimeout';
 
 import { buildUUID } from '/@/utils/uuid';
 import { isFunction, isBoolean } from '/@/utils/is';
-import { get } from 'lodash-es';
+import { get, cloneDeep } from 'lodash-es';
 
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
 
@@ -40,10 +40,21 @@ export function useDataSource(
   });
   const dataSourceRef = ref<Recordable[]>([]);
 
-  watchEffect(() => {
-    const { dataSource, api } = unref(propsRef);
-    !api && dataSource && (dataSourceRef.value = dataSource);
-  });
+  // watchEffect(() => {
+  //   const { dataSource, api } = unref(propsRef);
+  //   !api && dataSource && (dataSourceRef.value = dataSource);
+  // });
+
+  watch(
+    () => unref(propsRef).dataSource,
+    () => {
+      const { dataSource, api } = unref(propsRef);
+      !api && dataSource && (dataSourceRef.value = dataSource);
+    },
+    {
+      immediate: true,
+    }
+  );
 
   function handleTableChange(
     pagination: PaginationProps,
@@ -103,7 +114,8 @@ export function useDataSource(
 
       if (firstItem && lastItem) {
         if (!firstItem[ROW_KEY] || !lastItem[ROW_KEY]) {
-          unref(dataSourceRef).forEach((item) => {
+          const data = cloneDeep(unref(dataSourceRef));
+          data.forEach((item) => {
             if (!item[ROW_KEY]) {
               item[ROW_KEY] = buildUUID();
             }
@@ -111,6 +123,7 @@ export function useDataSource(
               setTableKey(item.children);
             }
           });
+          dataSourceRef.value = data;
         }
       }
     }
@@ -150,11 +163,11 @@ export function useDataSource(
         ...pageParams,
         ...(useSearchForm ? getFieldsValue() : {}),
         ...searchInfo,
-        ...(opt ? opt.searchInfo : {}),
-        ...(opt ? opt.sortInfo : {}),
-        ...(opt ? opt.filterInfo : {}),
+        ...(opt?.searchInfo ?? {}),
         ...sortInfo,
         ...filterInfo,
+        ...(opt?.sortInfo ?? {}),
+        ...(opt?.filterInfo ?? {}),
       };
       if (beforeFetch && isFunction(beforeFetch)) {
         params = beforeFetch(params) || params;
@@ -218,7 +231,7 @@ export function useDataSource(
   onMounted(() => {
     useTimeoutFn(() => {
       unref(propsRef).immediate && fetch();
-    }, 0);
+    }, 16);
   });
 
   return {

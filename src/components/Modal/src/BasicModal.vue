@@ -23,9 +23,11 @@
       :fullScreen="fullScreenRef"
       ref="modalWrapperRef"
       :loading="getProps.loading"
+      :minHeight="getProps.minHeight"
+      :height="getProps.height"
       :visible="visibleRef"
       :modalFooterHeight="footer !== undefined && !footer ? 0 : undefined"
-      v-bind="omit(getProps.wrapperProps, 'visible')"
+      v-bind="omit(getProps.wrapperProps, 'visible', 'height')"
       @ext-height="handleExtHeight"
       @height-change="handleHeightChange"
     >
@@ -65,6 +67,7 @@
   import { omit } from 'lodash-es';
   export default defineComponent({
     name: 'BasicModal',
+    inheritAttrs: false,
     components: { Modal, ModalWrapper, ModalClose, ModalFooter, ModalHeader },
     props: basicProps,
     emits: ['visible-change', 'height-change', 'cancel', 'ok', 'register'],
@@ -107,7 +110,6 @@
             visible: unref(visibleRef),
             title: undefined,
           };
-
           return {
             ...opt,
             wrapClassName: unref(getWrapClassName),
