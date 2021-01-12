@@ -33,7 +33,7 @@
           </Checkbox>
 
           <a-button size="small" type="link" @click="reset">
-            {{ t('component.table.settingReset') }}
+            {{ t('common.resetText') }}
           </a-button>
         </div>
       </template>
@@ -326,7 +326,7 @@
         if (isFixed && !item.width) {
           item.width = 100;
         }
-
+        table.setCacheColumnsByField?.(item.dataIndex, { fixed: isFixed });
         table.setColumns(columns);
       }
 

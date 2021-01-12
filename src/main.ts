@@ -3,23 +3,20 @@ import App from './App.vue';
 
 import router, { setupRouter } from '/@/router';
 import { setupStore } from '/@/store';
-import { setupAntd } from '/@/setup/ant-design-vue';
-import { setupErrorHandle } from '/@/setup/error-handle';
+import { setupErrorHandle } from '/@/logics/error-handle';
 import { setupGlobDirectives } from '/@/directives';
-import { setupI18n } from '/@/setup/i18n';
+import { setupI18n } from '/@/locales/setupI18n';
 import { setupProdMockServer } from '../mock/_createProductionServer';
-import { setApp } from '/@/setup/App';
+
+import { registerGlobComp } from '/@/components/registerGlobComp';
 
 import { isDevMode, isProdMode, isUseMock } from '/@/utils/env';
 
 import '/@/design/index.less';
 
-import '/@/locales/index';
-
 const app = createApp(App);
 
-// Configure component library
-setupAntd(app);
+registerGlobComp(app);
 
 // Multilingual configuration
 setupI18n(app);
@@ -51,5 +48,3 @@ if (isDevMode()) {
 if (isProdMode() && isUseMock()) {
   setupProdMockServer();
 }
-// Used to share app instances in other modules
-setApp(app);

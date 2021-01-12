@@ -14,7 +14,11 @@
     </template>
 
     <template #footer v-if="!$slots.footer">
-      <ModalFooter v-bind="getProps" @ok="handleOk" @cancel="handleCancel" />
+      <ModalFooter v-bind="getProps" @ok="handleOk" @cancel="handleCancel">
+        <template #[item]="data" v-for="item in Object.keys($slots)">
+          <slot :name="item" v-bind="data" />
+        </template>
+      </ModalFooter>
     </template>
 
     <ModalWrapper
@@ -123,6 +127,7 @@
 
       watchEffect(() => {
         visibleRef.value = !!props.visible;
+        fullScreenRef.value = !!props.defaultFullscreen;
       });
 
       watch(

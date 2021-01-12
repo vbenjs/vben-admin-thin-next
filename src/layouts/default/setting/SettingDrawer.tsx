@@ -31,7 +31,7 @@ import {
   mixSidebarTriggerOptions,
 } from './enum';
 
-import { HEADER_PRESET_BG_COLOR_LIST, SIDE_BAR_BG_COLOR_LIST } from '/@/settings/colorSetting';
+import { HEADER_PRESET_BG_COLOR_LIST, SIDE_BAR_BG_COLOR_LIST } from '/@/settings/designSetting';
 
 const { t } = useI18n();
 
@@ -389,26 +389,20 @@ export default defineComponent({
         width={330}
         wrapClassName="setting-drawer"
       >
-        {{
-          default: () => (
-            <>
-              <Divider>{() => t('layout.setting.navMode')}</Divider>
-              {renderSidebar()}
-              <Divider>{() => t('layout.setting.headerTheme')}</Divider>
-              {renderHeaderTheme()}
-              <Divider>{() => t('layout.setting.sidebarTheme')}</Divider>
-              {renderSiderTheme()}
-              <Divider>{() => t('layout.setting.interfaceFunction')}</Divider>
-              {renderFeatures()}
-              <Divider>{() => t('layout.setting.interfaceDisplay')}</Divider>
-              {renderContent()}
-              <Divider>{() => t('layout.setting.animation')}</Divider>
-              {renderTransition()}
-              <Divider />
-              <SettingFooter />
-            </>
-          ),
-        }}
+        <Divider>{() => t('layout.setting.navMode')}</Divider>
+        {renderSidebar()}
+        <Divider>{() => t('layout.setting.headerTheme')}</Divider>
+        {renderHeaderTheme()}
+        <Divider>{() => t('layout.setting.sidebarTheme')}</Divider>
+        {renderSiderTheme()}
+        <Divider>{() => t('layout.setting.interfaceFunction')}</Divider>
+        {renderFeatures()}
+        <Divider>{() => t('layout.setting.interfaceDisplay')}</Divider>
+        {renderContent()}
+        <Divider>{() => t('layout.setting.animation')}</Divider>
+        {renderTransition()}
+        <Divider />
+        <SettingFooter />
       </BasicDrawer>
     );
   },

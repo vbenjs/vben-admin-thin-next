@@ -10,10 +10,10 @@
   import { defineComponent } from 'vue';
   import { ConfigProvider } from 'ant-design-vue';
 
-  import { initAppConfigStore } from '/@/setup/App';
+  import { initAppConfigStore } from '/@/logics/initAppConfig';
 
   import { useLockPage } from '/@/hooks/web/useLockPage';
-  import { useLocale } from '/@/hooks/web/useLocale';
+  import { useLocale } from '/@/locales/useLocale';
 
   import { AppProvider } from '/@/components/Application';
 
@@ -21,6 +21,9 @@
     name: 'App',
     components: { ConfigProvider, AppProvider },
     setup() {
+      const { antConfigLocale, setLocale } = useLocale();
+      setLocale();
+
       // Initialize vuex internal system configuration
       initAppConfigStore();
 
@@ -28,7 +31,6 @@
       const lockEvent = useLockPage();
 
       // support Multi-language
-      const { antConfigLocale } = useLocale();
 
       return {
         antConfigLocale,

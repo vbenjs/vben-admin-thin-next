@@ -50,14 +50,16 @@
 
   //
   .ant-table {
+    width: 100%;
+    overflow-x: hidden;
     border: none;
 
     &-title {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 8px 6px;
       border-bottom: none;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .ant-table-thead > tr > th,
@@ -105,7 +107,10 @@
     border: 1px solid @border-color !important;
   }
 
-  .ant-table td {
+  .ant-table-tbody > tr > td,
+  .ant-table-tbody > tr > th,
+  .ant-table-thead > tr > td,
+  .ant-table-thead > tr > th {
     white-space: nowrap;
   }
 

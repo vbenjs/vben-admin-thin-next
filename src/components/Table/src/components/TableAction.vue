@@ -5,7 +5,10 @@
         <Icon :icon="action.icon" class="mr-1" v-if="action.icon" />
         {{ action.label }}
       </PopConfirmButton>
-      <Divider type="vertical" v-if="divider && index < getActions.length" />
+      <Divider
+        type="vertical"
+        v-if="divider && index < getActions.length - (dropDownActions ? 0 : 1)"
+      />
     </template>
     <Dropdown :trigger="['hover']" :dropMenuList="getDropList" v-if="dropDownActions">
       <slot name="more" />
@@ -18,7 +21,7 @@
 <script lang="ts">
   import { defineComponent, PropType, computed } from 'vue';
   import Icon from '/@/components/Icon/index';
-  import { ActionItem } from '/@/components/Table';
+  import { ActionItem, TableActionType } from '/@/components/Table';
   import { PopConfirmButton } from '/@/components/Button';
   import { Divider } from 'ant-design-vue';
   import { Dropdown } from '/@/components/Dropdown';
@@ -40,16 +43,35 @@
         default: null,
       },
       divider: propTypes.bool.def(true),
+      outside: propTypes.bool,
     },
     setup(props) {
       const { prefixCls } = useDesign('basic-table-action');
-      const table = useTableContext();
+      let table: Partial<TableActionType> = {};
+      if (!props.outside) {
+        table = useTableContext();
+      }
+
+      // const getSize = computed(() => {
+      //   const size = table?.getSize?.();
+      //   if (size === 'middle' || !size) {
+      //     return;
+      //   }
+
+      //   if (size === 'default') {
+      //     return 'large';
+      //   }
+      //   return size;
+      // });
+
       const getActions = computed(() => {
         return (props.actions || []).map((action) => {
           const { popConfirm } = action;
+          // const size = unref(getSize);
           return {
             type: 'link',
             size: 'small',
+            // ...(size ? { size } : {}),
             ...action,
             ...(popConfirm || {}),
             onConfirm: popConfirm?.confirm,
@@ -71,7 +93,7 @@
       });
 
       const getAlign = computed(() => {
-        const columns = table.getColumns();
+        const columns = (table as TableActionType)?.getColumns?.() || [];
         const actionColumn = columns.find((item) => item.flag === ACTION_COLUMN_FLAG);
         return actionColumn?.align ?? 'left';
       });
