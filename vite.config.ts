@@ -42,6 +42,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
     build: {
       base: VITE_PUBLIC_PATH,
+      polyfillDynamicImport: VITE_LEGACY,
       terserOptions: {
         compress: {
           keep_infinity: true,
@@ -55,7 +56,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
       commonjsOptions: {
-        ignore: ['fs', 'crypto', 'stream'],
+        ignore: [
+          // xlsx
+          'fs',
+          'crypto',
+          'stream',
+        ],
       },
     },
     define: {
@@ -94,6 +100,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         'ant-design-vue/es/locale/zh_CN',
         'moment/locale/zh-cn',
         'ant-design-vue/es/locale/en_US',
+        'resize-observer-polyfill',
       ],
     },
   };
