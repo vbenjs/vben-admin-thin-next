@@ -29,6 +29,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const isBuild = command === 'build';
 
   return {
+    base: VITE_PUBLIC_PATH,
     root,
     alias: {
       '/@/': `${pathResolve('src')}/`,
@@ -41,27 +42,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     build: {
-      base: VITE_PUBLIC_PATH,
       polyfillDynamicImport: VITE_LEGACY,
       terserOptions: {
         compress: {
           keep_infinity: true,
           drop_console: VITE_DROP_CONSOLE,
         },
-      },
-      // minify: 'esbuild',
-      rollupOptions: {
-        output: {
-          compact: true,
-        },
-      },
-      commonjsOptions: {
-        ignore: [
-          // xlsx
-          'fs',
-          'crypto',
-          'stream',
-        ],
       },
     },
     define: {

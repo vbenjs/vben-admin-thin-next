@@ -4,11 +4,18 @@
 
 - `ApiSelect`新增 `numberToString`属性,用于将 value 为`number`的值全部转化为`string`
 
+### ⚡ Performance Improvements
+
+当不使用 mock 时,将 `mock.js` 移出打包文件
+
 ### 🐛 Bug Fixes
 
 - 修复 modal 高度计算错误
 - 修复菜单折叠状态下点击标签页弹出菜单
 - 修复 form 表单初始化值为 0 问题
+- 修复表格换行问题
+- 修复菜单外链不跳转
+- 修复菜单顶部显示问题
 
 ## 2.0.0-rc.17 (2020-01-18)
 
