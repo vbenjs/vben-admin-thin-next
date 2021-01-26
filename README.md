@@ -16,11 +16,6 @@ Account for test: vben/123456
     <img alt="VbenAdmin Logo" width="100%" src="./.github/res/imgs/preview3.png">
 </p>
 
-### Environmental requirements
-
-- `Node.js`: - 版本最好大于 `12.0.0`
-- # `yarn` > `npm`: - 包管理工具.
-
 ## 修改清单
 
 当你开始使用时，请按下面列表先行修改项目
