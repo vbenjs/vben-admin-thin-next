@@ -102,6 +102,9 @@ export interface TableActionType {
   getCacheColumns: () => BasicColumn[];
   emit?: EmitType;
   updateTableData: (index: number, key: string, value: any) => Recordable;
+  setShowPagination: (show: boolean) => Promise<void>;
+  getShowPagination: () => boolean;
+  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
 }
 
 export interface FetchSetting {
@@ -125,6 +128,7 @@ export interface TableSetting {
 export interface BasicTableProps<T = any> {
   // 点击行选中
   clickToRowSelect?: boolean;
+  isTreeTable?: boolean;
   // 自定义排序方法
   sortFn?: (sortInfo: SorterResult) => any;
   // 排序方法
@@ -140,6 +144,8 @@ export interface BasicTableProps<T = any> {
   autoCreateKey?: boolean;
   // 计算合计行的方法
   summaryFunc?: (...arg: any) => Recordable[];
+  // 自定义合计表格内容
+  summaryData?: Recordable[];
   // 是否显示合计行
   showSummary?: boolean;
   // 是否可拖拽列

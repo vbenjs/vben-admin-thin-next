@@ -16,7 +16,7 @@
     <ScrollContainer
       :style="getScrollContentStyle"
       v-loading="getLoading"
-      :loading-tip="loadingText || t('component.drawer.loadingText')"
+      :loading-tip="loadingText || t('common.loadingText')"
     >
       <slot />
     </ScrollContainer>
@@ -199,7 +199,6 @@
   });
 </script>
 <style lang="less">
-  @import (reference) '../../../design/index.less';
   @header-height: 60px;
   @detail-header-height: 40px;
   @prefix-cls: ~'@{namespace}-basic-drawer';
@@ -219,7 +218,7 @@
     .ant-drawer-body {
       height: calc(100% - @header-height);
       padding: 0;
-      background-color: @background-color-dark;
+      background-color: #fff;
 
       .scrollbar__wrap {
         padding: 16px !important;

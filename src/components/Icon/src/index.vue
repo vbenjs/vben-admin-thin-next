@@ -74,7 +74,7 @@
         }
       );
 
-      // watch(() => props.icon, update, { flush: 'post' });
+      watch(() => props.icon, update, { flush: 'post' });
 
       onMounted(update);
 
@@ -83,8 +83,6 @@
   });
 </script>
 <style lang="less">
-  @import (reference) '../../../design/index.less';
-
   .app-iconify {
     display: inline-block;
     vertical-align: middle;

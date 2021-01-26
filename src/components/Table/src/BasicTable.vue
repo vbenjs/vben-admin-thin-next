@@ -87,6 +87,7 @@
       'row-mouseleave',
       'edit-end',
       'edit-cancel',
+      'edit-row-end',
     ],
     setup(props, { attrs, emit, slots }) {
       const tableElRef = ref<ComponentRef>(null);
@@ -102,7 +103,13 @@
       });
 
       const { getLoading, setLoading } = useLoading(getProps);
-      const { getPaginationInfo, getPagination, setPagination } = usePagination(getProps);
+      const {
+        getPaginationInfo,
+        getPagination,
+        setPagination,
+        setShowPagination,
+        getShowPagination,
+      } = usePagination(getProps);
 
       const {
         getRowSelection,
@@ -136,10 +143,14 @@
         emit
       );
 
-      const { getViewColumns, getColumns, setColumns, getColumnsRef, getCacheColumns } = useColumns(
-        getProps,
-        getPaginationInfo
-      );
+      const {
+        getViewColumns,
+        getColumns,
+        setCacheColumnsByField,
+        setColumns,
+        getColumnsRef,
+        getCacheColumns,
+      } = useColumns(getProps, getPaginationInfo);
 
       const { getScrollRef, redoHeight } = useTableScroll(
         getProps,
@@ -229,6 +240,9 @@
         getCacheColumns,
         emit,
         updateTableData,
+        setShowPagination,
+        getShowPagination,
+        setCacheColumnsByField,
         getSize: () => {
           return unref(getBindValues).size as SizeType;
         },

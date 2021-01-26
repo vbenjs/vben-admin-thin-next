@@ -84,7 +84,6 @@
   } from './components';
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
   export default defineComponent({
     name: 'LayoutHeader',
@@ -143,7 +142,7 @@
       });
 
       const getLogoWidth = computed(() => {
-        if (!unref(getIsMixMode)) {
+        if (!unref(getIsMixMode) || unref(getIsMobile)) {
           return {};
         }
         const width = unref(getMenuWidth) < 180 ? 180 : unref(getMenuWidth);

@@ -18,10 +18,14 @@
         </FormItem>
       </template>
 
-      <FormAction
-        v-bind="{ ...getProps, ...advanceState }"
-        @toggle-advanced="handleToggleAdvanced"
-      />
+      <FormAction v-bind="{ ...getProps, ...advanceState }" @toggle-advanced="handleToggleAdvanced">
+        <template
+          #[item]="data"
+          v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']"
+        >
+          <slot :name="item" v-bind="data" />
+        </template>
+      </FormAction>
       <slot name="formFooter" />
     </Row>
   </Form>
@@ -31,23 +35,14 @@
   import type { AdvanceState } from './types/hooks';
   import type { CSSProperties, Ref, WatchStopHandle } from 'vue';
 
-  import {
-    defineComponent,
-    reactive,
-    ref,
-    computed,
-    unref,
-    onMounted,
-    watch,
-    toRefs,
-    toRaw,
-  } from 'vue';
+  import { defineComponent, reactive, ref, computed, unref, onMounted, watch, toRefs } from 'vue';
   import { Form, Row } from 'ant-design-vue';
   import FormItem from './components/FormItem';
   import FormAction from './components/FormAction.vue';
 
   import { dateItemType } from './helper';
-  import moment from 'moment';
+  import { dateUtil } from '/@/utils/dateUtil';
+
   // import { cloneDeep } from 'lodash-es';
   import { deepMerge } from '/@/utils';
 
@@ -114,11 +109,11 @@
           // handle date type
           if (defaultValue && dateItemType.includes(component)) {
             if (!Array.isArray(defaultValue)) {
-              schema.defaultValue = moment(defaultValue);
+              schema.defaultValue = dateUtil(defaultValue);
             } else {
               const def: moment.Moment[] = [];
               defaultValue.forEach((item) => {
-                def.push(moment(item));
+                def.push(dateUtil(item));
               });
               schema.defaultValue = def;
             }
@@ -253,7 +248,6 @@
   });
 </script>
 <style lang="less">
-  @import (reference) '../../../design/index.less';
   @prefix-cls: ~'@{namespace}-basic-form';
 
   .@{prefix-cls} {

@@ -1,24 +1,26 @@
-import { createMockServer } from 'vite-plugin-mock';
-import type { Plugin } from 'vite';
-import { isDevFn, ViteEnv } from '../../utils';
+import { viteMockServe } from 'vite-plugin-mock';
+import { ViteEnv } from '../../utils';
 
-export function setupMockPlugin(
-  plugins: Plugin[],
-  env: ViteEnv,
-  mode: 'development' | 'production'
-) {
+export function configMockPlugin(env: ViteEnv, isBuild: boolean) {
   const { VITE_USE_MOCK } = env;
 
-  const useMock = isDevFn(mode) && VITE_USE_MOCK;
+  const useLocalMock = !isBuild && VITE_USE_MOCK;
+  const useProdMock = isBuild && VITE_USE_MOCK;
 
-  if (useMock) {
-    const mockPlugin = createMockServer({
+  if (useLocalMock || useProdMock) {
+    const mockPlugin = viteMockServe({
       ignore: /^\_/,
       mockPath: 'mock',
       showTime: true,
-      localEnabled: useMock,
+      localEnabled: useLocalMock,
+      prodEnabled: useProdMock,
+      injectCode: `
+      import { setupProdMockServer } from '../mock/_createProductionServer';
+
+      setupProdMockServer();
+      `,
     });
-    plugins.push(mockPlugin);
+    return mockPlugin;
   }
-  return plugins;
+  return [];
 }

@@ -35,6 +35,7 @@
 
   export default defineComponent({
     name: 'LazyContainer',
+    inheritAttrs: false,
     components: { Skeleton },
     props: {
       // Waiting time, if the time is specified, whether visible or not, it will be automatically loaded after the specified time
@@ -139,7 +140,6 @@
   });
 </script>
 <style lang="less">
-  @import (reference) '../../../design/index.less';
   @prefix-cls: ~'@{namespace}-lazy-container';
 
   .@{prefix-cls} {

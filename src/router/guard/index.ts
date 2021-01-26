@@ -8,14 +8,16 @@ import { createMessageGuard } from './messageGuard';
 import { createScrollGuard } from './scrollGuard';
 import { createHttpGuard } from './httpGuard';
 import { createPageGuard } from './pageGuard';
+import { createStateGuard } from './stateGuard';
 
 export function createGuard(router: Router) {
   createPageGuard(router);
+  createPageLoadingGuard(router);
   createHttpGuard(router);
   createScrollGuard(router);
   createMessageGuard(router);
   createTitleGuard(router);
-  createPageLoadingGuard(router);
   createProgressGuard(router);
   createPermissionGuard(router);
+  createStateGuard(router);
 }

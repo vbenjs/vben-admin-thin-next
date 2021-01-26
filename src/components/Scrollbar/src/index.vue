@@ -18,7 +18,8 @@
 </template>
 <script lang="ts">
   import { addResizeListener, removeResizeListener } from '/@/utils/event/resizeEvent';
-
+  import componentSetting from '/@/settings/componentSetting';
+  const { scrollbar } = componentSetting;
   import { toObject } from './util';
   import {
     defineComponent,
@@ -33,11 +34,12 @@
 
   export default defineComponent({
     name: 'Scrollbar',
+    // inheritAttrs: false,
     components: { Bar },
     props: {
       native: {
         type: Boolean,
-        default: false,
+        default: scrollbar?.native ?? false,
       },
       wrapStyle: {
         type: [String, Array],
@@ -91,12 +93,18 @@
       onMounted(() => {
         if (props.native) return;
         nextTick(update);
-        !props.noresize && addResizeListener(resize.value, update);
+        if (!props.noresize) {
+          addResizeListener(resize.value, update);
+          addResizeListener(wrap.value, update);
+        }
       });
 
       onBeforeUnmount(() => {
         if (props.native) return;
-        !props.noresize && removeResizeListener(resize.value, update);
+        if (!props.noresize) {
+          removeResizeListener(resize.value, update);
+          removeResizeListener(wrap.value, update);
+        }
       });
       const style = computed(() => {
         let style: any = props.wrapStyle;
@@ -127,7 +135,7 @@
 
     &__wrap {
       height: 100%;
-      overflow: scroll;
+      overflow: auto;
 
       &--hidden-default {
         scrollbar-width: none;

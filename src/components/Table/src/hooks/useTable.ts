@@ -3,25 +3,28 @@ import type { PaginationProps } from '../types/pagination';
 import type { DynamicProps } from '/@/types/utils';
 import { getDynamicProps } from '/@/utils';
 
-import { ref, onUnmounted, unref } from 'vue';
+import { ref, onUnmounted, unref, watch } from 'vue';
 import { isProdMode } from '/@/utils/env';
 import { isInSetup } from '/@/utils/helper/vueHelper';
 import { error } from '/@/utils/log';
-import { watchEffect } from 'vue';
 import type { FormActionType } from '/@/components/Form';
 
 type Props = Partial<DynamicProps<BasicTableProps>>;
 
+type UseTableMethod = TableActionType & {
+  getForm: () => FormActionType;
+};
+
 export function useTable(
   tableProps?: Props
-): [(instance: TableActionType, formInstance: FormActionType) => void, TableActionType] {
+): [(instance: TableActionType, formInstance: UseTableMethod) => void, TableActionType] {
   isInSetup();
 
   const tableRef = ref<Nullable<TableActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
-  const formRef = ref<Nullable<FormActionType>>(null);
+  const formRef = ref<Nullable<UseTableMethod>>(null);
 
-  function register(instance: TableActionType, formInstance: FormActionType) {
+  function register(instance: TableActionType, formInstance: UseTableMethod) {
     isProdMode() &&
       onUnmounted(() => {
         tableRef.value = null;
@@ -33,12 +36,19 @@ export function useTable(
     }
     tableRef.value = instance;
     formRef.value = formInstance;
-    // tableProps && instance.setProps(tableProps);
+    tableProps && instance.setProps(getDynamicProps(tableProps));
     loadedRef.value = true;
 
-    watchEffect(() => {
-      tableProps && instance.setProps(getDynamicProps(tableProps));
-    });
+    watch(
+      () => tableProps,
+      () => {
+        tableProps && instance.setProps(getDynamicProps(tableProps));
+      },
+      {
+        immediate: true,
+        deep: true,
+      }
+    );
   }
 
   function getTableInstance(): TableActionType {
@@ -113,7 +123,13 @@ export function useTable(
       return getTableInstance().getCacheColumns();
     },
     getForm: () => {
-      return unref(formRef) as FormActionType;
+      return (unref(formRef) as unknown) as FormActionType;
+    },
+    setShowPagination: async (show: boolean) => {
+      getTableInstance().setShowPagination(show);
+    },
+    getShowPagination: () => {
+      return getTableInstance().getShowPagination();
     },
   };
 

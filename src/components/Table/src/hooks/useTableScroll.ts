@@ -1,6 +1,6 @@
 import type { BasicTableProps, TableRowSelection } from '../types/table';
 import type { Ref, ComputedRef } from 'vue';
-import { computed, unref, ref, nextTick, watchEffect } from 'vue';
+import { computed, unref, ref, nextTick, watch } from 'vue';
 
 import { getViewportOffset } from '/@/utils/domUtils';
 import { isBoolean } from '/@/utils/is';
@@ -28,9 +28,15 @@ export function useTableScroll(
     return canResize && !(scroll || {}).y;
   });
 
-  watchEffect(() => {
-    unref(getCanResize) && debounceRedoHeight();
-  });
+  watch(
+    () => unref(getCanResize),
+    () => {
+      debounceRedoHeight();
+    },
+    {
+      immediate: true,
+    }
+  );
 
   function redoHeight() {
     if (unref(getCanResize)) {
@@ -121,11 +127,10 @@ export function useTableScroll(
       width += 60;
     }
 
-    // TODO propsdth ?? 0;
+    // TODO props ?? 0;
     const NORMAL_WIDTH = 150;
 
-    const columns = unref(columnsRef);
-
+    const columns = unref(columnsRef).filter((item) => !item.defaultHidden);
     columns.forEach((item) => {
       width += Number.parseInt(item.width as string) || 0;
     });
@@ -138,13 +143,12 @@ export function useTableScroll(
 
     const table = unref(tableElRef);
     const tableWidth = table?.$el?.offsetWidth ?? 0;
-    return tableWidth > width ? tableWidth - 24 : width;
+    return tableWidth > width ? '100%' : width;
   });
 
   const getScrollRef = computed(() => {
     const tableHeight = unref(tableHeightRef);
     const { canResize, scroll } = unref(propsRef);
-
     return {
       x: unref(getScrollX),
       y: canResize ? tableHeight : null,

@@ -108,10 +108,8 @@ const transform: AxiosTransform = {
     const params = config.params || {};
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
-        config.data = {
-          // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
-          params: Object.assign(params || {}, createNow(joinTime, false)),
-        };
+        // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
+        config.params = Object.assign(params || {}, createNow(joinTime, false));
       } else {
         // 兼容restful风格
         config.url = config.url + params + `${createNow(joinTime, true)}`;
@@ -154,8 +152,8 @@ const transform: AxiosTransform = {
     const { t } = useI18n();
     errorStore.setupErrorHandle(error);
     const { response, code, message } = error || {};
-    const msg: string = response?.data?.error ? response.data.error.message : '';
-    const err: string = error?.toString();
+    const msg: string = response?.data?.error?.message ?? '';
+    const err: string = error?.toString?.() ?? '';
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
         createMessage.error(t('sys.api.apiTimeoutMessage'));

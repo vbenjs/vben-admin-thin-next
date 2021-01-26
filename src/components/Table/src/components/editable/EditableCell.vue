@@ -31,7 +31,7 @@
   import type { CSSProperties, PropType } from 'vue';
   import type { BasicColumn } from '../../types/table';
 
-  import { defineComponent, ref, unref, nextTick, computed, watchEffect, toRaw } from 'vue';
+  import { defineComponent, ref, unref, nextTick, computed, watchEffect } from 'vue';
   import { FormOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons-vue';
 
   import { useDesign } from '/@/hooks/web/useDesign';
@@ -84,6 +84,18 @@
       const getRuleVisible = computed(() => {
         return unref(ruleMessage) && unref(ruleVisible);
       });
+
+      // const getSize = computed(() => {
+      //   const size = table?.getSize?.();
+      //   if (size === 'middle' || !size) {
+      //     return;
+      //   }
+
+      //   if (size === 'default') {
+      //     return 'large';
+      //   }
+      //   return size;
+      // });
 
       const getIsCheckComp = computed(() => {
         const component = unref(getComponent);
@@ -210,7 +222,7 @@
         return true;
       }
 
-      async function handleSubmit() {
+      async function handleSubmit(needEmit = true) {
         const isPass = await handleSubmiRule();
         if (!isPass) return false;
         const { column, index } = props;
@@ -220,7 +232,7 @@
         const dataKey = (dataIndex || key) as string;
 
         const record = await table.updateTableData(index, dataKey, unref(getValues));
-        table.emit?.('edit-end', { record, index, key, value: unref(currentValueRef) });
+        needEmit && table.emit?.('edit-end', { record, index, key, value: unref(currentValueRef) });
         isEdit.value = false;
       }
 
@@ -250,7 +262,7 @@
         if (props.record) {
           /* eslint-disable  */
           isArray(props.record[cbs])
-            ? props.record[cbs].push(handle)
+            ? props.record[cbs]?.push(handle)
             : (props.record[cbs] = [handle]);
         }
       }
@@ -267,14 +279,15 @@
         /* eslint-disable */
         props.record.onSubmitEdit = async () => {
           if (isArray(props.record?.submitCbs)) {
-            const validFns = props.record?.validCbs || [];
+            const validFns = (props.record?.validCbs || []).map((fn) => fn());
 
-            const res = await Promise.all(validFns.map((fn) => fn()));
+            const res = await Promise.all(validFns);
             const pass = res.every((item) => !!item);
 
             if (!pass) return;
             const submitFns = props.record?.submitCbs || [];
-            submitFns.forEach((fn) => fn());
+            submitFns.forEach((fn) => fn(false));
+            table.emit?.('edit-row-end');
             return true;
           }
           // isArray(props.record?.submitCbs) && props.record?.submitCbs.forEach((fn) => fn());
@@ -299,6 +312,7 @@
         handleOptionsChange,
         getWrapperStyle,
         getRowEditable,
+        // getSize,
       };
     },
   });

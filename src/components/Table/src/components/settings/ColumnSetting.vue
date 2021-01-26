@@ -33,7 +33,7 @@
           </Checkbox>
 
           <a-button size="small" type="link" @click="reset">
-            {{ t('component.table.settingReset') }}
+            {{ t('common.resetText') }}
           </a-button>
         </div>
       </template>
@@ -211,18 +211,17 @@
           cachePlainOptions.value = columns;
           state.defaultCheckList = checkList;
         } else {
-          const fixedColumns = columns.filter((item) =>
-            Reflect.has(item, 'fixed')
-          ) as BasicColumn[];
+          // const fixedColumns = columns.filter((item) =>
+          //   Reflect.has(item, 'fixed')
+          // ) as BasicColumn[];
 
           unref(plainOptions).forEach((item: BasicColumn) => {
-            const findItem = fixedColumns.find((fCol) => fCol.dataIndex === item.dataIndex);
+            const findItem = columns.find((col: BasicColumn) => col.dataIndex === item.dataIndex);
             if (findItem) {
               item.fixed = findItem.fixed;
             }
           });
         }
-
         state.checkedList = checkList;
       }
 
@@ -327,7 +326,7 @@
         if (isFixed && !item.width) {
           item.width = 100;
         }
-
+        table.setCacheColumnsByField?.(item.dataIndex, { fixed: isFixed });
         table.setColumns(columns);
       }
 
@@ -422,7 +421,7 @@
         // flex-wrap: wrap;
       }
 
-      .scroll-container {
+      .scrollbar {
         height: 220px;
       }
     }

@@ -1,3 +1,51 @@
+## 2.0.0-rc.17 (2020-01-18)
+
+### ✨ Refactor
+
+- Added `SimpleMenu` component to replace the left menu component (the top menu is not replaced, the function should be as simple as possible without stuck). Solve the menu stuck problem.
+- The `ant-design-vue` component is no longer registered globally. In order to better coordinate with the introduction of css on demand. If you need to register globally, you need to add it yourself
+
+### ✨ Features
+
+- `css` import on demand
+
+### 🐛 Bug Fixes
+
+- Fix `TableAction` icon problem
+- Fix the problem of missing menu folding buttons
+- Fix menu related issues
+- Fix moment multilingual issue
+
+## 2.0.0-rc.16 (2020-01-12)
+
+### ✨ Refactor
+
+- Independent component configuration to `/@/settings/componentsSetting`
+- `colorSetting` and `designSetting` are now merged into `designSetting`
+- `ant-design-vue` component registration moved to `components/registerComponent`
+- Remove the `setup` folder
+- Upgrade to `vite2`
+- Image preview is changed to `Image` component implementation, temporarily removing functional usage
+
+### ✨ Features
+
+- Added `mixSideTrigger` configuration. Used to configure how to open the mixed mode menu on the left. Optional `hover`, default `click`
+- Added `mixSideFixed` configuration. Used to fix the left mixed mode menu
+- Added `height` and `min-height` properties to the modal component
+- Added `PageWrapper` component. And applied to the sample page
+- Added tab folding function
+- Compatible with older browsers
+- tinymce new image upload
+
+### 🐛 Bug Fixes
+
+- Fix known issues with table column configuration
+- Restore the `isTreeTable` property of the table
+- Fix table memory overflow problem
+- Fix the function of `layout` shrinking and expanding in split mode
+- Fix modal height calculation error
+- Fix file upload error
+
 ## 2.0.0-rc.15 (2020-12-31)
 
 ### ✨ Table destructive update
