@@ -29,7 +29,7 @@ Account for test: vben/123456
 
 ## 注意
 
-依赖删除了`echarts`,`apexcharts`,`zxcvbn`,`qrcode`,`xlsx`,`vditor`。但是组件及代码未删除。在你未引用到相关组件的时候，不会发出错误。当你需要使用的时候，只需要执行相应的命令安装对应模块即可
+依赖删除了`echarts@4.9.0`,`apexcharts`,`zxcvbn`,`qrcode`,`xlsx`,`vditor`。但是组件及代码未删除。在你未引用到相关组件的时候，不会发出错误。当你需要使用的时候，只需要执行相应的命令安装对应模块即可
 
 需要用到哪个则执行对应命令
 
