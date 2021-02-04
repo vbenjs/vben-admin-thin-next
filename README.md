@@ -16,7 +16,16 @@ Account for test: vben/123456
     <img alt="VbenAdmin Logo" width="100%" src="./.github/res/imgs/preview3.png">
 </p>
 
-## 修改清单
+## Documentation
+
+The documentation for 2.0 hasn't started yet, it will be provided later.
+
+## Preinstallation
+
+### Environmental requirements
+
+- `Node.js`: - Version > `12.0.0` .
+- `yarn` : - Package management tool.
 
 当你开始使用时，请按下面列表先行修改项目
 
