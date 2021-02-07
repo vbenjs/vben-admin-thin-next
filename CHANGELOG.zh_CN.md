@@ -1,11 +1,16 @@
 ## Wip
 
+### ✨ Features
+
+- useModal 新增返回值函数 `redoModalHeight`,用于在 modal 内为动态内容时刷新 modal 高度
+
 ### 🐛 Bug Fixes
 
-- 修复菜单在 hmr 时数据被置空
 - 修复 Upload 组件 maxNumber 失效问题
 - 修复打包 sourcemap 报错
+- 修复代码 debugger 位置显示错误
 - 修复 mock 插件 post 请求错误问题
+- 修复部分主题颜色值错误
 
 ### 🎫 Chores
 
