@@ -1,17 +1,13 @@
 import type { UserConfig, ConfigEnv } from 'vite';
-import { resolve } from 'path';
-import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
-import legacy from '@vitejs/plugin-legacy';
 
 import { loadEnv } from 'vite';
+import { resolve } from 'path';
 
 import { generateModifyVars } from './build/config/themeConfig';
 import { createProxy } from './build/vite/proxy';
-
 import { wrapperEnv } from './build/utils';
-
 import { createVitePlugins } from './build/vite/plugin';
+import { OUTPUT_DIR } from './build/constant';
 
 const pkg = require('./package.json');
 
@@ -19,11 +15,14 @@ function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir);
 }
 
-const root: string = process.cwd();
-
 export default ({ command, mode }: ConfigEnv): UserConfig => {
+  const root = process.cwd();
+
   const env = loadEnv(mode, root);
+
+  // The boolean type read by loadEnv is a string. This function can be converted to boolean type
   const viteEnv = wrapperEnv(env);
+
   const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE, VITE_LEGACY } = viteEnv;
 
   const isBuild = command === 'build';
@@ -31,14 +30,18 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   return {
     base: VITE_PUBLIC_PATH,
     root,
-    alias: [
-      {
-        find: /^\/@\//,
-        replacement: pathResolve('src') + '/',
-      },
-    ],
+    resolve: {
+      alias: [
+        {
+          // /@/xxxx  =>  src/xxx
+          find: /^\/@\//,
+          replacement: pathResolve('src') + '/',
+        },
+      ],
+    },
     server: {
       port: VITE_PORT,
+      // Load proxy configuration from .env
       proxy: createProxy(VITE_PROXY),
       hmr: {
         overlay: true,
@@ -46,13 +49,16 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
 
     build: {
+      outDir: OUTPUT_DIR,
       polyfillDynamicImport: VITE_LEGACY,
       terserOptions: {
         compress: {
           keep_infinity: true,
+          // Used to delete console in production environment
           drop_console: VITE_DROP_CONSOLE,
         },
       },
+      // Turning off brotliSize display can slightly reduce packaging time
       brotliSize: false,
       chunkSizeWarningLimit: 1200,
     },
@@ -68,6 +74,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       preprocessorOptions: {
         less: {
           modifyVars: {
+            // Used for global import to avoid the need to import each style file separately
             // reference:  Avoid repeated references
             hack: `true; @import (reference) "${resolve('src/design/config.less')}";`,
             ...generateModifyVars(),
@@ -77,15 +84,13 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
 
-    plugins: [
-      vue(),
-      vueJsx(),
-      ...(VITE_LEGACY && isBuild ? [legacy()] : []),
-      ...createVitePlugins(viteEnv, isBuild),
-    ],
+    // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
+    plugins: createVitePlugins(viteEnv, isBuild),
 
     optimizeDeps: {
+      // @iconify/iconify: The dependency is dynamically and virtually loaded by @purge-icons/generated, so it needs to be specified explicitly
       include: ['@iconify/iconify'],
+      exclude: ['vue-demi'],
     },
   };
 };

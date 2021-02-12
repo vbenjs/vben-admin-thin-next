@@ -3,6 +3,8 @@
 ### ✨ Features
 
 - useModal 新增返回值函数 `redoModalHeight`,用于在 modal 内为动态内容时刷新 modal 高度
+- 升级 husky 到 5.0
+- 新增 `brotli`|`gzip`压缩及相关测试命令
 
 ### 🐛 Bug Fixes
 
@@ -11,6 +13,7 @@
 - 修复代码 debugger 位置显示错误
 - 修复 mock 插件 post 请求错误问题
 - 修复部分主题颜色值错误
+- 修复表格在可编辑行状态回车确认
 
 ### 🎫 Chores
 
