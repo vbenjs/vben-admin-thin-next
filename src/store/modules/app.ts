@@ -1,4 +1,4 @@
-import type { ProjectConfig } from '/@/types/config';
+import type { ProjectConfig } from '/#/config';
 
 import { VuexModule, getModule, Module, Mutation, Action } from 'vuex-module-decorators';
 import store from '/@/store';
@@ -6,7 +6,7 @@ import store from '/@/store';
 import { PROJ_CFG_KEY } from '/@/enums/cacheEnum';
 
 import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
-import { setLocal, getLocal, clearSession, clearLocal } from '/@/utils/helper/persistent';
+import { setLocal, getLocal, clearSession, clearLocal } from '/@/utils/cache/persistent';
 import { deepMerge } from '/@/utils';
 
 import { resetRouter } from '/@/router';
@@ -24,7 +24,7 @@ let timeId: TimeoutHandle;
 const NAME = 'app';
 hotModuleUnregisterModule(NAME);
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
-class App extends VuexModule {
+export default class App extends VuexModule {
   // Page loading status
   private pageLoadingState = false;
 

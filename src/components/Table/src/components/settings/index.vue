@@ -2,9 +2,7 @@
   <div class="table-settings">
     <RedoSetting v-if="getSetting.size" />
     <SizeSetting v-if="getSetting.redo" />
-
     <ColumnSetting v-if="getSetting.setting" />
-
     <FullScreenSetting v-if="getSetting.fullScreen" />
   </div>
 </template>
@@ -37,7 +35,7 @@
             redo: true,
             size: true,
             setting: true,
-            fullScreen: true,
+            fullScreen: false,
             ...props.setting,
           };
         }
