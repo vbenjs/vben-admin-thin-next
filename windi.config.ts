@@ -9,15 +9,14 @@ export default defineConfig({
   theme: {
     extend: {
       colors,
+      screens: {
+        sm: '576px',
+        md: '768px',
+        lg: '992px',
+        xl: '1200px',
+        '2xl': '1600px',
+      },
     },
-
-    // screen: {
-    //   sm: '576px',
-    //   md: '768px',
-    //   lg: '992px',
-    //   xl: '1200px',
-    //   '2xl': '1600px',
-    // },
   },
 });
 
@@ -45,14 +44,15 @@ function createEnterPlugin(maxOutput = 10) {
     };
   };
   const handler = ({ addBase }) => {
+    const addRawCss = {};
     for (let index = 1; index < maxOutput; index++) {
-      addBase({
+      Object.assign(addRawCss, {
         ...createCss(index, 'x'),
         ...createCss(index, 'y'),
       });
     }
-
     addBase({
+      ...addRawCss,
       [`@keyframes enter-x-animation`]: {
         to: {
           opacity: '1',

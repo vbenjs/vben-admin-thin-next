@@ -1,7 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router';
 import { RoleEnum } from '/@/enums/roleEnum';
 
-import type { Component } from '/@/components/types';
+import { defineComponent } from 'vue';
+
+export type Component<T extends any = any> =
+  | ReturnType<typeof defineComponent>
+  | (() => Promise<typeof import('*.vue')>)
+  | (() => Promise<T>);
 
 export interface RouteMeta {
   // title
@@ -83,13 +88,6 @@ export interface MenuModule {
   orderNo?: number;
   menu: Menu;
 }
-
-// interface RouteModule {
-//   layout: AppRouteRecordRaw;
-//   routes: AppRouteRecordRaw[];
-//   children?: AppRouteRecordRaw[];
-//   component?: Component;
-// }
 
 // export type AppRouteModule = RouteModule | AppRouteRecordRaw;
 export type AppRouteModule = AppRouteRecordRaw;

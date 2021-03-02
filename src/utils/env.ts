@@ -1,4 +1,7 @@
-import type { GlobEnvConfig } from '/@/types/config';
+import type { GlobEnvConfig } from '/#/config';
+
+import { useGlobSetting } from '/@/hooks/setting';
+import pkg from '../../package.json';
 
 /**
  * Get the global configuration (the configuration will be extracted independently when packaging)
@@ -6,6 +9,12 @@ import type { GlobEnvConfig } from '/@/types/config';
 export function getGlobEnvConfig(): GlobEnvConfig {
   const env = import.meta.env;
   return (env as unknown) as GlobEnvConfig;
+}
+
+// Generate cache key according to version
+export function getStorageShortName() {
+  const globSetting = useGlobSetting();
+  return `${globSetting.shortName}__${getEnv()}${`__${pkg.version}`}__`.toUpperCase();
 }
 
 /**

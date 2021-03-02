@@ -17,10 +17,9 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-  return defHttp.request<LoginResultModel>(
+  return defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
-      method: 'POST',
       params,
     },
     {
@@ -33,17 +32,15 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
  * @description: getUserInfoById
  */
 export function getUserInfoById(params: GetUserInfoByUserIdParams) {
-  return defHttp.request<GetUserInfoByUserIdModel>({
+  return defHttp.get<GetUserInfoByUserIdModel>({
     url: Api.GetUserInfoById,
-    method: 'GET',
     params,
   });
 }
 
 export function getPermCodeByUserId(params: GetUserInfoByUserIdParams) {
-  return defHttp.request<string[]>({
+  return defHttp.get<string[]>({
     url: Api.GetPermCodeByUserId,
-    method: 'GET',
     params,
   });
 }

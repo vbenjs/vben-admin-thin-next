@@ -1,3 +1,24 @@
+## Wip
+
+### ✨ Features
+
+- axios 支持 form-data 格式请求
+
+### ⚡ Performance Improvements
+
+- 登录界面动画优化
+- 修复 github 仓库体积过大问题.
+- 默认隐藏表格全屏按钮
+- `crypto-es`改为`crypto-js`，减小打包体积
+- `types`目录移动到根目录,兼容其他目录全局类型
+
+### 🐛 Bug Fixes
+
+- 修复验证码组件警告问题
+- 修复表格不能正确的获取选中行
+- 修复全屏状态下 modal 高度计算错误
+- 修复部分表格样式问题
+
 ## 2.0.1 (2021-02-21)
 
 ### ✨ Refactor
