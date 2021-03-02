@@ -18,28 +18,27 @@ import router from '/@/router';
 
 import { loginApi, getUserInfoById } from '/@/api/sys/user';
 
-import { setLocal, getLocal, getSession, setSession } from '/@/utils/cache/persistent';
-import { useProjectSetting } from '/@/hooks/setting';
+import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
+import projectSetting from '/@/settings/projectSetting';
 
 export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
-const NAME = 'user';
+const { permissionCacheType } = projectSetting;
+const isLocal = permissionCacheType === CacheTypeEnum.LOCAL;
+
+const NAME = 'app-user';
 hotModuleUnregisterModule(NAME);
 
-const { permissionCacheType } = useProjectSetting();
-
-function getCache<T>(key: string) {
-  const fn = permissionCacheType === CacheTypeEnum.LOCAL ? getLocal : getSession;
+function getCache<T>(key: BasicKeys) {
+  const fn = isLocal ? Persistent.getLocal : Persistent.getSession;
   return fn(key) as T;
 }
 
-function setCache(USER_INFO_KEY: string, info: any) {
-  if (!info) return;
-  setLocal(USER_INFO_KEY, info, true);
-  // TODO
-  setSession(USER_INFO_KEY, info, true);
+function setCache(key: BasicKeys, value) {
+  const fn = isLocal ? Persistent.setLocal : Persistent.setSession;
+  return fn(key, value);
 }
 
 @Module({ namespaced: true, name: NAME, dynamic: true, store })

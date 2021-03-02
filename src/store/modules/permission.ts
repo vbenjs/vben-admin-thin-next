@@ -22,7 +22,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 
 const { createMessage } = useMessage();
-const NAME = 'permission';
+const NAME = 'app-permission';
 hotModuleUnregisterModule(NAME);
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
 class Permission extends VuexModule {
@@ -88,7 +88,7 @@ class Permission extends VuexModule {
     let routes: AppRouteRecordRaw[] = [];
     const roleList = toRaw(userStore.getRoleListState);
 
-    const { permissionMode } = appStore.getProjectConfig;
+    const { permissionMode = PermissionModeEnum.ROLE } = appStore.getProjectConfig;
 
     // role permissions
     if (permissionMode === PermissionModeEnum.ROLE) {

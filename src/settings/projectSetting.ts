@@ -1,5 +1,4 @@
 import type { ProjectConfig } from '/#/config';
-
 import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '/@/enums/menuEnum';
 import { CacheTypeEnum } from '/@/enums/cacheEnum';
 import {
@@ -23,11 +22,11 @@ const setting: ProjectConfig = {
   permissionMode: PermissionModeEnum.ROLE,
 
   // Permission-related cache is stored in sessionStorage or localStorage
-  permissionCacheType: CacheTypeEnum.LOCAL,
+  permissionCacheType: CacheTypeEnum.SESSION,
 
   // color
-  // TODO Theme color
   themeColor: primaryColor,
+
   // TODO dark theme
   themeMode: themeMode,
 
@@ -48,17 +47,6 @@ const setting: ProjectConfig = {
 
   // Whether to show footer
   showFooter: false,
-
-  // locale setting
-  locale: {
-    show: true,
-    // Locale
-    lang: 'zh_CN',
-    // Default locale
-    fallback: 'zh_CN',
-    // available Locales
-    availableLocales: ['zh_CN', 'en'],
-  },
 
   // Header configuration
   headerSetting: {
