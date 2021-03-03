@@ -1,8 +1,18 @@
 ## Wip
 
+### ✨ Refactor
+
+- 重构多语言模块,支持懒加载及远程加载
+
 ### ✨ Features
 
 - axios 支持 form-data 格式请求
+- 新增图标选择器组件(支持本地和在线方式)
+- 新增修改密码界面
+- 新增部门管理示例界面
+- 新增 WebSocket 示例和服务脚本
+- BasicTree 组件新增 `renderIcon` 属性用于控制层级图标显示
+- BasicTree->actionItem 新增 show 属性，用于动态控制按钮显示
 
 ### ⚡ Performance Improvements
 

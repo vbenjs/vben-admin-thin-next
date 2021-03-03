@@ -16,6 +16,7 @@
   import Iconify from '@purge-icons/generated';
   import { isString } from '/@/utils/is';
   import { propTypes } from '/@/utils/propTypes';
+
   export default defineComponent({
     name: 'GIcon',
     props: {
@@ -45,7 +46,6 @@
           const icon = unref(getIconRef);
           if (!icon) return;
           const svg = Iconify.renderSVG(icon, {});
-
           if (svg) {
             el.textContent = '';
             el.appendChild(svg);
