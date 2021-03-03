@@ -1,6 +1,6 @@
 {
   "name": "vben-admin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "scripts": {
     "bootstrap": "yarn install",
     "serve": "vite",
@@ -29,7 +29,7 @@
   "dependencies": {
     "@iconify/iconify": "^2.0.0-rc.6",
     "@vueuse/core": "^4.3.1",
-    "@zxcvbn-ts/core": "^0.2.0",
+    "@zxcvbn-ts/core": "^0.3.0",
     "ant-design-vue": "2.0.1",
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
-    "@iconify/json": "^1.1.310",
+    "@iconify/json": "^1.1.311",
     "@ls-lint/ls-lint": "^1.9.2",
     "@purge-icons/generated": "^0.7.0",
     "@types/crypto-js": "^4.0.1",
@@ -107,7 +107,7 @@
     "vite-plugin-pwa": "^0.5.6",
     "vite-plugin-style-import": "^0.7.6",
     "vite-plugin-theme": "^0.4.8",
-    "vite-plugin-windicss": "0.6.2",
+    "vite-plugin-windicss": "0.6.4",
     "vue-eslint-parser": "^7.6.0",
     "yargs": "^16.2.0"
   },

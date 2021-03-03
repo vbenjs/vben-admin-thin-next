@@ -1,4 +1,4 @@
-## Wip
+## 2.0.1 (2021-03-04)
 
 ### ✨ Refactor
 
@@ -8,11 +8,11 @@
 
 - axios 支持 form-data 格式请求
 - 新增图标选择器组件(支持本地和在线方式)
-- 新增修改密码界面
-- 新增部门管理示例界面
 - 新增 WebSocket 示例和服务脚本
-- BasicTree 组件新增 `renderIcon` 属性用于控制层级图标显示
-- BasicTree->actionItem 新增 show 属性，用于动态控制按钮显示
+- Tree 组件新增 `renderIcon` 属性用于控制层级图标显示
+- Tree->actionItem 新增 show 属性，用于动态控制按钮显示
+- Tree 新增工具栏/title/搜索功能
+- 新增部门管理/修改密码/账号管理/角色管理/菜单管理示例界面
 
 ### ⚡ Performance Improvements
 
@@ -28,6 +28,7 @@
 - 修复表格不能正确的获取选中行
 - 修复全屏状态下 modal 高度计算错误
 - 修复部分表格样式问题
+- 修复树形表格 `indentSize`设置失效
 
 ## 2.0.1 (2021-02-21)
 
