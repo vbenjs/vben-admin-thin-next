@@ -38,6 +38,7 @@
   export default defineComponent({
     name: 'PageWrapper',
     components: { PageFooter, PageHeader },
+    inheritAttrs: false,
     props: {
       dense: propTypes.bool,
       ghost: propTypes.bool,

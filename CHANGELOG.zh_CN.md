@@ -1,4 +1,24 @@
-## 2.0.1 (2021-03-04)
+## Wip
+
+### ✨ Features
+
+- `BasicTree` 新增`clickRowToExpand`,用于单击树节点展开
+
+### ⚡ Performance Improvements
+
+- 表格关闭分页时不再携带分页参数
+- 登录页监听回车事件进行登录
+
+### 🐛 Bug Fixes
+
+- 修复`Description`已知问题
+- 修复`BasicForm`已知问题
+- 修复`BasicTree`下 ActionItem 的 show 属性逻辑问题
+- 修复树组件 demo 示例样式错误
+- 修复账号管理新增未清空旧数据
+- form 组件应允许 setFieldsValue 方法值为 null 或者 undefined
+
+## 2.0.2 (2021-03-04)
 
 ### ✨ Refactor
 

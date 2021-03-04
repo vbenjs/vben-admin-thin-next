@@ -88,6 +88,7 @@
     "is-ci": "^3.0.0",
     "less": "^4.1.1",
     "lint-staged": "^10.5.4",
+    "postcss": "^8.2.7",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "rimraf": "^3.0.2",
@@ -107,13 +108,15 @@
     "vite-plugin-pwa": "^0.5.6",
     "vite-plugin-style-import": "^0.7.6",
     "vite-plugin-theme": "^0.4.8",
-    "vite-plugin-windicss": "0.6.4",
+    "vite-plugin-windicss": "0.6.5",
     "vue-eslint-parser": "^7.6.0",
     "yargs": "^16.2.0"
   },
   "resolutions": {
     "//": "Used to install imagemin dependencies, because imagemin may not be installed in China.If it is abroad, you can delete it",
-    "bin-wrapper": "npm:bin-wrapper-china"
+    "bin-wrapper": "npm:bin-wrapper-china",
+    "esbuild": "0.8.55",
+    "rollup": "2.40.0"
   },
   "repository": {
     "type": "git",
