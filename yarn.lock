@@ -1117,10 +1117,10 @@
   dependencies:
     cross-fetch "^3.0.6"
 
-"@iconify/json@^1.1.312":
-  version "1.1.312"
-  resolved "https://registry.npmjs.org/@iconify/json/-/json-1.1.312.tgz#d8e92f31acfb326dcbfa4daea2d4ba885423c186"
-  integrity sha512-bYgaMaNB17MkLL1UgRRD6fv9Vp80kny7KA4SVMxonBEsVtZ+53dCK0R7RccrC45X1mspG8MejUaEw/AaEmWHZQ==
+"@iconify/json@^1.1.313":
+  version "1.1.313"
+  resolved "https://registry.npmjs.org/@iconify/json/-/json-1.1.313.tgz#c225be3c5ce3280a2c34e753a65dc257b85b6652"
+  integrity sha512-gv00rSX4apKE0i/fUjXp5+sBb8LHzzdJqrXkBNVby7Nl7yzRqeQ/EyY+7ixtSpEu3f1P/co/vrgdbZN6wlw6DA==
 
 "@intlify/core-base@9.0.0":
   version "9.0.0"
@@ -1785,16 +1785,16 @@
   dependencies:
     vue-demi latest
 
-"@windicss/plugin-utils@0.6.11":
-  version "0.6.11"
-  resolved "https://registry.npmjs.org/@windicss/plugin-utils/-/plugin-utils-0.6.11.tgz#9d2a2f5ba3170700ad4b223435b8796cff934167"
-  integrity sha512-UBPe1yb4ZzGjISjbHV+e9/sj3+bvK2Bb+Mcn18qSW4mUfPnTY+tXBV7yvoaYILgZat9BOppHrRk9dwrI2DJD3w==
+"@windicss/plugin-utils@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.npmjs.org/@windicss/plugin-utils/-/plugin-utils-0.7.1.tgz#001ba282b78a9d4e110e531d59309d2b9cb0929e"
+  integrity sha512-ZloIRRKCnArFyDNuhZiFRA15XqhlWaeTcOf3soP9VxWJ+i6/IkH6cnaYgBefDATA/zJodOPsXBnbX333zKVk1Q==
   dependencies:
-    esbuild "^0.8.56"
+    esbuild "^0.8.57"
     esbuild-register "^2.2.0"
     fast-glob "^3.2.5"
     micromatch "^4.0.2"
-    windicss "^2.2.6"
+    windicss "^2.3.0"
 
 "@zxcvbn-ts/core@^0.3.0":
   version "0.3.0"
@@ -3641,10 +3641,10 @@ esbuild-register@^2.2.0:
   dependencies:
     jsonc-parser "^3.0.0"
 
-esbuild@0.8.56, esbuild@^0.8.52, esbuild@^0.8.54, esbuild@^0.8.56:
-  version "0.8.56"
-  resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.8.56.tgz#9c7c3d6e614db7367afa348adb0ab287c296735e"
-  integrity sha512-PTMdAWK3JI2MNW811znGssGP5GR44tQPr++VQ1rPP0n8Z1cTKbCPD3S/kXPLr3ZZDIwAaVm08fuFym6Rp8l/0A==
+esbuild@0.8.57, esbuild@^0.8.52, esbuild@^0.8.54, esbuild@^0.8.56, esbuild@^0.8.57:
+  version "0.8.57"
+  resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.8.57.tgz#a42d02bc2b57c70bcd0ef897fe244766bb6dd926"
+  integrity sha512-j02SFrUwFTRUqiY0Kjplwjm1psuzO1d6AjaXKuOR9hrY0HuPsT6sV42B6myW34h1q4CRy+Y3g4RU/cGJeI/nNA==
 
 escalade@^3.1.1:
   version "3.1.1"
@@ -9032,13 +9032,13 @@ vite-plugin-theme@^0.4.8:
     es-module-lexer "^0.3.26"
     tinycolor2 "^1.4.2"
 
-vite-plugin-windicss@0.6.11:
-  version "0.6.11"
-  resolved "https://registry.npmjs.org/vite-plugin-windicss/-/vite-plugin-windicss-0.6.11.tgz#62156e30d9ae1dd9d0a1664686c263ef36092f27"
-  integrity sha512-cFHyEVyCHGZ5Bu7L3EmiMKVsYtsI23+YBEd/bggEbdhdbv93bBk0M3j8ZVwZxwvKgJhLVG9Fthl3jAE+FVl0EA==
+vite-plugin-windicss@0.7.1:
+  version "0.7.1"
+  resolved "https://registry.npmjs.org/vite-plugin-windicss/-/vite-plugin-windicss-0.7.1.tgz#1e1c41c2f62d18a2777819057c981a1ec26d8901"
+  integrity sha512-0NNrTBgjx11KOwqS/4szfVIt3LURFor4cEEVVJjB8p7JDTnC4K8Cu11bcAvY+QMOfflxv4s2ONo2SU4xkq68kA==
   dependencies:
-    "@windicss/plugin-utils" "0.6.11"
-    windicss "^2.2.6"
+    "@windicss/plugin-utils" "0.7.1"
+    windicss "^2.3.0"
 
 vite@^2.0.5:
   version "2.0.5"
@@ -9165,10 +9165,10 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-windicss@^2.2.6:
-  version "2.2.6"
-  resolved "https://registry.npmjs.org/windicss/-/windicss-2.2.6.tgz#1e1b40ca329f8dd5ab735734212f9f91c9497004"
-  integrity sha512-RK502Xwsw0ptjVueJum0TEr286YJgtqK6kXpa60R6a1z2gGkVpEcaIfr6okQ5EYUk8WMRLrXoK6B2E6dSRg/sw==
+windicss@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/windicss/-/windicss-2.3.0.tgz#76f10017169df195d95042b7101d2e2586e8ebd1"
+  integrity sha512-OR/ULZmcVhtEJDIFnkz4S4v4efpZ8DuvDtzBwXNgbtiPQIxN0Zhpo59q0rfF0i3tfwjKw2KCQXNxL5E98bMuVA==
 
 word-wrap@^1.0.3, word-wrap@^1.2.3:
   version "1.2.3"

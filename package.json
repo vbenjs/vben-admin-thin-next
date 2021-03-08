@@ -50,7 +50,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
-    "@iconify/json": "^1.1.312",
+    "@iconify/json": "^1.1.313",
     "@ls-lint/ls-lint": "^1.9.2",
     "@purge-icons/generated": "^0.7.0",
     "@types/crypto-js": "^4.0.1",
@@ -109,14 +109,14 @@
     "vite-plugin-style-import": "^0.8.1",
     "vite-plugin-svg-icons": "^0.3.3",
     "vite-plugin-theme": "^0.4.8",
-    "vite-plugin-windicss": "0.6.11",
+    "vite-plugin-windicss": "0.7.1",
     "vue-eslint-parser": "^7.6.0",
     "yargs": "^16.2.0"
   },
   "resolutions": {
     "//": "Used to install imagemin dependencies, because imagemin may not be installed in China.If it is abroad, you can delete it",
     "bin-wrapper": "npm:bin-wrapper-china",
-    "esbuild": "0.8.56",
+    "esbuild": "0.8.57",
     "rollup": "2.40.0"
   },
   "repository": {
