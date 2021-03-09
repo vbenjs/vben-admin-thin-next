@@ -97,7 +97,7 @@ export default defineComponent({
       return disabled;
     });
 
-    function getShow() {
+    function getShow(): { isShow: boolean; isIfShow: boolean } {
       const { show, ifShow } = props.schema;
       const { showAdvancedButton } = props.formProps;
       const itemIsAdvanced = showAdvancedButton
@@ -105,6 +105,7 @@ export default defineComponent({
           ? props.schema.isAdvanced
           : true
         : true;
+
       let isShow = true;
       let isIfShow = true;
 
@@ -150,6 +151,10 @@ export default defineComponent({
       const { rulesMessageJoinLabel: globalRulesMessageJoinLabel } = props.formProps;
       if (requiredRuleIndex !== -1) {
         const rule = rules[requiredRuleIndex];
+        const { isShow } = getShow();
+        if (!isShow) {
+          rule.required = false;
+        }
         if (rule.required && component) {
           if (!Reflect.has(rule, 'type')) {
             rule.type = 'string';
@@ -311,11 +316,12 @@ export default defineComponent({
       const realColProps = { ...baseColProps, ...colProps };
       const { isIfShow, isShow } = getShow();
 
+      const values = unref(getValues);
       const getContent = () => {
         return colSlot
-          ? getSlot(slots, colSlot, unref(getValues))
+          ? getSlot(slots, colSlot, values)
           : renderColContent
-          ? renderColContent(unref(getValues))
+          ? renderColContent(values)
           : renderItem();
       };
 

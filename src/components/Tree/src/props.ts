@@ -2,11 +2,28 @@ import type { PropType } from 'vue';
 import type { ReplaceFields, ActionItem, Keys, CheckKeys } from './types';
 import type { ContextMenuItem } from '/@/hooks/web/useContextMenu';
 import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree';
+import { propTypes } from '/@/utils/propTypes';
 
 export const basicProps = {
+  value: {
+    type: Array as PropType<Keys>,
+  },
   renderIcon: {
     type: Function as PropType<(params: Recordable) => string>,
   },
+
+  helpMessage: {
+    type: [String, Array] as PropType<string | string[]>,
+    default: '',
+  },
+
+  title: propTypes.string,
+  toolbar: propTypes.bool,
+  search: propTypes.bool,
+  checkStrictly: propTypes.bool,
+  clickRowToExpand: propTypes.bool.def(true),
+  checkable: propTypes.bool.def(false),
+
   replaceFields: {
     type: Object as PropType<ReplaceFields>,
   },
