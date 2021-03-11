@@ -9,19 +9,21 @@ import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
 import { useModalContext } from '/@/components/Modal';
 import { useDebounce } from '/@/hooks/core/useDebounce';
 import type { BasicColumn } from '/@/components/Table';
+import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
 
 export function useTableScroll(
   propsRef: ComputedRef<BasicTableProps>,
   tableElRef: Ref<ComponentRef>,
   columnsRef: ComputedRef<BasicColumn[]>,
-  rowSelectionRef: ComputedRef<TableRowSelection<any> | null>
+  rowSelectionRef: ComputedRef<TableRowSelection<any> | null>,
+  getDataSourceRef: ComputedRef<Recordable[]>
 ) {
   const tableHeightRef: Ref<Nullable<number>> = ref(null);
 
   const modalFn = useModalContext();
 
-  // const [debounceCalcTableHeight] = useDebounce(calcTableHeight, 80);
-  const [debounceRedoHeight] = useDebounce(redoHeight, 250);
+  // Greater than animation time 280
+  const [debounceRedoHeight] = useDebounce(redoHeight, 100);
 
   const getCanResize = computed(() => {
     const { canResize, scroll } = unref(propsRef);
@@ -29,21 +31,19 @@ export function useTableScroll(
   });
 
   watch(
-    () => unref(getCanResize),
+    () => [unref(getCanResize), unref(getDataSourceRef)?.length],
     () => {
       debounceRedoHeight();
     },
     {
-      immediate: true,
+      flush: 'post',
     }
   );
 
   function redoHeight() {
-    if (unref(getCanResize)) {
-      nextTick(() => {
-        calcTableHeight();
-      });
-    }
+    nextTick(() => {
+      calcTableHeight();
+    });
   }
 
   function setHeight(heigh: number) {
@@ -59,14 +59,24 @@ export function useTableScroll(
 
   async function calcTableHeight() {
     const { resizeHeightOffset, pagination, maxHeight } = unref(propsRef);
-    if (!unref(getCanResize)) return;
+    const tableData = unref(getDataSourceRef);
 
-    await nextTick();
     const table = unref(tableElRef);
     if (!table) return;
 
     const tableEl: Element = table.$el;
     if (!tableEl) return;
+
+    if (!bodyEl) {
+      bodyEl = tableEl.querySelector('.ant-table-body');
+    }
+
+    bodyEl!.style.height = 'unset';
+
+    if (!unref(getCanResize) || tableData.length === 0) return;
+
+    await nextTick();
+    //Add a delay to get the correct bottomIncludeBody paginationHeight footerHeight headerHeight
 
     const headEl = tableEl.querySelector('.ant-table-thead ');
 
@@ -120,13 +130,15 @@ export function useTableScroll(
     height = (height > maxHeight! ? (maxHeight as number) : height) ?? height;
     setHeight(height);
 
-    if (!bodyEl) {
-      bodyEl = tableEl.querySelector('.ant-table-body');
-    }
     bodyEl!.style.height = `${height}px`;
   }
-
-  useWindowSizeFn(calcTableHeight, 200);
+  useWindowSizeFn(calcTableHeight, 280);
+  onMountedOrActivated(() => {
+    calcTableHeight();
+    nextTick(() => {
+      debounceRedoHeight();
+    });
+  });
 
   const getScrollX = computed(() => {
     let width = 0;
