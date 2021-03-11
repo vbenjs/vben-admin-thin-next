@@ -1,14 +1,15 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
+import type { RequestOptions, Result, UploadFileParams } from './types';
+import type { CreateAxiosOptions } from './axiosTransform';
 
 import axios from 'axios';
+import qs from 'qs';
 import { AxiosCanceler } from './axiosCancel';
 import { isFunction } from '/@/utils/is';
 import { cloneDeep } from 'lodash-es';
 
-import type { RequestOptions, CreateAxiosOptions, Result, UploadFileParams } from './types';
 import { errorResult } from './const';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
-import qs from 'qs';
 import { RequestEnum } from '../../../enums/httpEnum';
 
 export * from './axiosTransform';
@@ -83,9 +84,15 @@ export class VAxios {
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
       const {
-        headers: { ignoreCancelToken = false },
+        headers: { ignoreCancelToken },
       } = config;
-      !ignoreCancelToken && axiosCanceler.addPending(config);
+
+      const ignoreCancel =
+        ignoreCancelToken !== undefined
+          ? ignoreCancelToken
+          : this.options.requestOptions?.ignoreCancelToken;
+
+      !ignoreCancel && axiosCanceler.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors)) {
         config = requestInterceptors(config);
       }

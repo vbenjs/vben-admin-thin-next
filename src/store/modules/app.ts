@@ -6,14 +6,10 @@ import store from '/@/store';
 import { PROJ_CFG_KEY } from '/@/enums/cacheEnum';
 
 import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
-import { setLocal, getLocal, clearSession, clearLocal } from '/@/utils/cache/persistent';
+import { Persistent } from '/@/utils/cache/persistent';
 import { deepMerge } from '/@/utils';
 
 import { resetRouter } from '/@/router';
-import { permissionStore } from './permission';
-import { tabStore } from './tab';
-
-import { userStore } from './user';
 
 export interface LockInfo {
   pwd: string | undefined;
@@ -29,7 +25,7 @@ export default class App extends VuexModule {
   private pageLoadingState = false;
 
   // project config
-  private projectConfigState: ProjectConfig | null = getLocal(PROJ_CFG_KEY);
+  private projectConfigState: ProjectConfig | null = Persistent.getLocal(PROJ_CFG_KEY);
 
   // set main overflow hidden
   private lockMainScrollState = false;
@@ -59,18 +55,13 @@ export default class App extends VuexModule {
   @Mutation
   commitProjectConfigState(proCfg: DeepPartial<ProjectConfig>): void {
     this.projectConfigState = deepMerge(this.projectConfigState || {}, proCfg);
-    setLocal(PROJ_CFG_KEY, this.projectConfigState);
+    Persistent.setLocal(PROJ_CFG_KEY, this.projectConfigState);
   }
 
   @Action
   async resumeAllState() {
     resetRouter();
-    clearSession();
-    clearLocal();
-
-    permissionStore.commitResetState();
-    tabStore.commitResetState();
-    userStore.commitResetState();
+    Persistent.clearAll();
   }
 
   @Action

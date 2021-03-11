@@ -38,7 +38,6 @@
 
   import { getCurrentParentPath } from '/@/router/menus';
 
-  // import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
   import { listenerLastChangeTab } from '/@/logics/mitt/tabChange';
   import { getAllParentPath } from '/@/router/helper/menuHelper';
 
@@ -47,7 +46,6 @@
     components: {
       Menu,
       BasicSubMenuItem,
-      // BasicSubMenuItem: createAsyncComponent(() => import('./components/BasicSubMenuItem.vue')),
     },
     props: basicProps,
     emits: ['menuClick'],
@@ -110,7 +108,7 @@
       listenerLastChangeTab((route) => {
         if (route.name === REDIRECT_NAME) return;
         handleMenuChange(route);
-        currentActiveMenu.value = route.meta?.currentActiveMenu;
+        currentActiveMenu.value = route.meta?.currentActiveMenu as string;
 
         if (unref(currentActiveMenu)) {
           menuState.selectedKeys = [unref(currentActiveMenu)];

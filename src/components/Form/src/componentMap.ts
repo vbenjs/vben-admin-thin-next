@@ -21,6 +21,8 @@ import {
 import RadioButtonGroup from './components/RadioButtonGroup.vue';
 import ApiSelect from './components/ApiSelect.vue';
 import { BasicUpload } from '/@/components/Upload';
+import { StrengthMeter } from '/@/components/StrengthMeter';
+import { IconPicker } from '/@/components/Icon';
 
 const componentMap = new Map<ComponentType, Component>();
 
@@ -34,11 +36,7 @@ componentMap.set('AutoComplete', AutoComplete);
 
 componentMap.set('Select', Select);
 componentMap.set('ApiSelect', ApiSelect);
-// componentMap.set('SelectOptGroup', Select.OptGroup);
-// componentMap.set('SelectOption', Select.Option);
 componentMap.set('TreeSelect', TreeSelect);
-// componentMap.set('Transfer', Transfer);
-// componentMap.set('Radio', Radio);
 componentMap.set('Switch', Switch);
 componentMap.set('RadioButtonGroup', RadioButtonGroup);
 componentMap.set('RadioGroup', Radio.Group);
@@ -51,6 +49,8 @@ componentMap.set('MonthPicker', DatePicker.MonthPicker);
 componentMap.set('RangePicker', DatePicker.RangePicker);
 componentMap.set('WeekPicker', DatePicker.WeekPicker);
 componentMap.set('TimePicker', TimePicker);
+componentMap.set('StrengthMeter', StrengthMeter);
+componentMap.set('IconPicker', IconPicker);
 
 componentMap.set('Upload', BasicUpload);
 

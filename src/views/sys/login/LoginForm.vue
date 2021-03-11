@@ -41,17 +41,17 @@
       </Button> -->
     </FormItem>
     <ARow class="enter-x">
-      <ACol :span="7">
+      <ACol :xs="24" :md="8">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
           {{ t('sys.login.mobileSignInFormTitle') }}
         </Button>
       </ACol>
-      <ACol :span="8" :offset="1">
+      <ACol :md="8" :xs="24" class="xs:my-2 md:my-0 xs:mx-0 md:mx-2">
         <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
           {{ t('sys.login.qrSignInFormTitle') }}
         </Button>
       </ACol>
-      <ACol :span="7" :offset="1">
+      <ACol :md="7" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
           {{ t('sys.login.registerButton') }}
         </Button>
@@ -88,6 +88,8 @@
   import { userStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { useKeyPress } from '/@/hooks/event/useKeyPress';
+  import { KeyCodeEnum } from '/@/enums/keyCodeEnum';
 
   export default defineComponent({
     name: 'LoginForm',
@@ -126,6 +128,13 @@
       });
 
       const { validForm } = useFormValid(formRef);
+      useKeyPress(['enter'], (events) => {
+        const keyCode = events.keyCode;
+
+        if (keyCode === KeyCodeEnum.ENTER) {
+          handleLogin();
+        }
+      });
 
       const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
 

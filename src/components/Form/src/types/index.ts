@@ -91,7 +91,6 @@ export type ComponentType =
   | 'Select'
   | 'ApiSelect'
   | 'SelectOptGroup'
-  | 'SelectOption'
   | 'TreeSelect'
   | 'Transfer'
   | 'RadioButtonGroup'
@@ -108,4 +107,5 @@ export type ComponentType =
   | 'Switch'
   | 'StrengthMeter'
   | 'Upload'
+  | 'IconPicker'
   | 'Render';

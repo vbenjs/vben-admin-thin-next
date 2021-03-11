@@ -1,10 +1,14 @@
 {
-  "name": "server",
+  "name": "upload-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
-    "koa": "^2.13.0",
+    "fs-extra": "^9.1.0",
+    "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "koa-router": "^10.0.0",
     "koa-static": "^5.0.0",
