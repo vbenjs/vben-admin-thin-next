@@ -64,7 +64,7 @@ jobs:
       - name: Sed Config Base
         shell: bash
         run: |
-          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /vue-vben-admin/#g' ./.env.production
+          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /vben-admin-thin-next/#g' ./.env.production
           sed -i  "s#VITE_BUILD_COMPRESS\s*=.*#VITE_BUILD_COMPRESS = 'gzip'#g" ./.env.production
           cat ./.env.production
 

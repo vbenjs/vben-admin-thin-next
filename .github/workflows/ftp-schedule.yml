@@ -16,7 +16,7 @@ jobs:
       - name: Sed Config Base
         shell: bash
         run: |
-          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /next/#g' ./.env.production
+          sed -i  's#VITE_PUBLIC_PATH\s*=.*#VITE_PUBLIC_PATH = /thin/next/#g' ./.env.production
           sed -i  "s#VITE_BUILD_COMPRESS\s*=.*#VITE_BUILD_COMPRESS = 'gzip'#g" ./.env.production
           cat ./.env.production
 
@@ -51,5 +51,5 @@ jobs:
           METHOD: sftp
           PORT: ${{ secrets.FTP_PORT }}
           LOCAL_DIR: dist
-          REMOTE_DIR: /srv/www/vben-admin
+          REMOTE_DIR: /srv/www/vben-admin-thin
           ARGS: --delete --verbose --parallel=80
