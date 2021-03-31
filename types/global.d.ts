@@ -7,6 +7,15 @@ import type {
 } from 'vue';
 
 declare global {
+  const __APP_INFO__: {
+    pkg: {
+      name: string;
+      version: string;
+      dependencies: Recordable<string>;
+      devDependencies: Recordable<string>;
+    };
+    lastBuildTime: string;
+  };
   declare interface Window {
     // Global vue app instance
     __APP__: App<Element>;
