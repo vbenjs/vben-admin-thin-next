@@ -3,14 +3,18 @@ import type { UserConfig, ConfigEnv } from 'vite';
 import { loadEnv } from 'vite';
 import { resolve } from 'path';
 
-import { generateModifyVars } from './build/config/themeConfig';
+import { generateModifyVars } from './build/generate/generateModifyVars';
 import { createProxy } from './build/vite/proxy';
-import { createAlias } from './build/vite/alias';
 import { wrapperEnv } from './build/utils';
 import { createVitePlugins } from './build/vite/plugin';
 import { OUTPUT_DIR } from './build/constant';
+
 import pkg from './package.json';
 import moment from 'moment';
+
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir);
+}
 
 const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
@@ -34,12 +38,19 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     base: VITE_PUBLIC_PATH,
     root,
     resolve: {
-      alias: createAlias([
+      alias: [
         // /@/xxxx => src/xxxx
-        ['/@/', 'src'],
+        {
+          find: /\/@\//,
+          replacement: pathResolve('src') + '/',
+        },
         // /#/xxxx => types/xxxx
-        ['/#/', 'types'],
-      ]),
+        {
+          find: /\/#\//,
+          replacement: pathResolve('types') + '/',
+        },
+        // ['@vue/compiler-sfc', '@vue/compiler-sfc/dist/compiler-sfc.esm-browser.js'],
+      ],
     },
     server: {
       port: VITE_PORT,
@@ -58,7 +69,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
       // Turning off brotliSize display can slightly reduce packaging time
       brotliSize: false,
-      chunkSizeWarningLimit: 1200,
+      chunkSizeWarningLimit: 1500,
     },
     define: {
       // setting vue-i18-next
@@ -72,12 +83,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: {
-            // Used for global import to avoid the need to import each style file separately
-            // reference:  Avoid repeated references
-            hack: `true; @import (reference) "${resolve('src/design/config.less')}";`,
-            ...generateModifyVars(),
-          },
+          modifyVars: generateModifyVars(),
           javascriptEnabled: true,
         },
       },

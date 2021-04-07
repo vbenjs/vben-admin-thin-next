@@ -1,4 +1,4 @@
-## Wip
+## 2.2.0 (2021-04-06)
 
 ### ✨ Features
 
@@ -11,8 +11,15 @@
 - 移除 useFullScreen 函数
 - tinymce 由 Cdn 改为 npm(打包体积偏大)
 - Dashboard 重构
+- 移除 ApexCharts 及示例
+
+### 🐛 Bug Fixes
+
+- 确保面包屑正确的显示图标
 - 修复 tinymce 上传按钮全屏模式下消失问题
 - 确保 title 在重新登录后正常改变
+- 确保后台模式登录正常
+- 修复 TableAction 点击事件问题
 
 ## 2.1.1 (2021-03-26)
 
