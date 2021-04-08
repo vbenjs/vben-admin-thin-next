@@ -78,9 +78,10 @@
           if (isString(size)) {
             fs = parseInt(size, 10);
           }
+
           return {
             fontSize: `${fs}px`,
-            color,
+            color: color,
             display: 'inline-flex',
           };
         }
