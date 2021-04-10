@@ -1,5 +1,5 @@
 <template>
-  <div class="flex px-2 py-1.5 items-center border-b-1">
+  <div class="flex px-2 py-1.5 items-center basic-tree-header">
     <slot name="headerTitle" v-if="$slots.headerTitle"></slot>
     <BasicTitle :helpMessage="helpMessage" v-if="!$slots.headerTitle && title">
       {{ title }}
@@ -41,7 +41,7 @@
   import { propTypes } from '/@/utils/propTypes';
 
   import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDebounce } from '/@/hooks/core/useDebounce';
+  import { useDebounceFn } from '@vueuse/core';
 
   import { ToolbarEnum } from './enum';
 
@@ -128,7 +128,7 @@
       function emitChange(value?: string): void {
         emit('search', value);
       }
-      const [debounceEmitChange] = useDebounce(emitChange, 200);
+      const debounceEmitChange = useDebounceFn(emitChange, 200);
 
       function handleSearch(e: ChangeEvent): void {
         debounceEmitChange(e.target.value);
@@ -138,3 +138,8 @@
     },
   });
 </script>
+<style lang="less" scoped>
+  .basic-tree-header {
+    border-bottom: 1px solid @border-color-base;
+  }
+</style>

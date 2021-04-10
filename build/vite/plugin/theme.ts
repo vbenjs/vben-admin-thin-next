@@ -22,7 +22,17 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
   });
   const plugin = [
     viteThemePlugin({
-      resolveSelector: (s) => `[data-theme] ${s}`,
+      resolveSelector: (s) => {
+        s = s.trim();
+        switch (s) {
+          case '.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon':
+            return '.ant-steps-item-icon > .ant-steps-icon';
+          case '.ant-steps-item-icon > .ant-steps-icon':
+            return s;
+        }
+
+        return `[data-theme] ${s}`;
+      },
       colorVariables: [...getThemeColors(), ...colors],
     }),
     antdDarkThemePlugin({
@@ -40,7 +50,7 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
         // black: '#0e1117',
         // #8b949e
         'text-color-secondary': '#8b949e',
-        // 'border-color-base': '#30363d',
+        'border-color-base': '#303030',
         // 'border-color-split': '#30363d',
         'item-active-bg': '#111b26',
       },

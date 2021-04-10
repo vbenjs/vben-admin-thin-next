@@ -1,9 +1,31 @@
-## Wip
+## 2.3.0 (2021-04-10)
+
+## (破坏性更新) Breaking changes
+
+- 使用 `pinia` 替换 `vuex`,`vuex-module-decorators`。
+
+  - 影响，之前如果有自己使用 vuex-module-decorators，需要改造为 pinia。
+  - 原因：
+    - pinia 于 vuex5api 基本类似，且简单易懂。
+    - 后续切换 vuex5 成本非常低，也可以当作第三方状态管理库使用
+
+- 移除 `useKeyPress` 使用`vueuse`-`onKeyStroke`代替
+- 移除 `useDebounceFn` 使用`vueuse`-`useDebounceFn`代替
+- 移除 `useThrottle` 使用`vueuse`-`useThrottleFn`代替
+
+### ✨ Features
+
+- 标签页支持持久化保存
+
+### ✨ Refactor
+
+- 移除 `useElResize`
 
 ### 🐛 Bug Fixes
 
 - 登录页样式修复
 - 修复菜单已知问题
+- 修复主题样式切换问题
 
 ## 2.2.0 (2021-04-06)
 

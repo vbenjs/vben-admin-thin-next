@@ -5,11 +5,11 @@ import { watch, unref, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { MenuSplitTyeEnum } from '/@/enums/menuEnum';
-import { useThrottle } from '/@/hooks/core/useThrottle';
+import { useThrottleFn } from '@vueuse/core';
 import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
 
 import { getChildrenMenus, getCurrentParentPath, getMenus, getShallowMenus } from '/@/router/menus';
-import { permissionStore } from '/@/store/modules/permission';
+import { usePermissionStore } from '/@/store/modules/permission';
 import { useAppInject } from '/@/hooks/web/useAppInject';
 
 export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
@@ -17,9 +17,10 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
   const menusRef = ref<Menu[]>([]);
   const { currentRoute } = useRouter();
   const { getIsMobile } = useAppInject();
+  const permissionStore = usePermissionStore();
   const { setMenuSetting, getIsHorizontal, getSplit } = useMenuSetting();
 
-  const [throttleHandleSplitLeftMenu] = useThrottle(handleSplitLeftMenu, 50);
+  const throttleHandleSplitLeftMenu = useThrottleFn(handleSplitLeftMenu, 50);
 
   const splitNotLeft = computed(
     () => unref(splitType) !== MenuSplitTyeEnum.LEFT && !unref(getIsHorizontal)
@@ -55,7 +56,7 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
 
   // Menu changes
   watch(
-    [() => permissionStore.getLastBuildMenuTimeState, () => permissionStore.getBackMenuListState],
+    [() => permissionStore.getLastBuildMenuTime, () => permissionStore.getBackMenuList],
     () => {
       genMenus();
     },
