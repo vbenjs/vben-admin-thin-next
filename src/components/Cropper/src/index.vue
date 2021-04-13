@@ -57,18 +57,19 @@
         default: '360px',
       },
       crossorigin: {
-        type: String,
+        type: String as PropType<'' | 'anonymous' | 'use-credentials' | undefined>,
         default: undefined,
       },
       imageStyle: {
         type: Object as PropType<CSSProperties>,
-        default: {},
+        default: () => {},
       },
       options: {
         type: Object as PropType<Options>,
-        default: {},
+        default: () => {},
       },
     },
+    emits: ['cropperedInfo'],
     setup(props, ctx) {
       const imgElRef = ref<ElRef<HTMLImageElement>>(null);
       const cropper: any = ref<Nullable<Cropper>>(null);
