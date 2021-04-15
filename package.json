@@ -113,7 +113,7 @@
     "vite-plugin-theme": "^0.7.1",
     "vite-plugin-windicss": "0.14.0",
     "vue-eslint-parser": "^7.6.0",
-    "vue-tsc": "^0.0.23"
+    "vue-tsc": "^0.0.24"
   },
   "resolutions": {
     "//": "Used to install imagemin dependencies, because imagemin may not be installed in China.If it is abroad, you can delete it",
