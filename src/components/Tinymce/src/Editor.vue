@@ -12,6 +12,40 @@
 </template>
 
 <script lang="ts">
+  import tinymce from 'tinymce/tinymce';
+  import 'tinymce/themes/silver';
+
+  import 'tinymce/icons/default/icons';
+  import 'tinymce/plugins/advlist';
+  import 'tinymce/plugins/anchor';
+  import 'tinymce/plugins/autolink';
+  import 'tinymce/plugins/autosave';
+  import 'tinymce/plugins/code';
+  import 'tinymce/plugins/codesample';
+  import 'tinymce/plugins/directionality';
+  import 'tinymce/plugins/fullscreen';
+  import 'tinymce/plugins/hr';
+  import 'tinymce/plugins/insertdatetime';
+  import 'tinymce/plugins/link';
+  import 'tinymce/plugins/lists';
+  import 'tinymce/plugins/media';
+  import 'tinymce/plugins/nonbreaking';
+  import 'tinymce/plugins/noneditable';
+  import 'tinymce/plugins/pagebreak';
+  import 'tinymce/plugins/paste';
+  import 'tinymce/plugins/preview';
+  import 'tinymce/plugins/print';
+  import 'tinymce/plugins/save';
+  import 'tinymce/plugins/searchreplace';
+  import 'tinymce/plugins/spellchecker';
+  import 'tinymce/plugins/tabfocus';
+  // import 'tinymce/plugins/table';
+  import 'tinymce/plugins/template';
+  import 'tinymce/plugins/textpattern';
+  import 'tinymce/plugins/visualblocks';
+  import 'tinymce/plugins/visualchars';
+  import 'tinymce/plugins/wordcount';
+
   import {
     defineComponent,
     computed,
@@ -25,7 +59,7 @@
 
   import ImgUpload from './ImgUpload.vue';
 
-  import { tinymce, toolbar, plugins } from './tinymce';
+  import { toolbar, plugins } from './tinymce';
 
   import { buildShortUUID } from '/@/utils/uuid';
   import { bindHandlers } from './helper';
@@ -96,21 +130,22 @@
 
       const initOptions = computed(() => {
         const { height, options, toolbar, plugins } = props;
+        const publicPath = import.meta.env.VITE_PUBLIC_PATH || '/';
         return {
           selector: `#${unref(tinymceId)}`,
           height,
           toolbar,
           menubar: 'file edit insert view format table',
           plugins,
-          language_url: '/resource/tinymce/langs/zh_CN.js',
+          language_url: publicPath + 'resource/tinymce/langs/zh_CN.js',
           language: 'zh_CN',
           branding: false,
           default_link_target: '_blank',
           link_title: false,
           object_resizing: false,
           skin: 'oxide',
-          skin_url: 'resource/tinymce/skins/ui/oxide',
-          content_css: 'resource/tinymce/skins/ui/oxide/content.min.css',
+          skin_url: publicPath + 'resource/tinymce/skins/ui/oxide',
+          content_css: publicPath + 'resource/tinymce/skins/ui/oxide/content.min.css',
           ...options,
           setup: (editor: any) => {
             editorRef.value = editor;

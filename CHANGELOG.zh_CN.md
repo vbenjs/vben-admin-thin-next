@@ -1,5 +1,15 @@
 ## Wip
 
+### ✨ Features
+
+- 新增图形编辑器示例
+- 新增代码编辑器(包含 Json 编辑器)
+- 新增 `JsonPreview`Json 数据查看组件
+
+### ⚡ Performance Improvements
+
+- 合并部分语言文件，减少文件数量
+
 ### 🐛 Bug Fixes
 
 - 修复黑暗主题刷新闪烁的白屏
