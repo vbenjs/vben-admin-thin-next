@@ -143,7 +143,9 @@
         defaultValueRef,
       });
 
-      const { transformDateFunc, fieldMapToTime, autoFocusFirstItem } = toRefs(props);
+      const { transformDateFunc, fieldMapToTime, autoFocusFirstItem } = toRefs(
+        unref(getProps)
+      ) as any;
 
       const { handleFormValues, initDefault } = useFormValues({
         transformDateFuncRef: transformDateFunc,
@@ -168,6 +170,7 @@
         validateFields,
         getFieldsValue,
         updateSchema,
+        resetSchema,
         appendSchemaByField,
         removeSchemaByFiled,
         resetFields,
@@ -230,6 +233,7 @@
         setFieldsValue,
         resetFields,
         updateSchema,
+        resetSchema,
         setProps,
         removeSchemaByFiled,
         appendSchemaByField,
