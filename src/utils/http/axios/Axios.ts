@@ -155,7 +155,7 @@ export class VAxios {
 
   // support form-data
   supportFormData(config: AxiosRequestConfig) {
-    const headers = config.headers;
+    const headers = config.headers || this.options.headers;
     const contentType = headers?.['Content-Type'] || headers?.['content-type'];
 
     if (
@@ -212,7 +212,7 @@ export class VAxios {
             ret !== errorResult ? resolve(ret) : reject(new Error('request error!'));
             return;
           }
-          resolve((res as unknown) as Promise<T>);
+          resolve(res as unknown as Promise<T>);
         })
         .catch((e: Error) => {
           if (requestCatchHook && isFunction(requestCatchHook)) {

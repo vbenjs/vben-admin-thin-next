@@ -62,11 +62,11 @@
       },
       imageStyle: {
         type: Object as PropType<CSSProperties>,
-        default: () => {},
+        default: () => ({}),
       },
       options: {
         type: Object as PropType<Options>,
-        default: () => {},
+        default: () => ({}),
       },
     },
     emits: ['cropperedInfo'],
@@ -76,22 +76,18 @@
 
       const isReady = ref(false);
 
-      const getImageStyle = computed(
-        (): CSSProperties => {
-          return {
-            height: props.height,
-            maxWidth: '100%',
-            ...props.imageStyle,
-          };
-        }
-      );
+      const getImageStyle = computed((): CSSProperties => {
+        return {
+          height: props.height,
+          maxWidth: '100%',
+          ...props.imageStyle,
+        };
+      });
 
-      const getWrapperStyle = computed(
-        (): CSSProperties => {
-          const { height } = props;
-          return { height: `${height}`.replace(/px/, '') + 'px' };
-        }
-      );
+      const getWrapperStyle = computed((): CSSProperties => {
+        const { height } = props;
+        return { height: `${height}`.replace(/px/, '') + 'px' };
+      });
 
       async function init() {
         const imgEl = unref(imgElRef);

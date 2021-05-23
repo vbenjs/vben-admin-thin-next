@@ -32,12 +32,12 @@
     props: {
       flowOptions: {
         type: Object as PropType<Definition>,
-        default: () => {},
+        default: () => ({}),
       },
 
       data: {
         type: Object as PropType<any>,
-        default: () => {},
+        default: () => ({}),
       },
 
       toolbar: {
@@ -55,7 +55,7 @@
       const appStore = useAppStore();
       const [register, { openModal }] = useModal();
       createFlowChartContext({
-        logicFlow: (lfInstance as unknown) as LogicFlow,
+        logicFlow: lfInstance as unknown as LogicFlow,
       });
 
       const getFlowOptions = computed(() => {

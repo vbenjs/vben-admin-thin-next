@@ -25,17 +25,19 @@
 </template>
 <script lang="ts">
   import { defineComponent, PropType, computed, toRaw } from 'vue';
-
   import { MoreOutlined } from '@ant-design/icons-vue';
+  import { Divider } from 'ant-design-vue';
+
   import Icon from '/@/components/Icon/index';
   import { ActionItem, TableActionType } from '/@/components/Table';
   import { PopConfirmButton } from '/@/components/Button';
-  import { Divider } from 'ant-design-vue';
   import { Dropdown } from '/@/components/Dropdown';
 
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useTableContext } from '../hooks/useTableContext';
+  import { usePermission } from '/@/hooks/web/usePermission';
 
+  import { isBoolean, isFunction } from '/@/utils/is';
   import { propTypes } from '/@/utils/propTypes';
   import { ACTION_COLUMN_FLAG } from '../const';
 
@@ -61,33 +63,56 @@
         table = useTableContext();
       }
 
+      const { hasPermission } = usePermission();
+      function isIfShow(action: ActionItem): boolean {
+        const ifShow = action.ifShow;
+
+        let isIfShow = true;
+
+        if (isBoolean(ifShow)) {
+          isIfShow = ifShow;
+        }
+        if (isFunction(ifShow)) {
+          isIfShow = ifShow(action);
+        }
+        return isIfShow;
+      }
+
       const getActions = computed(() => {
-        return (toRaw(props.actions) || []).map((action) => {
-          const { popConfirm } = action;
-          return {
-            type: 'link',
-            size: 'small',
-            ...action,
-            ...(popConfirm || {}),
-            onConfirm: popConfirm?.confirm,
-            onCancel: popConfirm?.cancel,
-            enable: !!popConfirm,
-          };
-        });
+        return (toRaw(props.actions) || [])
+          .filter((action) => {
+            return hasPermission(action.auth) && isIfShow(action);
+          })
+          .map((action) => {
+            const { popConfirm } = action;
+            return {
+              type: 'link',
+              size: 'small',
+              ...action,
+              ...(popConfirm || {}),
+              onConfirm: popConfirm?.confirm,
+              onCancel: popConfirm?.cancel,
+              enable: !!popConfirm,
+            };
+          });
       });
 
       const getDropdownList = computed(() => {
-        return (toRaw(props.dropDownActions) || []).map((action, index) => {
-          const { label, popConfirm } = action;
-          return {
-            ...action,
-            ...popConfirm,
-            onConfirm: popConfirm?.confirm,
-            onCancel: popConfirm?.cancel,
-            text: label,
-            divider: index < props.dropDownActions.length - 1 ? props.divider : false,
-          };
-        });
+        return (toRaw(props.dropDownActions) || [])
+          .filter((action) => {
+            return hasPermission(action.auth) && isIfShow(action);
+          })
+          .map((action, index) => {
+            const { label, popConfirm } = action;
+            return {
+              ...action,
+              ...popConfirm,
+              onConfirm: popConfirm?.confirm,
+              onCancel: popConfirm?.cancel,
+              text: label,
+              divider: index < props.dropDownActions.length - 1 ? props.divider : false,
+            };
+          });
       });
 
       const getAlign = computed(() => {

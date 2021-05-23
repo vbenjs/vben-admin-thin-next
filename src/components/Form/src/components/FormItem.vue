@@ -10,7 +10,7 @@
   import { componentMap } from '../componentMap';
   import { BasicHelp } from '/@/components/Basic';
 
-  import { isBoolean, isFunction } from '/@/utils/is';
+  import { isBoolean, isFunction, isNull } from '/@/utils/is';
   import { getSlot } from '/@/utils/helper/tsxHelper';
   import { createPlaceholderMessage, setComponentRuleType } from '../helper';
   import { upperFirst, cloneDeep } from 'lodash-es';
@@ -24,19 +24,19 @@
     props: {
       schema: {
         type: Object as PropType<FormSchema>,
-        default: () => {},
+        default: () => ({}),
       },
       formProps: {
         type: Object as PropType<FormProps>,
-        default: () => {},
+        default: () => ({}),
       },
       allDefaultValues: {
         type: Object as PropType<Recordable>,
-        default: () => {},
+        default: () => ({}),
       },
       formModel: {
         type: Object as PropType<Recordable>,
-        default: () => {},
+        default: () => ({}),
       },
       setFormModel: {
         type: Function as PropType<(key: string, value: any) => void>,
@@ -141,15 +141,47 @@
         }
 
         let rules: ValidationRule[] = cloneDeep(defRules) as ValidationRule[];
+        const { rulesMessageJoinLabel: globalRulesMessageJoinLabel } = props.formProps;
+
+        const joinLabel = Reflect.has(props.schema, 'rulesMessageJoinLabel')
+          ? rulesMessageJoinLabel
+          : globalRulesMessageJoinLabel;
+        const defaultMsg = createPlaceholderMessage(component) + `${joinLabel ? label : ''}`;
+
+        function validator(rule: any, value: any) {
+          const msg = rule.message || defaultMsg;
+          if (value === undefined || isNull(value)) {
+            // 空值
+            return Promise.reject(msg);
+          } else if (Array.isArray(value) && value.length === 0) {
+            // 数组类型
+            return Promise.reject(msg);
+          } else if (typeof value === 'string' && value.trim() === '') {
+            // 空字符串
+            return Promise.reject(msg);
+          } else if (
+            typeof value === 'object' &&
+            Reflect.has(value, 'checked') &&
+            Reflect.has(value, 'halfChecked') &&
+            Array.isArray(value.checked) &&
+            Array.isArray(value.halfChecked) &&
+            value.checked.length === 0 &&
+            value.halfChecked.length === 0
+          ) {
+            // 非关联选择的tree组件
+            return Promise.reject(msg);
+          }
+          return Promise.resolve();
+        }
 
         if ((!rules || rules.length === 0) && required) {
-          rules = [{ required, type: 'string' }];
+          rules = [{ required, validator }];
         }
 
         const requiredRuleIndex: number = rules.findIndex(
           (rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator')
         );
-        const { rulesMessageJoinLabel: globalRulesMessageJoinLabel } = props.formProps;
+
         if (requiredRuleIndex !== -1) {
           const rule = rules[requiredRuleIndex];
           const { isShow } = getShow();
@@ -160,12 +192,8 @@
             if (!Reflect.has(rule, 'type')) {
               rule.type = component === 'InputNumber' ? 'number' : 'string';
             }
-            const joinLabel = Reflect.has(props.schema, 'rulesMessageJoinLabel')
-              ? rulesMessageJoinLabel
-              : globalRulesMessageJoinLabel;
 
-            rule.message =
-              rule.message || createPlaceholderMessage(component) + `${joinLabel ? label : ''}`;
+            rule.message = rule.message || defaultMsg;
 
             if (component.includes('Input') || component.includes('Textarea')) {
               rule.whitespace = true;
@@ -220,13 +248,11 @@
         };
 
         const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder;
-        let placeholder;
         // RangePicker place is an array
         if (isCreatePlaceholder && component !== 'RangePicker' && component) {
-          placeholder =
+          propsData.placeholder =
             unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
         }
-        propsData.placeholder = placeholder;
         propsData.codeField = field;
         propsData.formValues = unref(getValues);
 
@@ -261,13 +287,16 @@
         ) : (
           label
         );
-        if (!helpMessage || (Array.isArray(helpMessage) && helpMessage.length === 0)) {
+        const getHelpMessage = isFunction(helpMessage)
+          ? helpMessage(unref(getValues))
+          : helpMessage;
+        if (!getHelpMessage || (Array.isArray(getHelpMessage) && getHelpMessage.length === 0)) {
           return renderLabel;
         }
         return (
           <span>
             {renderLabel}
-            <BasicHelp placement="top" class="mx-1" text={helpMessage} {...helpComponentProps} />
+            <BasicHelp placement="top" class="mx-1" text={getHelpMessage} {...helpComponentProps} />
           </span>
         );
       }

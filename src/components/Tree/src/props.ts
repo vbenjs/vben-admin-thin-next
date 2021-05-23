@@ -1,12 +1,12 @@
 import type { PropType } from 'vue';
-import type { ReplaceFields, ActionItem, Keys, CheckKeys } from './types';
+import type { ReplaceFields, ActionItem, Keys, CheckKeys, ContextMenuOptions } from './types';
 import type { ContextMenuItem } from '/@/hooks/web/useContextMenu';
 import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree';
 import { propTypes } from '/@/utils/propTypes';
 
 export const basicProps = {
   value: {
-    type: Array as PropType<Keys>,
+    type: [Object, Array] as PropType<Keys | CheckKeys>,
   },
   renderIcon: {
     type: Function as PropType<(params: Recordable) => string>,
@@ -53,7 +53,7 @@ export const basicProps = {
   },
 
   beforeRightClick: {
-    type: Function as PropType<(...arg: any) => ContextMenuItem[]>,
+    type: Function as PropType<(...arg: any) => ContextMenuItem[] | ContextMenuOptions>,
     default: null,
   },
 

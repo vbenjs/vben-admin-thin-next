@@ -23,11 +23,14 @@
   import { filter } from '/@/utils/helper/treeHelper';
 
   import { useTree } from './useTree';
-  import { useContextMenu, ContextMenuItem } from '/@/hooks/web/useContextMenu';
+  import { useContextMenu } from '/@/hooks/web/useContextMenu';
   import { useExpose } from '/@/hooks/core/useExpose';
   import { useDesign } from '/@/hooks/web/useDesign';
 
   import { basicProps } from './props';
+  import { CreateContextOptions } from '/@/components/ContextMenu';
+
+  import { CheckEvent } from './types';
 
   interface State {
     expandedKeys: Keys;
@@ -58,17 +61,15 @@
       const [createContextMenu] = useContextMenu();
       const { prefixCls } = useDesign('basic-tree');
 
-      const getReplaceFields = computed(
-        (): Required<ReplaceFields> => {
-          const { replaceFields } = props;
-          return {
-            children: 'children',
-            title: 'title',
-            key: 'key',
-            ...replaceFields,
-          };
-        }
-      );
+      const getReplaceFields = computed((): Required<ReplaceFields> => {
+        const { replaceFields } = props;
+        return {
+          children: 'children',
+          title: 'title',
+          key: 'key',
+          ...replaceFields,
+        };
+      });
 
       const getBindValues = computed(() => {
         let propsData = {
@@ -88,12 +89,11 @@
             state.selectedKeys = v;
             emit('update:selectedKeys', v);
           },
-          onCheck: (v: CheckKeys) => {
+          onCheck: (v: CheckKeys, e: CheckEvent) => {
             state.checkedKeys = v;
             const rawVal = toRaw(v);
-            emit('change', rawVal);
-            emit('check', rawVal);
             emit('update:value', rawVal);
+            emit('check', rawVal, e);
           },
           onRightClick: handleRightClick,
         };
@@ -109,13 +109,8 @@
         return searchState.startSearch && searchState.searchData?.length === 0;
       });
 
-      const {
-        deleteNodeByKey,
-        insertNodeByKey,
-        filterByLevel,
-        updateNodeByKey,
-        getAllKeys,
-      } = useTree(treeDataRef, getReplaceFields);
+      const { deleteNodeByKey, insertNodeByKey, filterByLevel, updateNodeByKey, getAllKeys } =
+        useTree(treeDataRef, getReplaceFields);
 
       function getIcon(params: Recordable, icon?: string) {
         if (!icon) {
@@ -128,18 +123,20 @@
 
       async function handleRightClick({ event, node }: Recordable) {
         const { rightMenuList: menuList = [], beforeRightClick } = props;
-        let rightMenuList: ContextMenuItem[] = [];
+        let contextMenuOptions: CreateContextOptions = { event, items: [] };
 
         if (beforeRightClick && isFunction(beforeRightClick)) {
-          rightMenuList = await beforeRightClick(node);
+          let result = await beforeRightClick(node, event);
+          if (Array.isArray(result)) {
+            contextMenuOptions.items = result;
+          } else {
+            Object.assign(contextMenuOptions, result);
+          }
         } else {
-          rightMenuList = menuList;
+          contextMenuOptions.items = menuList;
         }
-        if (!rightMenuList.length) return;
-        createContextMenu({
-          event,
-          items: rightMenuList,
-        });
+        if (!contextMenuOptions.items?.length) return;
+        createContextMenu(contextMenuOptions);
       }
 
       function setExpandedKeys(keys: Keys) {
@@ -185,9 +182,13 @@
         searchState.startSearch = true;
         const { title: titleField } = unref(getReplaceFields);
 
-        searchState.searchData = filter(unref(treeDataRef), (node) => {
-          return node[titleField]?.includes(searchValue) ?? false;
-        });
+        searchState.searchData = filter(
+          unref(treeDataRef),
+          (node) => {
+            return node[titleField]?.includes(searchValue) ?? false;
+          },
+          unref(getReplaceFields)
+        );
       }
 
       function handleClickNode(key: string, children: TreeItem[]) {
@@ -224,6 +225,15 @@
         () => props.value,
         () => {
           state.checkedKeys = toRaw(props.value || []);
+        }
+      );
+
+      watch(
+        () => state.checkedKeys,
+        () => {
+          const v = toRaw(state.checkedKeys);
+          emit('update:value', v);
+          emit('change', v);
         }
       );
 
@@ -285,9 +295,11 @@
           return null;
         }
         return data.map((item) => {
-          const { title: titleField, key: keyField, children: childrenField } = unref(
-            getReplaceFields
-          );
+          const {
+            title: titleField,
+            key: keyField,
+            children: childrenField,
+          } = unref(getReplaceFields);
 
           const propsData = omit(item, 'title');
           const icon = getIcon({ ...item, level }, item.icon);
@@ -305,7 +317,11 @@
                     ) : (
                       <>
                         {icon && <TreeIcon icon={icon} />}
-                        <span class={`${prefixCls}__content`}>{get(item, titleField)}</span>
+                        <span
+                          class={unref(getBindValues)?.blockNode ? `${prefixCls}__content` : ''}
+                        >
+                          {get(item, titleField)}
+                        </span>
                         <span class={`${prefixCls}__actions`}>
                           {renderAction({ ...item, level })}
                         </span>
