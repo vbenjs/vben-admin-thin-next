@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-100 !h-full w-full overflow-hidden" ref="el"> </div>
+  <div class="relative !h-full w-full overflow-hidden" ref="el"> </div>
 </template>
 
 <script lang="ts">
@@ -53,7 +53,9 @@
         async (v) => {
           await nextTick();
           const oldValue = editor?.getValue();
-          v && v !== oldValue && editor?.setValue(v);
+          if (v !== oldValue) {
+            editor?.setValue(v ? v : '');
+          }
         },
         { flush: 'post' }
       );
