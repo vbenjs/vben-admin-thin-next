@@ -58,6 +58,7 @@
 
   import { omit } from 'lodash-es';
   import { basicProps } from './props';
+  import { isFunction } from '/@/utils/is';
 
   export default defineComponent({
     components: {
@@ -81,6 +82,7 @@
       'edit-row-end',
       'edit-change',
       'expanded-rows-change',
+      'change',
     ],
     setup(props, { attrs, emit, slots }) {
       const tableElRef = ref<ComponentRef>(null);
@@ -116,7 +118,7 @@
       } = useRowSelection(getProps, tableData, emit);
 
       const {
-        handleTableChange,
+        handleTableChange: onTableChange,
         getDataSourceRef,
         getDataSource,
         setTableData,
@@ -137,6 +139,14 @@
         },
         emit
       );
+
+      function handleTableChange(...args) {
+        onTableChange.call(undefined, ...args);
+        emit('change', ...args);
+        // 解决通过useTable注册onChange时不起作用的问题
+        const { onChange } = unref(getProps);
+        onChange && isFunction(onChange) && onChange.call(undefined, ...args);
+      }
 
       const {
         getViewColumns,
@@ -204,7 +214,7 @@
           propsData = omit(propsData, 'scroll');
         }
 
-        propsData = omit(propsData, 'class');
+        propsData = omit(propsData, ['class', 'onChange']);
         return propsData;
       });
 
@@ -294,6 +304,8 @@
   @prefix-cls: ~'@{namespace}-basic-table';
 
   .@{prefix-cls} {
+    max-width: 100%;
+
     &-row__striped {
       td {
         background-color: @app-content-background;
