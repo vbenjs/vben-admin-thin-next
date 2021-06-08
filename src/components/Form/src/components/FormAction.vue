@@ -31,7 +31,7 @@
         v-if="showAdvancedButton && !hideAdvanceBtn"
       >
         {{ isAdvanced ? t('component.form.putAway') : t('component.form.unfold') }}
-        <BasicArrow class="ml-1" :expand="!isAdvanced" top />
+        <BasicArrow class="ml-1" :expand="!isAdvanced" up />
       </Button>
       <slot name="advanceAfter"></slot>
     </FormItem>

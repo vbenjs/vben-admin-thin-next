@@ -8,21 +8,12 @@ import moment from 'moment';
 import { i18n } from './setupI18n';
 import { useLocaleStoreWithOut } from '/@/store/modules/locale';
 import { unref, computed } from 'vue';
+import { loadLocalePool, setHtmlPageLang } from './helper';
 
 interface LangModule {
   message: Recordable;
   momentLocale: Recordable;
   momentLocaleName: string;
-}
-
-const loadLocalePool: LocaleType[] = [];
-
-export function setHtmlPageLang(locale: LocaleType) {
-  document.querySelector('html')?.setAttribute('lang', locale);
-}
-
-export function setLoadLocalePool(cb: (loadLocalePool: LocaleType[]) => void) {
-  cb(loadLocalePool);
 }
 
 function setI18nLanguage(locale: LocaleType) {
