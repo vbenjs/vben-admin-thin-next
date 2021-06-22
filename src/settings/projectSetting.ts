@@ -51,7 +51,7 @@ const setting: ProjectConfig = {
   showLogo: true,
 
   // Whether to show footer
-  showFooter: false,
+  showFooter: true,
 
   // Header configuration
   headerSetting: {
@@ -68,7 +68,7 @@ const setting: ProjectConfig = {
     // Whether to show the full screen button
     showFullScreen: true,
     // Whether to show the document button
-    showDoc: true,
+    showDoc: false,
     // Whether to show the notification button
     showNotice: true,
     // Whether to display the menu search
@@ -145,11 +145,11 @@ const setting: ProjectConfig = {
     openPageLoading: true,
 
     // Whether to open the top progress bar
-    openNProgress: false,
+    openNProgress: true,
   },
 
   // Whether to enable KeepAlive cache is best to close during development, otherwise the cache needs to be cleared every time
-  openKeepAlive: true,
+  openKeepAlive: false,
 
   // Automatic screen lock time, 0 does not lock the screen. Unit minute default 0
   lockTime: 0,
@@ -161,7 +161,7 @@ const setting: ProjectConfig = {
   showBreadCrumbIcon: false,
 
   // Use error-handler-plugin
-  useErrorHandle: false,
+  useErrorHandle: true,
 
   // Whether to open back to top
   useOpenBackTop: true,

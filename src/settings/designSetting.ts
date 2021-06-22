@@ -6,7 +6,7 @@ export const darkMode = ThemeEnum.LIGHT;
 
 // app theme preset color
 export const APP_PRESET_COLOR_LIST: string[] = [
-  '#0960bd',
+  '#2E3CEE',
   '#0084f4',
   '#009688',
   '#536dfe',
@@ -38,10 +38,10 @@ export const SIDE_BAR_BG_COLOR_LIST: string[] = [
   '#212121',
   '#273352',
   '#ffffff',
-  '#191b24',
-  '#191a23',
-  '#304156',
-  '#001628',
+  '#3E7EFF',
+  '#FFE406',
+  '#575EFF',
+  '#EF1730',
   '#28333E',
   '#344058',
   '#383f45',

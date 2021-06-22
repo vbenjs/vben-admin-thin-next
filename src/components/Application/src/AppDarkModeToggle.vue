@@ -1,8 +1,8 @@
 <template>
   <div v-if="getShowDarkModeToggle" :class="getClass" @click="toggleDarkMode">
     <div :class="`${prefixCls}-inner`"> </div>
-    <SvgIcon size="14" name="sun" />
-    <SvgIcon size="14" name="moon" />
+    <SvgIcon size="12" name="sun" />
+    <SvgIcon size="12" name="moon" />
   </div>
 </template>
 <script lang="ts">
@@ -60,9 +60,9 @@
   .@{prefix-cls} {
     position: relative;
     display: flex;
-    width: 50px;
-    height: 26px;
-    padding: 0 6px;
+    width: 40px;
+    height: 20px;
+    padding: 0 4px;
     margin-left: auto;
     cursor: pointer;
     background-color: #151515;
@@ -73,8 +73,8 @@
     &-inner {
       position: absolute;
       z-index: 1;
-      width: 18px;
-      height: 18px;
+      width: 14px;
+      height: 14px;
       background-color: #fff;
       border-radius: 50%;
       transition: transform 0.5s, background-color 0.5s;

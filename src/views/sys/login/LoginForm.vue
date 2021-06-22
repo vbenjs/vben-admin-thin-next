@@ -65,7 +65,7 @@
       </ACol>
     </ARow>
 
-    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
+    <!-- <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
       <GithubFilled />
@@ -73,20 +73,28 @@
       <AlipayCircleFilled />
       <GoogleCircleFilled />
       <TwitterCircleFilled />
-    </div>
+    </div> -->
   </Form>
 </template>
 <script lang="ts">
   import { defineComponent, reactive, ref, toRaw, unref, computed } from 'vue';
 
-  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
   import {
-    GithubFilled,
-    WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
-  } from '@ant-design/icons-vue';
+    Checkbox,
+    Form,
+    Input,
+    Row,
+    Col,
+    Button,
+    //Divider
+  } from 'ant-design-vue';
+  // import {
+  //   GithubFilled,
+  //   WechatFilled,
+  //   AlipayCircleFilled,
+  //   GoogleCircleFilled,
+  //   TwitterCircleFilled,
+  // } from '@ant-design/icons-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -107,14 +115,14 @@
       Form,
       FormItem: Form.Item,
       Input,
-      Divider,
+      // Divider,
       LoginFormTitle,
       InputPassword: Input.Password,
-      GithubFilled,
-      WechatFilled,
-      AlipayCircleFilled,
-      GoogleCircleFilled,
-      TwitterCircleFilled,
+      // GithubFilled,
+      // WechatFilled,
+      // AlipayCircleFilled,
+      // GoogleCircleFilled,
+      // TwitterCircleFilled,
     },
     setup() {
       const { t } = useI18n();

@@ -1,26 +1,25 @@
 <template>
   <div
     :class="prefixCls"
-    class="fixed inset-0 flex h-screen w-screen bg-black items-center justify-center"
+    class="fixed inset-0 flex items-center justify-center w-screen h-screen bg-black"
   >
     <div
       :class="`${prefixCls}__unlock`"
       class="
         absolute
         top-0
-        left-1/2
-        flex
-        pt-5
-        h-16
+        flex flex-col
         items-center
         justify-center
-        sm:text-md
-        xl:text-xl
+        h-16
+        pt-5
         text-white
-        flex-col
-        cursor-pointer
         transform
         translate-x-1/2
+        cursor-pointer
+        left-1/2
+        sm:text-md
+        xl:text-xl
       "
       @click="handleShowForm(false)"
       v-show="showDate"
@@ -29,10 +28,10 @@
       <span>{{ t('sys.lock.unlock') }}</span>
     </div>
 
-    <div class="flex w-screen h-screen justify-center items-center">
-      <div :class="`${prefixCls}__hour`" class="relative mr-5 md:mr-20 w-2/5 h-2/5 md:h-4/5">
+    <div class="flex items-center justify-center w-screen h-screen" @click="handleShowForm(false)">
+      <div :class="`${prefixCls}__hour`" class="relative w-2/5 mr-5 md:mr-20 h-2/5 md:h-4/5">
         <span>{{ hour }}</span>
-        <span class="meridiem absolute left-5 top-5 text-md xl:text-xl" v-show="showDate">
+        <span class="absolute meridiem left-5 top-5 text-md xl:text-xl" v-show="showDate">
           {{ meridiem }}
         </span>
       </div>
@@ -57,10 +56,13 @@
           <span :class="`${prefixCls}-entry__err-msg enter-x`" v-if="errMsg">
             {{ t('sys.lock.alert') }}
           </span>
+          <a-button class="mt-2 enter-x" type="primary" block @click="unLock()" :loading="loading">
+            {{ t('sys.lock.entry') }}
+          </a-button>
           <div :class="`${prefixCls}-entry__footer enter-x`">
             <a-button
-              type="link"
               size="small"
+              type="link"
               class="mt-2 mr-2 enter-x"
               :disabled="loading"
               @click="handleShowForm(true)"
@@ -76,16 +78,13 @@
             >
               {{ t('sys.lock.backToLogin') }}
             </a-button>
-            <a-button class="mt-2" type="link" size="small" @click="unLock()" :loading="loading">
-              {{ t('sys.lock.entry') }}
-            </a-button>
           </div>
         </div>
       </div>
     </transition>
 
-    <div class="absolute bottom-5 w-full text-gray-300 xl:text-xl 2xl:text-3xl text-center enter-y">
-      <div class="text-5xl mb-4 enter-x" v-show="!showDate">
+    <div class="absolute w-full text-center text-gray-300 bottom-5 xl:text-xl 2xl:text-3xl enter-y">
+      <div class="mb-4 text-5xl enter-x" v-show="!showDate">
         {{ hour }}:{{ minute }} <span class="text-3xl">{{ meridiem }}</span>
       </div>
       <div class="text-2xl"> {{ year }}/{{ month }}/{{ day }} {{ week }} </div>
