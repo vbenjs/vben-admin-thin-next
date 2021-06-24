@@ -1,3 +1,11 @@
+## Wip
+
+### 🐛 Bug Fixes
+
+- **Table** 修复分页抖动问题
+- **Upload** 确保携带自定义参数
+- **Dropdown** 修复 popConfirm 的图标显示问题
+
 ## 2.5.0(2021-06-20)
 
 ## (破坏性更新) Breaking changes
