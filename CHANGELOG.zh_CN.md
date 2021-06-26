@@ -1,10 +1,17 @@
-## Wip
+## 2.5.1(2021-06-26)
+
+### ⚡ Performance Improvements
+
+- 升级`vue`与`ant-design-vue`版本，解决兼容问题
+- **Tree** 性能优化
 
 ### 🐛 Bug Fixes
 
 - **Table** 修复分页抖动问题
 - **Upload** 确保携带自定义参数
 - **Dropdown** 修复 popConfirm 的图标显示问题
+- **Table** 修复树形表格的编辑事件不正常的问题
+- **Table** 修复当表格数据为空时，getDataSource 返回的值不是表格所使用的数据源的问题
 
 ## 2.5.0(2021-06-20)
 

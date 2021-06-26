@@ -1,6 +1,6 @@
 {
   "name": "vben-admin",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "author": {
     "name": "vben",
     "email": "anncwb@126.com",
@@ -37,7 +37,7 @@
     "@iconify/iconify": "^2.0.2",
     "@vueuse/core": "^5.0.3",
     "@zxcvbn-ts/core": "^0.3.0",
-    "ant-design-vue": "2.1.6",
+    "ant-design-vue": "2.2.0-beta.6",
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
     "echarts": "^5.1.2",
@@ -48,7 +48,7 @@
     "pinia": "2.0.0-beta.3",
     "qrcode": "^1.4.4",
     "sortablejs": "^1.13.0",
-    "vue": "3.0.11",
+    "vue": "3.1.2",
     "vue-i18n": "9.1.6",
     "vue-json-pretty": "^2.0.2",
     "vue-router": "^4.0.10",
@@ -77,7 +77,7 @@
     "@vitejs/plugin-legacy": "^1.4.2",
     "@vitejs/plugin-vue": "^1.2.3",
     "@vitejs/plugin-vue-jsx": "^1.1.5",
-    "@vue/compiler-sfc": "3.0.11",
+    "@vue/compiler-sfc": "3.1.2",
     "@vue/test-utils": "^2.0.0-rc.9",
     "autoprefixer": "^10.2.6",
     "commitizen": "^4.2.4",
@@ -89,7 +89,7 @@
     "eslint-define-config": "^1.0.8",
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-vue": "^7.11.1",
+    "eslint-plugin-vue": "^7.12.1",
     "esno": "^0.7.3",
     "fs-extra": "^10.0.0",
     "http-server": "^0.12.3",
@@ -120,8 +120,8 @@
     "vite-plugin-mock": "^2.8.0",
     "vite-plugin-purge-icons": "^0.7.0",
     "vite-plugin-pwa": "^0.8.1",
-    "vite-plugin-style-import": "^1.0.0",
-    "vite-plugin-svg-icons": "^0.7.1",
+    "vite-plugin-style-import": "^1.0.1",
+    "vite-plugin-svg-icons": "^1.0.0",
     "vite-plugin-theme": "^0.8.1",
     "vue-eslint-parser": "^7.6.0",
     "vue-tsc": "^0.2.0"
@@ -129,7 +129,7 @@
   "resolutions": {
     "//": "Used to install imagemin dependencies, because imagemin may not be installed in China. If it is abroad, you can delete it",
     "bin-wrapper": "npm:bin-wrapper-china",
-    "rollup": "^2.52.2"
+    "rollup": "^2.52.3"
   },
   "repository": {
     "type": "git",
