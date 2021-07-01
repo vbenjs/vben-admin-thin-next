@@ -47,6 +47,7 @@
     "path-to-regexp": "^6.2.0",
     "pinia": "^2.0.0-beta.3",
     "qrcode": "^1.4.4",
+    "resize-observer-polyfill": "^1.5.1",
     "sortablejs": "^1.13.0",
     "vue": "3.1.2",
     "vue-i18n": "9.1.6",
