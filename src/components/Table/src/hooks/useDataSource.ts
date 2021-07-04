@@ -176,6 +176,7 @@ export function useDataSource(
     try {
       setLoading(true);
       const { pageField, sizeField, listField, totalField } = Object.assign(
+        {},
         FETCH_SETTING,
         fetchSetting
       );
@@ -203,7 +204,7 @@ export function useDataSource(
         ...(opt?.filterInfo ?? {}),
       };
       if (beforeFetch && isFunction(beforeFetch)) {
-        params = beforeFetch(params) || params;
+        params = (await beforeFetch(params)) || params;
       }
 
       const res = await api(params);
@@ -225,7 +226,7 @@ export function useDataSource(
       }
 
       if (afterFetch && isFunction(afterFetch)) {
-        resultItems = afterFetch(resultItems) || resultItems;
+        resultItems = (await afterFetch(resultItems)) || resultItems;
       }
       dataSourceRef.value = resultItems;
       setPagination({
