@@ -41,7 +41,7 @@
               my-auto
               rounded-md
               shadow-md
-              xl:ml-20 xl:bg-transparent
+              xl:ml-16 xl:bg-transparent
               sm:px-8
               xl:p-4 xl:shadow-none
               sm:w-3/4
@@ -143,6 +143,7 @@
   }
 
   .@{prefix-cls} {
+    min-height: 100%;
     overflow: hidden;
     @media (max-width: @screen-xl) {
       background-color: #293146;

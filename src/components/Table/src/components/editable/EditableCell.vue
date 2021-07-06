@@ -44,6 +44,7 @@
   import { propTypes } from '/@/utils/propTypes';
   import { isString, isBoolean, isFunction, isNumber, isArray } from '/@/utils/is';
   import { createPlaceholderMessage } from './helper';
+  import { set, omit } from 'lodash-es';
 
   export default defineComponent({
     name: 'EditableCell',
@@ -107,7 +108,7 @@
         return {
           placeholder: createPlaceholderMessage(unref(getComponent)),
           ...apiSelectProps,
-          ...compProps,
+          ...omit(compProps, 'onChange'),
           [valueField]: value,
         };
       });
@@ -183,6 +184,8 @@
         } else if (isString(e) || isBoolean(e) || isNumber(e)) {
           currentValueRef.value = e;
         }
+        const onChange = props.column?.editComponentProps?.onChange;
+        if (onChange && isFunction(onChange)) onChange(...arguments);
 
         table.emit?.('edit-change', {
           column: props.column,
@@ -227,14 +230,16 @@
           if (!isPass) return false;
         }
 
-        const { column, index } = props;
+        const { column, index, record } = props;
+        if (!record) return false;
         const { key, dataIndex } = column;
         const value = unref(currentValueRef);
         if (!key || !dataIndex) return;
 
         const dataKey = (dataIndex || key) as string;
 
-        const record = await table.updateTableData(index, dataKey, value);
+        set(record, dataKey, value);
+        //const record = await table.updateTableData(index, dataKey, value);
         needEmit && table.emit?.('edit-end', { record, index, key, value });
         isEdit.value = false;
       }
@@ -249,7 +254,14 @@
       function handleCancel() {
         isEdit.value = false;
         currentValueRef.value = defaultValueRef.value;
-        table.emit?.('edit-cancel', unref(currentValueRef));
+        const { column, index, record } = props;
+        const { key, dataIndex } = column;
+        table.emit?.('edit-cancel', {
+          record,
+          index,
+          key: dataIndex || key,
+          value: unref(currentValueRef),
+        });
       }
 
       function onClickOutside() {
