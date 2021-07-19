@@ -62,6 +62,7 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
         name: title,
         hideMenu,
         path: node.path,
+        ...(node.redirect ? { redirect: node.redirect } : {}),
       };
     },
   });
@@ -72,14 +73,16 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
 /**
  * config menu with given params
  */
-const menuParamRegex = /(?<=:)([\s\S]+?)((?=\/)|$)/g;
+const menuParamRegex = /(?::)([\s\S]+?)((?=\/)|$)/g;
 export function configureDynamicParamsMenu(menu: Menu, params: RouteParams) {
   const { path, paramPath } = toRaw(menu);
   let realPath = paramPath ? paramPath : path;
   const matchArr = realPath.match(menuParamRegex);
+
   matchArr?.forEach((it) => {
-    if (params[it]) {
-      realPath = realPath.replace(`:${it}`, params[it] as string);
+    const realIt = it.substr(1);
+    if (params[realIt]) {
+      realPath = realPath.replace(`:${realIt}`, params[realIt] as string);
     }
   });
   // save original param path.

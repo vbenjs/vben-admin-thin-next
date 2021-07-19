@@ -106,7 +106,7 @@
       async function fetch() {
         const api = props.api;
         if (!api || !isFunction(api)) return;
-
+        options.value = [];
         try {
           loading.value = true;
           const res = await api(props.params);
@@ -134,7 +134,7 @@
       }
 
       function emitChange() {
-        emit('options-change', unref(options));
+        emit('options-change', unref(getOptions));
       }
 
       function handleChange(_, ...args) {
