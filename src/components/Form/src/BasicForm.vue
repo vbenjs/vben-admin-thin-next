@@ -19,7 +19,7 @@
           :setFormModel="setFormModel"
         >
           <template #[item]="data" v-for="item in Object.keys($slots)">
-            <slot :name="item" v-bind="data"></slot>
+            <slot :name="item" v-bind="data || {}"></slot>
           </template>
         </FormItem>
       </template>
@@ -231,9 +231,7 @@
         formModel[key] = value;
         const { validateTrigger } = unref(getBindValue);
         if (!validateTrigger || validateTrigger === 'change') {
-          try {
-            validateFields([key]);
-          } catch (e) {}
+          validateFields([key]).catch((_) => {});
         }
       }
 

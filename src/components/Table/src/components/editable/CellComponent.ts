@@ -10,21 +10,32 @@ export interface ComponentProps {
   rule: boolean;
   popoverVisible: boolean;
   ruleMessage: string;
+  getPopupContainer?: Fn;
 }
 
 export const CellComponent: FunctionalComponent = (
-  { component = 'Input', rule = true, ruleMessage, popoverVisible }: ComponentProps,
+  {
+    component = 'Input',
+    rule = true,
+    ruleMessage,
+    popoverVisible,
+    getPopupContainer,
+  }: ComponentProps,
   { attrs }
 ) => {
   const Comp = componentMap.get(component) as typeof defineComponent;
 
   const DefaultComp = h(Comp, attrs);
-  if (!rule || !popoverVisible) {
+  if (!rule) {
     return DefaultComp;
   }
   return h(
     Popover,
-    { overlayClassName: 'edit-cell-rule-popover', visible: !!popoverVisible },
+    {
+      overlayClassName: 'edit-cell-rule-popover',
+      visible: !!popoverVisible,
+      ...(getPopupContainer ? { getPopupContainer } : {}),
+    },
     {
       default: () => DefaultComp,
       content: () => ruleMessage,

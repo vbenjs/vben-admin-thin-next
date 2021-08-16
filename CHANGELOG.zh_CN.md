@@ -1,3 +1,62 @@
+## 2.7.1(2021-08-16)
+
+- 升级 vue 3.2,如果运行失败，删除 node_modules 后重装即可
+
+### ✨ Features
+
+- **BasicTree** 添加搜索功能相关属性和方法
+- **BasicForm** 新增`alwaysShowLines`用于设置折叠时保留显示的行数
+
+### 🐛 Bug Fixes
+
+- **Cropper** 修复未能及时销毁的问题
+- **BasicTable**
+  - 修复`CellFormat`无法使用`Map`类型数据的问题
+  - 修复可编辑单元格未能正确显示`0`值的问题
+  - 修复 selection-change 事件在取消勾选时未能正确触发的问题
+  - 修复浅色主题下的全屏状态背景颜色不正确的问题
+  - 修复`getSelectRows`不支持远程数据跨页选择时获取完整数据的问题
+  - 修复在`editComponentProps`中为编辑组件提供的`size`属性无效的问题
+- **Qrcode** 修复二维码组件在创建时未能及时绘制的问题
+- **BasicModal** 修复`helpMessage`属性不起作用的问题
+- **BasicButton** 修复按钮样式表现与 antd 官方不一致的问题
+- **其它** 修复`useRedo`(重新加载当前路由)会丢失路由`params`数据的问题
+
+## 2.7.0(2021-08-03)
+
+## (破坏性更新) Breaking changes
+
+- 将项目`tailwindcss`还原回`windicss`，尝试了`tailwindcss`，问题可能还挺多，先切换回`windicss`提高开发效率，切换成本较低。
+  - 目前项目不兼容地方有
+    - `xl:!m-4` 之类的写法需要改为`!xl:m-4`,注意只有`!`这个不兼容，没用到则不用改
+    - 内存溢出问题可能还在（频率低，重启下即可，重启 vite 较快）
+
+### ✨ Features
+
+- **Preview** 添加新的属性及事件
+- **Dark Theme** 新增对 tailwindcss 夜间模式的支持
+- **其它** 为 useLoading 添加 setTip 方法
+
+### 🐛 Bug Fixes
+
+- **ApiTreeSelect** 修复未能正确监听`params`变化的问题
+- **ImgRotateDragVerify** 修复组件`resume`方法无法调用的问题
+- **TableAction** 修复 stopButtonPropagation 属性某些情况下不起作用的问题
+- **PageWrapper** 修复`class`属性无效的问题
+- **BasicTree** 修复`checkAll`方法会影响到`disabled`状态节点的问题
+- **BasicTable**
+  - 修复可编辑单元格不支持`ellipsis`配置的问题
+  - 修复全屏模式下看不到子组件弹出层（popconfirm 以及 select、treeSelect 等编辑组件）的问题
+  - 修复启用`expandRowByClick`时，点击不可展开的行可能会导致样式错误的问题
+  - 修复`pagination`属性动态改变不生效的问题
+  - 修复`getSelectRows`不支持树形表格子级数据的问题
+- **Dark Theme** 黑暗主题下的配色问题修正
+  - 修复`Tree`组件被选中节点的背景颜色
+  - 修复`Alert`组件的颜色配置
+  - 修复禁用状态下的`link`类型的按钮颜色问题
+  - 修复`Tree`已勾选的复选框的样式问题
+- **其它** 修复 useScript 未能自动移除 script 节点的问题
+
 ## 2.6.1(2021-07-19)
 
 ### ✨ Features
@@ -5,8 +64,10 @@
 - **NoticeList** 添加分页、超长自动省略、标题点击事件、标题删除线等功能
 - **MixSider** 优化 Mix 菜单布局时 底部折叠按钮 的样式，与其它菜单布局时的风格保持一致
 - **ApiTreeSelect** 扩展`antdv`的`TreeSelect`组件，支持远程数据源，用法类似`ApiSelect`
-- **BasicTable** 新增`ApiTreeSelect`编辑组件
-- 可以为不同的用户指定不同的后台首页：
+- **BasicTable**
+  - 新增`ApiTreeSelect`编辑组件
+  - 新增`headerTop`插槽
+- **其它** 可以为不同的用户指定不同的后台首页：
   - 在`getUserInfo`接口返回的用户信息中增加`homePath`字段(可选)即可为当前用户定制首页路径
 
 ### 🐛 Bug Fixes
@@ -14,7 +75,6 @@
 - **BasicTable**
   - 修复滚动条样式问题(移除了滚动样式补丁)
   - 修复树形表格的带有展开图标的单元格的内容对齐问题
-  - 新增`headerTop`插槽
   - 修复操作列的按钮在 disabled 状态下的颜色显示
   - 修复可编辑单元格的值不能直接通过修改`dataSource`来更新显示的问题
   - 修复使用`ApiSelect`编辑组件时的数据回显问题
@@ -40,7 +100,7 @@
 - **其它**
   - 修复菜单默认折叠的配置不起作用的问题
   - 修复`safari`浏览器报错导致网站打不开
-  - 修复在 window 上，拉取代码后 eslint 因 endOfLine 而保错问题
+  - 修复在 window 上，拉取代码后 eslint 因 endOfLine 而报错问题
   - 修复因动态路由而产生的 `Vue Router warn`
 
 ### 🎫 Chores

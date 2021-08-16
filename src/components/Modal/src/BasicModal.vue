@@ -20,7 +20,7 @@
     <template #footer v-if="!$slots.footer">
       <ModalFooter v-bind="getBindValue" @ok="handleOk" @cancel="handleCancel">
         <template #[item]="data" v-for="item in Object.keys($slots)">
-          <slot :name="item" v-bind="data"></slot>
+          <slot :name="item" v-bind="data || {}"></slot>
         </template>
       </ModalFooter>
     </template>
@@ -140,9 +140,9 @@
           wrapClassName: unref(getWrapClassName),
         };
         if (unref(fullScreenRef)) {
-          return omit(attr, 'height');
+          return omit(attr, ['height', 'title']);
         }
-        return attr;
+        return omit(attr, 'title');
       });
 
       const getWrapperHeight = computed(() => {

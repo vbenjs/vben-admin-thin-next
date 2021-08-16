@@ -1,8 +1,9 @@
 import { isFunction } from '/@/utils/is';
 import type { BasicTableProps, TableRowSelection } from '../types/table';
-import { computed, ref, unref, ComputedRef, Ref, toRaw, watch, nextTick } from 'vue';
+import { computed, ComputedRef, nextTick, Ref, ref, toRaw, unref, watch } from 'vue';
 import { ROW_KEY } from '../const';
 import { omit } from 'lodash-es';
+import { findNodeAll } from '/@/utils/helper/treeHelper';
 
 export function useRowSelection(
   propsRef: ComputedRef<BasicTableProps>,
@@ -21,11 +22,12 @@ export function useRowSelection(
     return {
       selectedRowKeys: unref(selectedRowKeysRef),
       hideDefaultSelections: false,
-      onChange: (selectedRowKeys: string[], selectedRows: Recordable[]) => {
-        selectedRowKeysRef.value = selectedRowKeys;
-        selectedRowRef.value = selectedRows;
+      onChange: (selectedRowKeys: string[]) => {
+        setSelectedRowKeys(selectedRowKeys);
+        // selectedRowKeysRef.value = selectedRowKeys;
+        // selectedRowRef.value = selectedRows;
       },
-      ...omit(rowSelection === undefined ? {} : rowSelection, ['onChange']),
+      ...omit(rowSelection, ['onChange']),
     };
   });
 
@@ -50,7 +52,8 @@ export function useRowSelection(
           rows: getSelectRows(),
         });
       });
-    }
+    },
+    { deep: true }
   );
 
   const getAutoCreateKey = computed(() => {
@@ -64,11 +67,19 @@ export function useRowSelection(
 
   function setSelectedRowKeys(rowKeys: string[]) {
     selectedRowKeysRef.value = rowKeys;
-
-    const rows = toRaw(unref(tableData)).filter((item) =>
-      rowKeys.includes(item[unref(getRowKey) as string])
+    const allSelectedRows = findNodeAll(
+      toRaw(unref(tableData)).concat(toRaw(unref(selectedRowRef))),
+      (item) => rowKeys.includes(item[unref(getRowKey) as string]),
+      {
+        children: propsRef.value.childrenColumnName ?? 'children',
+      }
     );
-    selectedRowRef.value = rows;
+    const trueSelectedRows: any[] = [];
+    rowKeys.forEach((key: string) => {
+      const found = allSelectedRows.find((item) => item[unref(getRowKey) as string] === key);
+      found && trueSelectedRows.push(found);
+    });
+    selectedRowRef.value = trueSelectedRows;
   }
 
   function setSelectedRows(rows: Recordable[]) {
