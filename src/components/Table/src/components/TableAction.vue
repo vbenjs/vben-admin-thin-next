@@ -14,11 +14,7 @@
       <Divider
         type="vertical"
         class="action-divider"
-        v-if="
-          divider &&
-          index < getActions.length - (dropDownActions ? 0 : 1) &&
-          getDropdownList.length > 0
-        "
+        v-if="divider && index < getActions.length - 1"
       />
     </template>
     <Dropdown
@@ -95,7 +91,7 @@
           .map((action) => {
             const { popConfirm } = action;
             return {
-              getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
+              getPopupContainer: () => unref((table as any)?.wrapRef.value) ?? document.body,
               type: 'link',
               size: 'small',
               ...action,
@@ -107,7 +103,7 @@
           });
       });
 
-      const getDropdownList = computed(() => {
+      const getDropdownList = computed((): any[] => {
         return (toRaw(props.dropDownActions) || [])
           .filter((action) => {
             return hasPermission(action.auth) && isIfShow(action);
@@ -133,7 +129,7 @@
 
       function getTooltip(data: string | TooltipProps): TooltipProps {
         return {
-          getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
+          getPopupContainer: () => unref((table as any)?.wrapRef.value) ?? document.body,
           placement: 'bottom',
           ...(isString(data) ? { title: data } : data),
         };
