@@ -222,7 +222,6 @@
       const getBindValues = computed(() => {
         const dataSource = unref(getDataSourceRef);
         let propsData: Recordable = {
-          size: 'middle',
           // ...(dataSource.length === 0 ? { getPopupContainer: () => document.body } : {}),
           ...attrs,
           customRow,
@@ -365,12 +364,6 @@
       }
     }
 
-    &--inset {
-      .ant-table-wrapper {
-        padding: 0;
-      }
-    }
-
     .ant-tag {
       margin-right: 0;
     }
@@ -429,6 +422,12 @@
 
       td {
         padding: 12px 8px;
+      }
+    }
+
+    &--inset {
+      .ant-table-wrapper {
+        padding: 0;
       }
     }
   }
