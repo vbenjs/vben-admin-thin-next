@@ -1,5 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { resultError, resultSuccess, getRequestToken, requestParams } from '../_util';
+import { PageEnum } from '/@/enums/pageEnum';
 
 export function createFakeUserList() {
   return [
@@ -11,7 +12,7 @@ export function createFakeUserList() {
       desc: 'manager',
       password: '123456',
       token: 'fakeToken1',
-      homePath: '/dashboard/analysis',
+      homePath: PageEnum.BASE_HOME,
       roles: [
         {
           roleName: 'Super Admin',
