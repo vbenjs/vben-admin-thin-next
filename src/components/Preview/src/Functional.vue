@@ -143,6 +143,9 @@
       function scaleFunc(num: number) {
         if (imgState.imgScale <= 0.2 && num < 0) return;
         imgState.imgScale += num;
+        if (imgState.imgScale <= 0) {
+          imgState.imgScale = 0.2;
+        }
       }
 
       // 旋转图片
